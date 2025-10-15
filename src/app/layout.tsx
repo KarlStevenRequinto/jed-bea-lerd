@@ -25,10 +25,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} bg-neutral-50 text-neutral-950 antialiased`}>
+            <body className={`${geistSans.variable} antialiased`}>
                 <Navbar />
                 <main className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl flex-col gap-8 px-6 py-10">{children}</main>
             </body>
         </html>
     );
 }
+

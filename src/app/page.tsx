@@ -1,14 +1,36 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function HomePage() {
-    return (
-        <section className="space-y-4">
-            <div className="space-y-2">
-                <p className="text-sm uppercase tracking-wide text-neutral-500">Homepage</p>
-                <h1 className="text-3xl font-semibold">Explore Auto & Real Estate Deals</h1>
-                <p className="text-base text-neutral-600">
-                    Welcome to the Auto Real Estate Ecommerce platform. Browse featured listings, manage your profile, and keep track of the assets
-                    that matter most to you.
-                </p>
-            </div>
-        </section>
-    );
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (dark) {
+      root.classList.add("theme-dark");
+    } else {
+      root.classList.remove("theme-dark");
+    }
+  }, [dark]);
+
+  return (
+    <div
+      className="min-h-screen w-full flex items-center justify-center"
+      style={{ background: "var(--color-bg)", color: "var(--color-fg)" }}
+    >
+      <button
+        onClick={() => setDark((v) => !v)}
+        className="rounded-md border px-6 py-3 text-base font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2"
+        style={{
+          background: dark ? "#111" : "#fff",
+          color: dark ? "#fff" : "#111",
+          borderColor: dark ? "#333" : "#ddd",
+        }}
+        aria-pressed={dark}
+      >
+        {dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+      </button>
+    </div>
+  );
 }
