@@ -14,21 +14,23 @@ export const metadata: Metadata = {
     description: "Discover and manage automotive and real estate listings in one place.",
 };
 
-export default function RootLayout({
+const RootLayout = ({
     children,
 }: Readonly<{
     children: React.ReactNode;
-}>) {
+}>) => {
     return (
         <html lang="en">
             <body className={`${inter.variable} antialiased`}>
                 <StoreProvider>
                     <NavbarGate />
-                    <main className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl flex-col gap-8 px-6 py-10">{children}</main>
+                    <main className="flex min-h-[calc(100vh-5rem)] w-full flex-col gap-0">{children}</main>
                 </StoreProvider>
             </body>
         </html>
     );
-}
+};
+
+export default RootLayout;
 
 

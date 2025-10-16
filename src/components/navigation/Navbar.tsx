@@ -12,7 +12,7 @@ const navItemsBase = [
     { href: "/profile", label: "Profile" },
 ];
 
-export function Navbar() {
+export const Navbar = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const loggedIn = useAppSelector((s) => s.auth.loggedIn);
@@ -44,4 +44,4 @@ export function Navbar() {
             </nav>
         </header>
     );
-}
+};
