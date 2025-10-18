@@ -16,7 +16,7 @@ const LoginPage = () => {
         <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2">
             {/* Left panel fills full left column with grey */}
             <aside className="hidden lg:flex min-h-screen w-full bg-[var(--color-muted)]">
-                <div className="mx-auto w-full max-w-[720px] p-10 flex flex-col items-center justify-start gap-6">
+                <div className="mx-auto w-full max-w-[720px] p-10 flex flex-col items-center justify-center gap-6">
                     {/* Placeholder logo */}
                     <div className="flex flex-col items-center mt-6">
                         <div className="flex items-center gap-3 text-neutral-800">
@@ -68,9 +68,9 @@ const LoginPage = () => {
             </aside>
 
             {/* Right panel */}
-            <section className="flex min-h-screen w-full flex-col items-center bg-[var(--color-bg)] px-6 py-10 lg:px-14">
+            <section className="flex min-h-screen w-full flex-col items-center justify-center bg-[var(--color-bg)] px-6 py-8 lg:px-12">
                 {/* Tabs */}
-                <div className="w-full max-w-md mt-2">
+                <div className="w-full max-w-md mt-0">
                     <div className="relative h-9 w-full rounded-full border border-[var(--color-border)] overflow-hidden">
                         <div
                             className="absolute top-0 h-full w-1/2 rounded-full bg-[var(--color-primary)] transition-transform duration-300 ease-out"
@@ -96,7 +96,7 @@ const LoginPage = () => {
                 </div>
 
                 {/* Content */}
-                <div className="w-full max-w-md mt-8">{tab === "login" ? <LoginFormUI /> : <RegisterPlaceholder />}</div>
+                <div className="w-full max-w-md mt-6">{tab === "login" ? <LoginFormUI /> : <RegisterPlaceholder />}</div>
             </section>
         </div>
     );
