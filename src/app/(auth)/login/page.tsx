@@ -1,13 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Feature from "@/components/common/feature";
+import countryHomes from "@/assets/icons/images/country-homes.png";
+import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
-
-// Local SVGs
-// Replaced SVG feature icons with images
-// Keep social as images too
-// Facebook icon switched to image
 
 const LoginPage = () => {
     const [tab, setTab] = useState<"login" | "register">("login");
@@ -23,7 +19,7 @@ const LoginPage = () => {
                             <div className="h-10 w-10 rounded-md bg-neutral-200" aria-hidden />
                             <div className="h-6 w-16 rounded bg-neutral-200" aria-hidden />
                         </div>
-                        <p className="mt-2 text-sm text-neutral-500">Your trusted platform for vehicles and properties.</p>
+                        <p className="mt-2 text-sm text-[var(--color-foreground)]">Your trusted platform for vehicles and properties.</p>
                     </div>
 
                     {/* Hero image */}
@@ -33,34 +29,25 @@ const LoginPage = () => {
                             alt="Property with vehicle"
                             width={1600}
                             height={1066}
-                            className="h-[420px] w-full object-cover rounded-2xl"
+                            className="h-[420px] w-full object-cover rounded-[10px]"
                             priority
                         />
                     </div>
 
                     {/* Features */}
                     <div className="mt-2 grid grid-cols-3 gap-8">
-                        <Feature
+                        <IconBadge
                             icon={<Image src="/images/tesla.png" alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />}
                             label="Quality Vehicles"
                         />
-                        <Feature
+                        <IconBadge
                             icon={
                                 <Image src="/images/protect.png" alt="Protect" width={24} height={24} className="h-6 w-6 object-contain" priority />
                             }
                             label="Secure and Trusted"
                         />
-                        <Feature
-                            icon={
-                                <Image
-                                    src="/images/city-buildings.png"
-                                    alt="City Buildings"
-                                    width={24}
-                                    height={24}
-                                    className="h-6 w-6 object-contain"
-                                    priority
-                                />
-                            }
+                        <IconBadge
+                            icon={<Image src={countryHomes} alt="Homes" width={24} height={24} className="h-6 w-6 object-contain" priority />}
                             label="Quality Properties"
                         />
                     </div>

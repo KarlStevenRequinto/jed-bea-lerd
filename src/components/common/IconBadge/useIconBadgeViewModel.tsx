@@ -6,7 +6,7 @@ type UseFeatureVMArgs = {
     label: string;
 };
 
-export const useFeatureViewModel = ({ label }: UseFeatureVMArgs) => {
+export const useIconBadgeViewModel = ({ label }: UseFeatureVMArgs) => {
     const testId = "feature-item";
     const normalizedLabel = useMemo(() => label, [label]);
     return {
@@ -14,3 +14,4 @@ export const useFeatureViewModel = ({ label }: UseFeatureVMArgs) => {
         label: normalizedLabel,
     };
 };
+
