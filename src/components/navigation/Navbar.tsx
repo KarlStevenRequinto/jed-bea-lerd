@@ -18,16 +18,14 @@ export const Navbar = () => {
     const loggedIn = useAppSelector((s) => s.auth.loggedIn);
 
     const navItems = loggedIn
-        ? [...navItemsBase, { href: "#logout", label: "Logout" }]
+        ? [...navItemsBase, { href: "/logout", label: "Logout" }]
         : [...navItemsBase, { href: "/login", label: "Login" }];
 
-    const handleClick = (href: string) => (e: React.MouseEvent) => {
-        if (href === "#logout") {
-            e.preventDefault();
-            dispatch(logout());
-            router.push("/login");
-        }
+    const handleLogout = () => {
+        dispatch(logout());
+        router.push("/login");
     };
+
     return (
         <header className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
             <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -35,9 +33,19 @@ export const Navbar = () => {
                 <ul className="flex items-center gap-4 text-sm font-medium text-[var(--color-foreground)]">
                     {navItems.map((item) => (
                         <li key={item.href}>
-                            <Link className="transition-colors hover:text-[var(--color-primary)]" href={item.href} onClick={handleClick(item.href)}>
-                                {item.label}
-                            </Link>
+                            {item.label === "Logout" ? (
+                                <button
+                                    type="button"
+                                    onClick={handleLogout}
+                                    className="transition-colors hover:text-[var(--color-primary)]"
+                                >
+                                    {item.label}
+                                </button>
+                            ) : (
+                                <Link className="transition-colors hover:text-[var(--color-primary)]" href={item.href}>
+                                    {item.label}
+                                </Link>
+                            )}
                         </li>
                     ))}
                 </ul>
