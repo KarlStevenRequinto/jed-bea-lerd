@@ -118,7 +118,7 @@ const LoginPage = () => {
                         aria-labelledby="tab-register"
                         aria-hidden={tab !== "register"}
                     >
-                        <RegisterPlaceholder />
+                        <RegisterFormUI />
                     </div>
                 </div>
             </section>
@@ -128,10 +128,10 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-// Feature component moved to src/components/Feature
-
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store";
+import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
+import AuthInput from "@/components/forms/AuthInput";
 import { login } from "@/store/authSlice";
 
 const LoginFormUI = () => {
@@ -139,51 +139,24 @@ const LoginFormUI = () => {
     const dispatch = useAppDispatch();
     return (
         <div className="space-y-6" aria-labelledby="welcome-heading">
-            <div className="[&>*+*]:mt-[13px]">
-                <h1 className="text-normal text-2xl" id="welcome-heading">
-                    Welcome Back!
-                </h1>
-                <p className="text-light text-[16px]">Sign in to your account to continue</p>
-            </div>
+            <AuthSectionHeader title="Welcome Back!" subtitle="Sign in to your account to continue" />
 
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()} aria-describedby="identifier-help password-help">
-                {/* Email */}
-                <div className="space-y-1.5">
-                    <label htmlFor="identifier" className="text-normal text-center-flex text-sm">
-                        Email
-                    </label>
-                    <input
-                        id="identifier"
-                        type="text"
-                        placeholder="Enter your email"
-                        className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] placeholder:text-normal placeholder:text-center-flex shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
-                        aria-describedby="identifier-help"
-                        autoComplete="email"
-                    />
-                    <p id="identifier-help" className="sr-only">
-                        Enter the email you used to register.
-                    </p>
-                </div>
-
-                {/* Password */}
-                <div className="space-y-1.5">
-                    <label htmlFor="password" className="text-normal text-center-flex text-sm">
-                        Password
-                    </label>
-
-                    <div className="relative">
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="Enter your password"
-                            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] placeholder:text-normal placeholder:text-center-flex shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
-                            autoComplete="current-password"
-                        />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3" aria-hidden>
-                            <Image src={eye} alt="Toggle password visibility" width={20} height={20} className="h-5 w-5 object-contain opacity-70" />
-                        </span>
-                    </div>
-                </div>
+                <AuthInput id="identifier" name="identifier" type="text" label="Email" placeholder="Enter your email" autoComplete="email" />
+                <p id="identifier-help" className="sr-only">
+                    Enter the email you used to register.
+                </p>
+                <AuthInput
+                    id="password"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    placeholder="Enter your password"
+                    autoComplete="current-password"
+                    rightIcon={
+                        <Image src={eye} alt="Toggle password visibility" width={20} height={20} className="h-5 w-5 object-contain opacity-70" />
+                    }
+                />
 
                 {/* Remember me */}
                 <div className="flex items-center justify-between text-light text-sm">
@@ -249,6 +222,73 @@ const LoginFormUI = () => {
     );
 };
 
-const RegisterPlaceholder = () => {
-    return <div className="flex h-[480px] items-center justify-center rounded-md border border-dashed text-neutral-500">this is register</div>;
+const RegisterFormUI = () => {
+    return (
+        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <AuthSectionHeader title="Create an account" subtitle="Join HomeNDrive today" className="mb-2" />
+            <div className="[&>*+*]:mt-3">
+                <div className="space-y-1.5">
+                    <label className="text-normal text-center-flex text-sm">I am a *</label>
+                    <select className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-fg)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]">
+                        <option value="">Select your role</option>
+                        <option>Buyer</option>
+                        <option>Seller</option>
+                        <option>Agent</option>
+                    </select>
+                </div>
+                <AuthInput id="email" name="email" type="email" label="Email *" placeholder="Enter your email address" autoComplete="email" />
+                <AuthInput
+                    id="passwordReg"
+                    name="passwordReg"
+                    type="password"
+                    label="Password *"
+                    placeholder="Enter your password"
+                    autoComplete="new-password"
+                />
+                <AuthInput
+                    id="passwordConfirm"
+                    name="passwordConfirm"
+                    type="password"
+                    label="Confirm Password *"
+                    placeholder="Re-enter your password"
+                    autoComplete="new-password"
+                />
+                <div className="space-y-1.5">
+                    <label className="inline-flex items-center gap-2 text-sm text-[var(--color-foreground)]">
+                        <span>Verification Code *</span>
+                    </label>
+                    <div className="rounded-md border border-[var(--color-border)] bg-[var(--color-muted)] h-24 flex items-center justify-center select-none text-4xl tracking-widest text-[var(--color-muted-foreground)]">
+                        7 0 6 D E
+                    </div>
+                    <div className="relative">
+                        <input
+                            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
+                            placeholder="Enter the code above"
+                        />
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70" aria-hidden>
+                            ↻
+                        </span>
+                    </div>
+                    <p className="text-[12px] text-[var(--color-muted-foreground)]">Enter the code shown above to verify you&apos;re human</p>
+                </div>
+            </div>
+            <button
+                type="submit"
+                className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] hover:bg-[color-mix(in_oklab,_var(--color-primary)_92%,_black)]"
+            >
+                Create Account
+            </button>
+            <p className="text-center text-[12px] text-[var(--color-muted-foreground)]">
+                By creating an account, you agree to our{" "}
+                <a href="#" className="underline">
+                    Terms of Service
+                </a>{" "}
+                and{" "}
+                <a href="#" className="underline">
+                    Privacy Policy
+                </a>
+                .
+            </p>
+        </form>
+    );
 };
