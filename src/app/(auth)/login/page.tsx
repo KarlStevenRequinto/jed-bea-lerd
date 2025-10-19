@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import countryHomes from "@/assets/icons/images/country-homes.png";
+import { countryHomes, eye, tesla, protect } from "@/assets/icons/images";
 import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ const LoginPage = () => {
                             <div className="h-10 w-10 rounded-md bg-neutral-200" aria-hidden />
                             <div className="h-6 w-16 rounded bg-neutral-200" aria-hidden />
                         </div>
-                        <p className="mt-2 text-sm text-[var(--color-foreground)]">Your trusted platform for vehicles and properties.</p>
+                        <p className="mt-2 text-normal text-center-flex text-[15px]">Your trusted platform for vehicles and properties.</p>
                     </div>
 
                     {/* Hero image */}
@@ -36,16 +36,8 @@ const LoginPage = () => {
 
                     {/* Features */}
                     <div className="mt-2 grid grid-cols-3 gap-8">
-                        <IconBadge
-                            icon={<Image src="/images/tesla.png" alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />}
-                            label="Quality Vehicles"
-                        />
-                        <IconBadge
-                            icon={
-                                <Image src="/images/protect.png" alt="Protect" width={24} height={24} className="h-6 w-6 object-contain" priority />
-                            }
-                            label="Secure and Trusted"
-                        />
+                        <IconBadge icon={<Image src={tesla} alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />} label="Quality Vehicles" />
+                        <IconBadge icon={<Image src={protect} alt="Protect" width={24} height={24} className="h-6 w-6 object-contain" priority />} label="Secure and Trusted" />
                         <IconBadge
                             icon={<Image src={countryHomes} alt="Homes" width={24} height={24} className="h-6 w-6 object-contain" priority />}
                             label="Quality Properties"
@@ -58,32 +50,49 @@ const LoginPage = () => {
             <section className="flex min-h-screen w-full flex-col items-center justify-center bg-[var(--color-bg)] px-6 py-8 lg:px-12">
                 {/* Tabs */}
                 <div className="w-full max-w-md mt-0">
-                    <div className="relative h-9 w-full rounded-full border border-[var(--color-border)] overflow-hidden">
+                    <div className="relative h-[35px] w-full rounded-[10px] bg-black">
+                        {/* Sliding highlight */}
                         <div
-                            className="absolute top-0 h-full w-1/2 rounded-full bg-[var(--color-primary)] transition-transform duration-300 ease-out"
-                            style={{ transform: tab === "login" ? "translateX(0%)" : "translateX(100%)" }}
+                            className="absolute top-1/2 h-[29px] w-[calc(50%-5px)] -translate-y-1/2 rounded-[7px] bg-white transition-transform duration-300 ease-out"
+                            style={{ transform: tab === "login" ? "translateX(3px)" : "translateX(calc(100% + 7px))" }}
+                            aria-hidden
                         />
-                        <div className="relative z-10 grid h-full grid-cols-2 text-xs font-medium tracking-wide">
+                        {/* Single layer labels with dynamic color */}
+                        <div className="relative z-10 grid h-full grid-cols-2 font-semibold tracking-wide select-none">
                             <button
                                 type="button"
                                 onClick={() => setTab("login")}
-                                className={`px-3 ${tab === "login" ? "text-[var(--color-primary-foreground)]" : "text-[var(--color-fg)]"}`}
+                                className="relative flex items-center justify-center px-3 h-full cursor-pointer"
+                                aria-pressed={tab === "login"}
                             >
-                                LOG IN
+                                <span className={`text-normal text-center-flex text-[15px] ${tab === "login" ? "text-black" : "text-white"}`}>
+                                    LOG IN
+                                </span>
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setTab("register")}
-                                className={`px-3 ${tab === "register" ? "text-[var(--color-primary-foreground)]" : "text-[var(--color-fg)]"}`}
+                                className="relative flex items-center justify-center px-3 h-full cursor-pointer"
+                                aria-pressed={tab === "register"}
                             >
-                                REGISTER
+                                <span className={`text-normal text-center-flex text-[15px] ${tab === "register" ? "text-black" : "text-white"}`}>
+                                    REGISTER
+                                </span>
                             </button>
                         </div>
                     </div>
                 </div>
-
+                {/* Spacer between tabs and welcome */}
+                <div className="h-[42px]" aria-hidden />
                 {/* Content */}
-                <div className="w-full max-w-md mt-6">{tab === "login" ? <LoginFormUI /> : <RegisterPlaceholder />}</div>
+                <div className="relative w-full max-w-md mt-6 min-h-[540px]">
+                    <div className={tab === "login" ? "absolute inset-0 opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}>
+                        <LoginFormUI />
+                    </div>
+                    <div className={tab === "register" ? "absolute inset-0 opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}>
+                        <RegisterPlaceholder />
+                    </div>
+                </div>
             </section>
         </div>
     );
@@ -102,61 +111,52 @@ const LoginFormUI = () => {
     const dispatch = useAppDispatch();
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-2xl font-semibold text-[var(--color-fg)]">Welcome Back!</h1>
-                <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">Sign in to your account to continue</p>
+            <div className="[&>*+*]:mt-[13px]">
+                <h1 className="text-normal text-2xl">Welcome Back!</h1>
+                <p className="text-light text-[16px]">Sign in to your account to continue</p>
             </div>
 
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                {/* Email / Username */}
+                {/* Email */}
                 <div className="space-y-1.5">
-                    <label htmlFor="identifier" className="text-sm font-medium text-[var(--color-fg)]">
-                        Email / Username
+                    <label htmlFor="identifier" className="text-normal text-center-flex text-sm">
+                        Email
                     </label>
                     <input
                         id="identifier"
                         type="text"
-                        placeholder="Enter your email or username"
-                        className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
+                        placeholder="Enter your email"
+                        className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] placeholder:text-normal placeholder:text-center-flex shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
                         aria-describedby="identifier-help"
                     />
                 </div>
 
                 {/* Password */}
                 <div className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                        <label htmlFor="password" className="text-sm font-medium text-[var(--color-fg)]">
-                            Password
-                        </label>
-                        <button type="button" className="text-xs text-[var(--color-muted-foreground)] hover:text-[var(--color-fg)]">
-                            Forgot password?
-                        </button>
-                    </div>
+                    <label htmlFor="password" className="text-normal text-center-flex text-sm">
+                        Password
+                    </label>
+
                     <div className="relative">
                         <input
                             id="password"
                             type="password"
                             placeholder="Enter your password"
-                            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
+                            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] placeholder:text-normal placeholder:text-center-flex shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
                         />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-[var(--color-muted-foreground)]" aria-hidden>
-                            {/* eye icon placeholder */}
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                                <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
-                            </svg>
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-3" aria-hidden>
+                            <Image src={eye} alt="Toggle password visibility" width={20} height={20} className="h-5 w-5 object-contain opacity-70" />
                         </span>
                     </div>
                 </div>
 
                 {/* Remember me */}
-                <div className="flex items-center justify-between">
-                    <label className="inline-flex items-center gap-2 text-sm text-[var(--color-foreground)]">
-                        <input
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
-                        />
+                <div className="flex items-center justify-between text-light text-sm">
+                    <label className="inline-flex items-center gap-2 text-[var(--color-foreground)]">
+                        <input type="checkbox" className="h-4 w-4 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]" />
                         Remember Me
                     </label>
+                    <span>Forgot password?</span>
                 </div>
 
                 {/* Submit */}
@@ -166,7 +166,7 @@ const LoginFormUI = () => {
                         dispatch(login());
                         router.push("/");
                     }}
-                    className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] hover:bg-[color-mix(in_oklab,_var(--color-primary)_92%,_black)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
+                    className="w-full rounded-md bg-[var(--color-neutral-300)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] hover:bg-[color-mix(in_oklab,_var(--color-neutral-400)_92%,_black)] focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)] cursor-pointer"
                 >
                     Log In
                 </button>
@@ -184,14 +184,14 @@ const LoginFormUI = () => {
             <div className="flex items-center gap-4">
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)]"
+                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
                 >
                     <Image src="/images/google.png" alt="Google" width={20} height={20} className="h-5 w-5 object-contain" priority />
                     Google
                 </button>
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)]"
+                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
                 >
                     <Image src="/images/facebook.png" alt="Facebook" width={20} height={20} className="h-5 w-5 object-contain" priority />
                     Facebook
@@ -200,7 +200,7 @@ const LoginFormUI = () => {
 
             <p className="text-center text-sm text-[var(--color-muted-foreground)]">
                 Don&apos;t have an account?{" "}
-                <a className="font-medium text-[var(--color-fg)] hover:underline" href="#">
+                <a className="font-medium text-[var(--color-fg)] hover:underline cursor-pointer" href="#">
                     Register now
                 </a>
             </p>
