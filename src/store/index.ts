@@ -9,7 +9,11 @@ const loadPreloadedState = () => {
     if (typeof window === "undefined") return undefined;
     try {
         const v = window.localStorage.getItem("auth.loggedIn");
-        if (v === null) return undefined;
+        // If missing, seed to true so first load shows nav and remains consistent on reloads
+        if (v === null) {
+            window.localStorage.setItem("auth.loggedIn", "true");
+            return { auth: { loggedIn: true } } as const;
+        }
         return { auth: { loggedIn: v === "true" } } as const;
     } catch {
         return undefined;
