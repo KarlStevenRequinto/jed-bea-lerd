@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { countryHomes, eye, tesla, protect } from "@/assets/icons/images";
+import { countryHomes, eye, teslaBlue, protect } from "@/assets/icons/images";
 import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
 
@@ -10,8 +10,15 @@ const LoginPage = () => {
 
     return (
         <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2" role="main">
-            {/* Left panel fills full left column with grey */}
-            <aside className="hidden lg:flex min-h-screen w-full bg-[var(--color-muted)]" aria-label="Promotional content">
+            {/* Left panel with branded gradient background */}
+            <aside
+                className="hidden lg:flex min-h-screen w-full"
+                style={{
+                    /* Left-to-right gradient: blue on the left fading to white on the right */
+                    background: `linear-gradient(90deg, var(--gradient-start) 0%, var(--color-bg) 80%)`,
+                }}
+                aria-label="Promotional content"
+            >
                 <div className="mx-auto w-full max-w-[720px] p-10 flex flex-col items-center justify-center gap-6">
                     {/* Placeholder logo */}
                     <div className="flex flex-col items-center mt-6">
@@ -37,7 +44,7 @@ const LoginPage = () => {
                     {/* Features */}
                     <div className="mt-2 grid grid-cols-3 gap-8">
                         <IconBadge
-                            icon={<Image src={tesla} alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />}
+                            icon={<Image src={teslaBlue} alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />}
                             label="Quality Vehicles"
                         />
                         <IconBadge
@@ -54,12 +61,17 @@ const LoginPage = () => {
 
             {/* Right panel */}
             <section
-                className="flex min-h-screen w-full flex-col items-center justify-center bg-[var(--color-bg)] px-6 py-8 lg:px-12"
+                className="flex min-h-screen w-full flex-col items-center justify-center bg-[var(--color-primary-foreground)] px-6 py-8 lg:px-12"
                 aria-labelledby="auth-tabs"
             >
                 {/* Tabs */}
                 <div className="w-full max-w-md mt-0">
-                    <div className="relative h-[35px] w-full rounded-[10px] bg-black" role="tablist" aria-label="Authentication tabs" id="auth-tabs">
+                    <div
+                        className="relative h-[35px] w-full rounded-[10px] bg-[var(--color-surface-muted)]"
+                        role="tablist"
+                        aria-label="Authentication tabs"
+                        id="auth-tabs"
+                    >
                         {/* Sliding highlight */}
                         <div
                             className="absolute top-1/2 h-[29px] w-[calc(50%-5px)] -translate-y-1/2 rounded-[7px] bg-white transition-transform duration-300 ease-out"
@@ -77,9 +89,7 @@ const LoginPage = () => {
                                 aria-controls="panel-login"
                                 aria-selected={tab === "login"}
                             >
-                                <span className={`text-normal text-center-flex text-[15px] ${tab === "login" ? "text-black" : "text-white"}`}>
-                                    LOG IN
-                                </span>
+                                <span className={`text-normal text-center-flex text-[15px] `}>LOG IN</span>
                             </button>
                             <button
                                 type="button"
@@ -90,9 +100,7 @@ const LoginPage = () => {
                                 aria-controls="panel-register"
                                 aria-selected={tab === "register"}
                             >
-                                <span className={`text-normal text-center-flex text-[15px] ${tab === "register" ? "text-black" : "text-white"}`}>
-                                    REGISTER
-                                </span>
+                                <span className={`text-normal text-center-flex text-[15px]`}>REGISTER</span>
                             </button>
                         </div>
                     </div>
@@ -180,7 +188,7 @@ const LoginFormUI = () => {
                         dispatch(login());
                         router.push("/");
                     }}
-                    className="w-full rounded-md bg-[var(--color-neutral-300)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] hover:bg-[color-mix(in_oklab,_var(--color-neutral-400)_92%,_black)] focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)] cursor-pointer"
+                    className="w-full rounded-md bg-[var(--color-brand)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)] cursor-pointer"
                 >
                     Log In
                 </button>
@@ -191,21 +199,23 @@ const LoginFormUI = () => {
                 <div className="absolute inset-0 flex items-center">
                     <div className="h-px w-full bg-[var(--color-border)]" />
                 </div>
-                <div className="relative mx-auto w-fit bg-[var(--color-bg)] px-3 text-xs text-[var(--color-muted-foreground)]">Or continue with</div>
+                <div className="relative mx-auto w-fit bg-[var(--color-primary-foreground)] px-3 text-xs text-[var(--color-muted-foreground)]">
+                    Or continue with
+                </div>
             </div>
 
             {/* Social buttons */}
             <div className="flex items-center gap-4">
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
+                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
                 >
                     <Image src="/images/google.png" alt="Google" width={20} height={20} className="h-5 w-5 object-contain" priority />
                     Google
                 </button>
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
+                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
                 >
                     <Image src="/images/facebook.png" alt="Facebook" width={20} height={20} className="h-5 w-5 object-contain" priority />
                     Facebook
@@ -229,7 +239,7 @@ const RegisterFormUI = () => {
             <div className="[&>*+*]:mt-3">
                 <div className="space-y-1.5">
                     <label className="text-normal text-center-flex text-sm">I am a *</label>
-                    <select className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-fg)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]">
+                    <select className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-3 py-2 text-sm text-[var(--color-fg)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]">
                         <option value="">Select your role</option>
                         <option>Buyer</option>
                         <option>Seller</option>
@@ -262,7 +272,7 @@ const RegisterFormUI = () => {
                     </div>
                     <div className="relative">
                         <input
-                            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
+                            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
                             placeholder="Enter the code above"
                         />
                         <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70" aria-hidden>

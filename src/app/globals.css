@@ -16,6 +16,20 @@
     /* Additional neutrals */
     --color-neutral-300: #d9d9d9;
     --color-neutral-400: #e0e0e0;
+
+    /* Brand palette */
+    --color-brand: #155DFD; /* primary brand blue */
+    --color-brand-dark: #003AB0; /* deep brand blue */
+    --color-brand-medium: #0A4CD0; /* mid brand blue */
+
+    /* Success palette */
+    --color-success: #03A444; /* primary success */
+    --color-success-dark: #00733D; /* strong success */
+    --color-success-muted: #DBFFEA; /* success surface */
+
+    /* Extended neutrals / surfaces */
+    --color-surface-muted: #ECEBF0; /* soft neutral surface */
+    --color-neutral-450: #A7A2A2; /* subtle text/lines */
 }
 
 @theme inline {
@@ -34,6 +48,14 @@
     --font-sans: var(--font-sans);
     --color-neutral-300: var(--color-neutral-300);
     --color-neutral-400: var(--color-neutral-400);
+    --color-neutral-450: var(--color-neutral-450);
+    --color-brand: var(--color-brand);
+    --color-brand-dark: var(--color-brand-dark);
+    --color-brand-medium: var(--color-brand-medium);
+    --color-success: var(--color-success);
+    --color-success-dark: var(--color-success-dark);
+    --color-success-muted: var(--color-success-muted);
+    --color-surface-muted: var(--color-surface-muted);
 }
 
 /* Dark theme is applied by toggling .theme-dark on <html> */

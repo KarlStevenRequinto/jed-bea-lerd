@@ -17,7 +17,7 @@ const AuthInput: React.FC<Props> = ({ label, id, rightIcon, className = "", ...r
             <div className="relative">
                 <input
                     id={id}
-                    className={`w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] placeholder:text-normal placeholder:text-center-flex shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)] ${className}`}
+                    className={`w-full rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] placeholder:text-normal placeholder:text-center-flex shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)] ${className}`}
                     {...rest}
                 />
                 {rightIcon ? (

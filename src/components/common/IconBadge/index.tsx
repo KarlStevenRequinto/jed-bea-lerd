@@ -14,7 +14,8 @@ export type IconBadgeProps = {
 const IconBadge = ({ icon, label, className, iconWrapperClassName, labelClassName }: IconBadgeProps) => {
     const vm = useIconBadgeViewModel({ label });
     const container = className ?? "flex flex-col items-center gap-3";
-    const iconWrapper = iconWrapperClassName ?? "flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-bg)] shadow-md";
+    const iconWrapper =
+        iconWrapperClassName ?? "flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary-foreground)] shadow-md";
     const labelStyle = labelClassName ?? "mt-2 text-sm text-[var(--color-foreground)]";
     return (
         <div className={container} data-testid={vm.testId}>
@@ -29,7 +30,3 @@ const IconBadge = ({ icon, label, className, iconWrapperClassName, labelClassNam
 };
 
 export default IconBadge;
-
-
-
-
