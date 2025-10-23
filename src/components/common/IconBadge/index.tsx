@@ -13,14 +13,14 @@ export type IconBadgeProps = {
 
 const IconBadge = ({ icon, label, className, iconWrapperClassName, labelClassName }: IconBadgeProps) => {
     const vm = useIconBadgeViewModel({ label });
-    const container = className ?? "flex flex-col items-center gap-3";
+    const container = className ?? "flex flex-col items-center gap-3 animate-fade-in-up";
     const iconWrapper =
-        iconWrapperClassName ?? "flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary-foreground)] shadow-md";
-    const labelStyle = labelClassName ?? "mt-2 text-sm text-[var(--color-foreground)]";
+        iconWrapperClassName ?? "flex h-12 w-12 items-center justify-center rounded-full bg-primary-foreground shadow-md";
+    const labelStyle = labelClassName ?? "mt-2 text-sm text-foreground";
     return (
         <div className={container} data-testid={vm.testId}>
             <div className={iconWrapper}>
-                <span className="text-[var(--color-fg)]" aria-hidden>
+                <span className="text-foreground" aria-hidden>
                     {icon}
                 </span>
             </div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { countryHomes, eye, teslaBlue, protect } from "@/assets/icons/images";
+import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
 
@@ -14,23 +15,23 @@ const LoginPage = () => {
             <aside
                 className="hidden lg:flex min-h-screen w-full"
                 style={{
-                    /* Left-to-right gradient: blue on the left fading to white on the right */
-                    background: `linear-gradient(90deg, var(--gradient-start) 0%, var(--color-bg) 80%)`,
+                    background: "linear-gradient(90deg, var(--color-brand-light) 0%, var(--color-white) 90%)",
                 }}
                 aria-label="Promotional content"
             >
                 <div className="mx-auto w-full max-w-[720px] p-10 flex flex-col items-center justify-center gap-6">
-                    {/* Placeholder logo */}
-                    <div className="flex flex-col items-center mt-6">
-                        <div className="flex items-center gap-3 text-neutral-800">
-                            <div className="h-10 w-10 rounded-md bg-neutral-200" aria-hidden />
-                            <div className="h-6 w-16 rounded bg-neutral-200" aria-hidden />
+                    {/* Logo */}
+                    <div className="flex flex-col items-center mt-6 gap-1">
+                        <div className="animate-fade-in-up" style={{ animationDelay: "0s" }}>
+                            <Image src={homeNDriveLogo} alt="HomeNDrive" width={200} height={80} className="object-contain" priority />
                         </div>
-                        <p className="mt-2 text-normal text-center-flex text-[15px]">Your trusted platform for vehicles and properties.</p>
+                        <p className="text-normal text-center-flex text-[15px] animate-fade-in-up -mt-6" style={{ animationDelay: "0.1s" }}>
+                            Your trusted platform for vehicles and properties.
+                        </p>
                     </div>
 
                     {/* Hero image */}
-                    <div className="w-full max-w-[640px] overflow-hidden" aria-hidden>
+                    <div className="w-full max-w-[640px] overflow-hidden animate-fade-in-up" style={{ animationDelay: "0.2s" }} aria-hidden>
                         <Image
                             src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80"
                             alt="Property with vehicle"
@@ -43,31 +44,37 @@ const LoginPage = () => {
 
                     {/* Features */}
                     <div className="mt-2 grid grid-cols-3 gap-8">
-                        <IconBadge
-                            icon={<Image src={teslaBlue} alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />}
-                            label="Quality Vehicles"
-                        />
-                        <IconBadge
-                            icon={<Image src={protect} alt="Protect" width={24} height={24} className="h-6 w-6 object-contain" priority />}
-                            label="Secure and Trusted"
-                        />
-                        <IconBadge
-                            icon={<Image src={countryHomes} alt="Homes" width={24} height={24} className="h-6 w-6 object-contain" priority />}
-                            label="Quality Properties"
-                        />
+                        <div style={{ animationDelay: "0.1s" }}>
+                            <IconBadge
+                                icon={<Image src={teslaBlue} alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />}
+                                label="Quality Vehicles"
+                            />
+                        </div>
+                        <div style={{ animationDelay: "0.2s" }}>
+                            <IconBadge
+                                icon={<Image src={protect} alt="Protect" width={24} height={24} className="h-6 w-6 object-contain" priority />}
+                                label="Secure and Trusted"
+                            />
+                        </div>
+                        <div style={{ animationDelay: "0.3s" }}>
+                            <IconBadge
+                                icon={<Image src={countryHomes} alt="Homes" width={24} height={24} className="h-6 w-6 object-contain" priority />}
+                                label="Quality Properties"
+                            />
+                        </div>
                     </div>
                 </div>
             </aside>
 
             {/* Right panel */}
             <section
-                className="flex min-h-screen w-full flex-col items-center justify-center bg-[var(--color-primary-foreground)] px-6 py-8 lg:px-12"
+                className="flex min-h-screen w-full flex-col items-center justify-center bg-primary-foreground px-6 py-8 lg:px-12"
                 aria-labelledby="auth-tabs"
             >
                 {/* Tabs */}
                 <div className="w-full max-w-md mt-0">
                     <div
-                        className="relative h-[35px] w-full rounded-[10px] bg-[var(--color-surface-muted)]"
+                        className="relative h-[35px] w-full rounded-[10px] bg-surface-muted"
                         role="tablist"
                         aria-label="Authentication tabs"
                         id="auth-tabs"
@@ -168,12 +175,8 @@ const LoginFormUI = () => {
 
                 {/* Remember me */}
                 <div className="flex items-center justify-between text-light text-sm">
-                    <label className="inline-flex items-center gap-2 text-[var(--color-foreground)]">
-                        <input
-                            type="checkbox"
-                            className="h-4 w-4 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
-                            aria-label="Remember me"
-                        />
+                    <label className="inline-flex items-center gap-2 text-foreground">
+                        <input type="checkbox" className="h-4 w-4 focus:ring-primary/20" aria-label="Remember me" />
                         Remember Me
                     </label>
                     <a href="#" className="hover:underline cursor-pointer" aria-label="Forgot password">
@@ -188,7 +191,7 @@ const LoginFormUI = () => {
                         dispatch(login());
                         router.push("/");
                     }}
-                    className="w-full rounded-md bg-[var(--color-brand)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)] cursor-pointer"
+                    className="w-full rounded-md bg-brand px-4 py-2 text-sm font-medium text-primary-foreground focus:ring-primary/20 cursor-pointer"
                 >
                     Log In
                 </button>
@@ -197,34 +200,32 @@ const LoginFormUI = () => {
             {/* Divider */}
             <div className="relative py-2">
                 <div className="absolute inset-0 flex items-center">
-                    <div className="h-px w-full bg-[var(--color-border)]" />
+                    <div className="h-px w-full bg-border" />
                 </div>
-                <div className="relative mx-auto w-fit bg-[var(--color-primary-foreground)] px-3 text-xs text-[var(--color-muted-foreground)]">
-                    Or continue with
-                </div>
+                <div className="relative mx-auto w-fit bg-primary-foreground px-3 text-xs text-muted-foreground">Or continue with</div>
             </div>
 
             {/* Social buttons */}
             <div className="flex items-center gap-4">
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
+                    className="flex w-full items-center justify-center gap-2 rounded-[10px] border-1 border-success bg-success-muted px-4 py-2.5 text-normal text-sm text-success-dark hover:opacity-90 cursor-pointer"
                 >
                     <Image src="/images/google.png" alt="Google" width={20} height={20} className="h-5 w-5 object-contain" priority />
                     Google
                 </button>
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-4 py-2 text-sm text-[var(--color-fg)] shadow-sm hover:bg-[var(--color-muted)] cursor-pointer"
+                    className="flex w-full items-center justify-center gap-2 rounded-[10px] border-1 border-brand bg-brand-muted px-4 py-2.5 text-normal text-sm text-brand hover:opacity-90 cursor-pointer"
                 >
                     <Image src="/images/facebook.png" alt="Facebook" width={20} height={20} className="h-5 w-5 object-contain" priority />
                     Facebook
                 </button>
             </div>
 
-            <p className="text-center text-sm text-[var(--color-muted-foreground)]">
+            <p className="text-center text-sm text-muted-foreground">
                 Don&apos;t have an account?{" "}
-                <a className="font-medium text-[var(--color-fg)] hover:underline cursor-pointer" href="#">
+                <a className="font-medium text-brand-medium hover:underline cursor-pointer" href="#">
                     Register now
                 </a>
             </p>
@@ -239,7 +240,7 @@ const RegisterFormUI = () => {
             <div className="[&>*+*]:mt-3">
                 <div className="space-y-1.5">
                     <label className="text-normal text-center-flex text-sm">I am a *</label>
-                    <select className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-3 py-2 text-sm text-[var(--color-fg)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]">
+                    <select className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                         <option value="">Select your role</option>
                         <option>Buyer</option>
                         <option>Seller</option>
@@ -264,31 +265,28 @@ const RegisterFormUI = () => {
                     autoComplete="new-password"
                 />
                 <div className="space-y-1.5">
-                    <label className="inline-flex items-center gap-2 text-sm text-[var(--color-foreground)]">
+                    <label className="inline-flex items-center gap-2 text-sm text-foreground">
                         <span>Verification Code *</span>
                     </label>
-                    <div className="rounded-md border border-[var(--color-border)] bg-[var(--color-muted)] h-24 flex items-center justify-center select-none text-4xl tracking-widest text-[var(--color-muted-foreground)]">
+                    <div className="rounded-md border border-border bg-muted h-24 flex items-center justify-center select-none text-4xl tracking-widest text-muted-foreground">
                         7 0 6 D E
                     </div>
                     <div className="relative">
                         <input
-                            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-primary-foreground)] px-3 py-2 pr-10 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-muted-foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab, var(--color-primary) 20%, transparent)]"
+                            className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
                             placeholder="Enter the code above"
                         />
                         <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70" aria-hidden>
                             ↻
                         </span>
                     </div>
-                    <p className="text-[12px] text-[var(--color-muted-foreground)]">Enter the code shown above to verify you&apos;re human</p>
+                    <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
                 </div>
             </div>
-            <button
-                type="submit"
-                className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] hover:bg-[color-mix(in_oklab,_var(--color-primary)_92%,_black)]"
-            >
+            <button type="submit" className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/92">
                 Create Account
             </button>
-            <p className="text-center text-[12px] text-[var(--color-muted-foreground)]">
+            <p className="text-center text-[12px] text-muted-foreground">
                 By creating an account, you agree to our{" "}
                 <a href="#" className="underline">
                     Terms of Service

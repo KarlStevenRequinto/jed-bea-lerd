@@ -1,35 +1,54 @@
 @import "tailwindcss";
 
 :root {
-    /* Base (light) theme tokens */
-    --color-bg: #ffffff;
-    --color-fg: #171717;
-    --color-border: #e5e5e5; /* neutral-200 */
-    --color-muted: #f5f5f5; /* neutral-100 */
-    --color-muted-foreground: #737373; /* neutral-500 */
-    --color-primary: #171717; /* neutral-900 */
-    --color-primary-foreground: #ffffff;
-    --color-secondary: #262626; /* neutral-800 */
-    --color-secondary-foreground: #ffffff;
-    --color-accent: #111827; /* slate-900 */
-    --color-accent-foreground: #ffffff;
-    /* Additional neutrals */
-    --color-neutral-300: #d9d9d9;
-    --color-neutral-400: #e0e0e0;
+    /* Base colors */
+    --color-white: #ffffff;
+    --color-black: #0a0a0a;
+
+    /* Grays/Neutrals */
+    --color-gray-50: #fafafa;
+    --color-gray-100: #f5f5f5;
+    --color-gray-200: #e5e5e5;
+    --color-gray-300: #d9d9d9;
+    --color-gray-400: #e0e0e0;
+    --color-gray-450: #A7A2A2;
+    --color-gray-500: #737373;
+    --color-gray-600: #a3a3a3;
+    --color-gray-800: #262626;
+    --color-gray-900: #171717;
+
+    /* Slate */
+    --color-slate-50: #f9fafb;
+    --color-slate-800: #1f2937;
+    --color-slate-900: #111827;
 
     /* Brand palette */
-    --color-brand: #155DFD; /* primary brand blue */
-    --color-brand-dark: #003AB0; /* deep brand blue */
-    --color-brand-medium: #0A4CD0; /* mid brand blue */
+    --color-brand: #155DFD;
+    --color-brand-dark: #003AB0;
+    --color-brand-medium: #0A4CD0;
+    --color-brand-muted: #EBF2FF;
+    --color-brand-light: #B5E1FF;
 
     /* Success palette */
-    --color-success: #03A444; /* primary success */
-    --color-success-dark: #00733D; /* strong success */
-    --color-success-muted: #DBFFEA; /* success surface */
+    --color-success: #03A444;
+    --color-success-dark: #00733D;
+    --color-success-muted: #DBFFEA;
 
-    /* Extended neutrals / surfaces */
-    --color-surface-muted: #ECEBF0; /* soft neutral surface */
-    --color-neutral-450: #A7A2A2; /* subtle text/lines */
+    /* Surface */
+    --color-surface-muted: #ECEBF0;
+
+    /* Semantic tokens (light theme) */
+    --color-bg: var(--color-white);
+    --color-fg: var(--color-gray-900);
+    --color-border: var(--color-gray-200);
+    --color-muted: var(--color-gray-100);
+    --color-muted-foreground: var(--color-gray-500);
+    --color-primary: var(--color-gray-900);
+    --color-primary-foreground: var(--color-white);
+    --color-secondary: var(--color-gray-800);
+    --color-secondary-foreground: var(--color-white);
+    --color-accent: var(--color-slate-900);
+    --color-accent-foreground: var(--color-white);
 }
 
 @theme inline {
@@ -46,12 +65,26 @@
     --color-accent: var(--color-accent);
     --color-accent-foreground: var(--color-accent-foreground);
     --font-sans: var(--font-sans);
-    --color-neutral-300: var(--color-neutral-300);
-    --color-neutral-400: var(--color-neutral-400);
-    --color-neutral-450: var(--color-neutral-450);
+    --color-white: var(--color-white);
+    --color-black: var(--color-black);
+    --color-gray-50: var(--color-gray-50);
+    --color-gray-100: var(--color-gray-100);
+    --color-gray-200: var(--color-gray-200);
+    --color-gray-300: var(--color-gray-300);
+    --color-gray-400: var(--color-gray-400);
+    --color-gray-450: var(--color-gray-450);
+    --color-gray-500: var(--color-gray-500);
+    --color-gray-600: var(--color-gray-600);
+    --color-gray-800: var(--color-gray-800);
+    --color-gray-900: var(--color-gray-900);
+    --color-slate-50: var(--color-slate-50);
+    --color-slate-800: var(--color-slate-800);
+    --color-slate-900: var(--color-slate-900);
     --color-brand: var(--color-brand);
     --color-brand-dark: var(--color-brand-dark);
     --color-brand-medium: var(--color-brand-medium);
+    --color-brand-muted: var(--color-brand-muted);
+    --color-brand-light: var(--color-brand-light);
     --color-success: var(--color-success);
     --color-success-dark: var(--color-success-dark);
     --color-success-muted: var(--color-success-muted);
@@ -60,17 +93,17 @@
 
 /* Dark theme is applied by toggling .theme-dark on <html> */
 html.theme-dark {
-    --color-bg: #0a0a0a;
+    --color-bg: var(--color-black);
     --color-fg: #ededed;
-    --color-border: #262626; /* neutral-800 */
-    --color-muted: #171717; /* neutral-900 */
-    --color-muted-foreground: #a3a3a3; /* neutral-400 */
-    --color-primary: #fafafa; /* neutral-50 */
-    --color-primary-foreground: #0a0a0a;
-    --color-secondary: #e5e5e5; /* neutral-200 */
-    --color-secondary-foreground: #0a0a0a;
-    --color-accent: #1f2937; /* slate-800 */
-    --color-accent-foreground: #f9fafb; /* slate-50 */
+    --color-border: var(--color-gray-800);
+    --color-muted: var(--color-gray-900);
+    --color-muted-foreground: var(--color-gray-600);
+    --color-primary: var(--color-gray-50);
+    --color-primary-foreground: var(--color-black);
+    --color-secondary: var(--color-gray-200);
+    --color-secondary-foreground: var(--color-black);
+    --color-accent: var(--color-slate-800);
+    --color-accent-foreground: var(--color-slate-50);
 }
 
 body {
@@ -98,4 +131,21 @@ body {
 .text-light {
     font-weight: 300;
     font-style: normal;
+}
+
+/* Entrance animation */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    opacity: 0;
+    animation: fade-in-up 0.6s ease-out forwards;
 }
