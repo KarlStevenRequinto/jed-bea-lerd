@@ -28,6 +28,7 @@
     --color-brand-medium: #0A4CD0;
     --color-brand-muted: #EBF2FF;
     --color-brand-light: #B5E1FF;
+    --color-link: #135FF9;
 
     /* Success palette */
     --color-success: #03A444;
@@ -89,6 +90,7 @@
     --color-success-dark: var(--color-success-dark);
     --color-success-muted: var(--color-success-muted);
     --color-surface-muted: var(--color-surface-muted);
+    --color-link: var(--color-link);
 }
 
 /* Dark theme is applied by toggling .theme-dark on <html> */

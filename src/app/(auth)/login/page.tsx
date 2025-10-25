@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { shield, help, refresh } from "@/assets/icons/images";
 import { countryHomes, eye, teslaBlue, protect } from "@/assets/icons/images";
 import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import IconBadge from "@/components/common/IconBadge";
@@ -8,6 +9,7 @@ import { useState } from "react";
 
 const LoginPage = () => {
     const [tab, setTab] = useState<"login" | "register">("login");
+    const [animationKey] = useState(() => Date.now());
 
     return (
         <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2" role="main">
@@ -19,7 +21,7 @@ const LoginPage = () => {
                 }}
                 aria-label="Promotional content"
             >
-                <div className="mx-auto w-full max-w-[720px] p-10 flex flex-col items-center justify-center gap-6">
+                <div key={animationKey} className="mx-auto w-full max-w-[720px] p-10 flex flex-col items-center justify-center gap-6">
                     {/* Logo */}
                     <div className="flex flex-col items-center mt-6 gap-1">
                         <div className="animate-fade-in-up" style={{ animationDelay: "0s" }}>
@@ -148,6 +150,7 @@ import { useAppDispatch } from "@/store";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import { login } from "@/store/authSlice";
+import { RefreshIcon } from "@/assets/icons/images/refresh";
 
 const LoginFormUI = () => {
     const router = useRouter();
@@ -179,7 +182,7 @@ const LoginFormUI = () => {
                         <input type="checkbox" className="h-4 w-4 focus:ring-primary/20" aria-label="Remember me" />
                         Remember Me
                     </label>
-                    <a href="#" className="hover:underline cursor-pointer" aria-label="Forgot password">
+                    <a href="#" className="hover:underline cursor-pointer" style={{ color: "var(--color-link)" }} aria-label="Forgot password">
                         Forgot password?
                     </a>
                 </div>
@@ -238,24 +241,21 @@ const RegisterFormUI = () => {
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
             <AuthSectionHeader title="Create an account" subtitle="Join HomeNDrive today" className="mb-2" />
             <div className="[&>*+*]:mt-3">
-                <div className="space-y-1.5">
-                    <label className="text-normal text-center-flex text-sm">I am a *</label>
-                    <select className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
-                        <option value="">Select your role</option>
-                        <option>Buyer</option>
-                        <option>Seller</option>
-                        <option>Agent</option>
-                    </select>
-                </div>
                 <AuthInput id="email" name="email" type="email" label="Email *" placeholder="Enter your email address" autoComplete="email" />
-                <AuthInput
-                    id="passwordReg"
-                    name="passwordReg"
-                    type="password"
-                    label="Password *"
-                    placeholder="Enter your password"
-                    autoComplete="new-password"
-                />
+                <div className="space-y-1.5">
+                    <label htmlFor="passwordReg" className="inline-flex items-center gap-2 text-sm text-foreground">
+                        <span>Password *</span>
+                        <Image src={help} alt="help" width={15} height={15} className="h-4 w-4" />
+                    </label>
+                    <input
+                        id="passwordReg"
+                        name="passwordReg"
+                        type="password"
+                        className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                        placeholder="Enter your password"
+                        autoComplete="new-password"
+                    />
+                </div>
                 <AuthInput
                     id="passwordConfirm"
                     name="passwordConfirm"
@@ -266,6 +266,7 @@ const RegisterFormUI = () => {
                 />
                 <div className="space-y-1.5">
                     <label className="inline-flex items-center gap-2 text-sm text-foreground">
+                        <Image src={shield} alt="shield" width={16} height={16} className="h-4 w-4" />
                         <span>Verification Code *</span>
                     </label>
                     <div className="rounded-md border border-border bg-muted h-24 flex items-center justify-center select-none text-4xl tracking-widest text-muted-foreground">
@@ -277,7 +278,7 @@ const RegisterFormUI = () => {
                             placeholder="Enter the code above"
                         />
                         <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70" aria-hidden>
-                            ↻
+                            <RefreshIcon />
                         </span>
                     </div>
                     <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
@@ -287,11 +288,11 @@ const RegisterFormUI = () => {
                 Create Account
             </button>
             <p className="text-center text-[12px] text-muted-foreground">
-                By creating an account, you agree to our{" "}
+                By creating an account, you agree to our
                 <a href="#" className="underline">
                     Terms of Service
-                </a>{" "}
-                and{" "}
+                </a>
+                and
                 <a href="#" className="underline">
                     Privacy Policy
                 </a>
