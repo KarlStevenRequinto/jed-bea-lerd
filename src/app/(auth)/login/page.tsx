@@ -1,17 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { eye, shield, help } from "@/assets/icons/images";
-import { TeslaIconSvg, ProtectIconSvg, CountryHouseIconSvg, RefreshIconSvg, GoogleIconSvg, FacebookIconSvg, EyeIconSvg } from "@/components/svg-icons";
+import { TeslaIconSvg, ProtectIconSvg, CountryHouseIconSvg } from "@/components/svg-icons";
 import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store";
-import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
-import AuthInput from "@/components/forms/AuthInput";
-import BaseButton from "@/components/forms/BaseButton";
-import { login } from "@/store/authSlice";
+import LoginForm from "../_components/LoginForm";
+import RegisterForm from "../_components/RegisterForm";
 
 const LoginPage = () => {
     const [tab, setTab] = useState<"login" | "register">("login");
@@ -123,7 +118,7 @@ const LoginPage = () => {
                         aria-labelledby="tab-login"
                         aria-hidden={tab !== "login"}
                     >
-                        <LoginFormUI />
+                        <LoginForm />
                     </div>
                     <div
                         className={tab === "register" ? "absolute inset-0 opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}
@@ -132,7 +127,7 @@ const LoginPage = () => {
                         aria-labelledby="tab-register"
                         aria-hidden={tab !== "register"}
                     >
-                        <RegisterFormUI />
+                        <RegisterForm />
                     </div>
                 </div>
             </section>
@@ -141,173 +136,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-const LoginFormUI = () => {
-    const router = useRouter();
-    const dispatch = useAppDispatch();
-    return (
-        <div className="space-y-6" aria-labelledby="welcome-heading">
-            <AuthSectionHeader title="Welcome Back!" subtitle="Sign in to your account to continue" />
-
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()} aria-describedby="identifier-help password-help">
-                <AuthInput id="identifier" name="identifier" type="text" label="Email" placeholder="Enter your email" autoComplete="email" />
-                <p id="identifier-help" className="sr-only">
-                    Enter the email you used to register.
-                </p>
-                <AuthInput
-                    id="password"
-                    name="password"
-                    type="password"
-                    label="Password"
-                    placeholder="Enter your password"
-                    autoComplete="current-password"
-                    rightIcon={
-                        <Image src={eye} alt="Toggle password visibility" width={20} height={20} className="h-5 w-5 object-contain opacity-70" />
-                    }
-                />
-
-                {/* Remember me */}
-                <div className="flex items-center justify-between text-light text-sm">
-                    <label className="inline-flex items-center gap-2 text-foreground">
-                        <input type="checkbox" className="h-4 w-4 focus:ring-primary/20" aria-label="Remember me" />
-                        Remember Me
-                    </label>
-                    <a href="#" className="hover:underline cursor-pointer" style={{ color: "var(--color-link)" }} aria-label="Forgot password">
-                        Forgot password?
-                    </a>
-                </div>
-
-                {/* Submit */}
-                <button
-                    type="button"
-                    onClick={() => {
-                        dispatch(login());
-                        router.push("/");
-                    }}
-                    className="w-full rounded-md bg-brand px-4 py-2 text-sm font-medium text-primary-foreground focus:ring-primary/20 cursor-pointer"
-                >
-                    Log In
-                </button>
-            </form>
-
-            {/* Divider */}
-            <div className="relative py-2">
-                <div className="absolute inset-0 flex items-center">
-                    <div className="h-px w-full bg-border" />
-                </div>
-                <div className="relative mx-auto w-fit bg-primary-foreground px-3 text-xs text-muted-foreground">Or continue with</div>
-            </div>
-
-            {/* Social buttons */}
-            <div className="flex items-center justify-center gap-6">
-                <BaseButton
-                    leftIcon={<GoogleIconSvg />}
-                    className="rounded-[10px] border-1 border-success text-normal text-success-dark w-[212px] h-10"
-                >
-                    Google
-                </BaseButton>
-                <BaseButton
-                    leftIcon={<FacebookIconSvg />}
-                    className="rounded-[10px] border-1 border-brand text-normal text-brand w-[212px] h-10"
-                >
-                    Facebook
-                </BaseButton>
-            </div>
-
-            <p className="text-center text-sm text-muted-foreground">
-                Don&apos;t have an account?{" "}
-                <a className="font-medium text-brand-medium hover:underline cursor-pointer" href="#">
-                    Register now
-                </a>
-            </p>
-        </div>
-    );
-};
-
-const RegisterFormUI = () => {
-    return (
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <AuthSectionHeader title="Create an account" subtitle="Join HomeNDrive today" className="mb-2" />
-            <div className="[&>*+*]:mt-3">
-                <AuthInput id="email" name="email" type="email" label="Email *" placeholder="Enter your email address" autoComplete="email" />
-                <div className="space-y-1.5">
-                    <label htmlFor="passwordReg" className="inline-flex items-center gap-2 text-sm text-foreground">
-                        <span>Password *</span>
-                        <Image src={help} alt="help" width={15} height={15} className="h-4 w-4" />
-                    </label>
-                    <div className="relative">
-                        <input
-                            id="passwordReg"
-                            name="passwordReg"
-                            type="password"
-                            className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                            placeholder="Enter your password"
-                            autoComplete="new-password"
-                        />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70 cursor-pointer" aria-hidden>
-                            <EyeIconSvg />
-                        </span>
-                    </div>
-                </div>
-                <div className="space-y-1.5">
-                    <label htmlFor="passwordConfirm" className="text-sm text-foreground">
-                        Confirm Password *
-                    </label>
-                    <div className="relative">
-                        <input
-                            id="passwordConfirm"
-                            name="passwordConfirm"
-                            type="password"
-                            className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                            placeholder="Re-enter your password"
-                            autoComplete="new-password"
-                        />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70 cursor-pointer" aria-hidden>
-                            <EyeIconSvg />
-                        </span>
-                    </div>
-                </div>
-                <div className="space-y-1.5">
-                    <label className="inline-flex items-center gap-2 text-sm text-foreground">
-                        <Image src={shield} alt="shield" width={16} height={16} className="h-4 w-4" />
-                        <span>Verification Code *</span>
-                    </label>
-                    <div className="rounded-md border border-border bg-muted h-24 flex items-center justify-center select-none text-4xl tracking-widest text-muted-foreground">
-                        7 0 6 D E
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <input
-                            className="flex-1 rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                            placeholder="Enter the code above"
-                        />
-                        <button type="button" className="flex items-center justify-center w-10 h-10 rounded-md border border-border bg-primary-foreground shadow-sm opacity-70 hover:opacity-100 cursor-pointer" aria-label="Refresh code">
-                            <RefreshIconSvg />
-                        </button>
-                    </div>
-                    <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
-                </div>
-            </div>
-            <BaseButton type="submit" className="w-full bg-[var(--color-success-light)] text-primary-foreground">
-                Create Account
-            </BaseButton>
-            <div className="space-y-2 text-center text-[12px]">
-                <p className="text-muted-foreground">
-                    By signing up, you agree to our{" "}
-                    <a href="#" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
-                        Terms of Service
-                    </a>{" "}
-                    and{" "}
-                    <a href="#" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
-                        Privacy Policy
-                    </a>
-                </p>
-                <p className="text-muted-foreground">
-                    Already have an account?{" "}
-                    <a href="#" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
-                        Log in
-                    </a>
-                </p>
-            </div>
-        </form>
-    );
-};
