@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { countryHomes, eye, teslaBlue, protect, shield, help } from "@/assets/icons/images";
+import { eye, shield, help } from "@/assets/icons/images";
+import { TeslaIconSvg, ProtectIconSvg, CountryHouseIconSvg, RefreshIconSvg } from "@/components/svg-icons";
 import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
@@ -10,7 +11,6 @@ import { useAppDispatch } from "@/store";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import { login } from "@/store/authSlice";
-import { RefreshIconSvg } from "@/components/svg-icons/refresh";
 
 const LoginPage = () => {
     const [tab, setTab] = useState<"login" | "register">("login");
@@ -52,22 +52,13 @@ const LoginPage = () => {
                     {/* Features */}
                     <div className="mt-2 grid grid-cols-3 gap-8">
                         <div style={{ animationDelay: "0.1s" }}>
-                            <IconBadge
-                                icon={<Image src={teslaBlue} alt="Tesla" width={24} height={24} className="h-6 w-6 object-contain" priority />}
-                                label="Quality Vehicles"
-                            />
+                            <IconBadge icon={<TeslaIconSvg />} label="Quality Vehicles" />
                         </div>
                         <div style={{ animationDelay: "0.2s" }}>
-                            <IconBadge
-                                icon={<Image src={protect} alt="Protect" width={24} height={24} className="h-6 w-6 object-contain" priority />}
-                                label="Secure and Trusted"
-                            />
+                            <IconBadge icon={<ProtectIconSvg />} label="Secure and Trusted" />
                         </div>
                         <div style={{ animationDelay: "0.3s" }}>
-                            <IconBadge
-                                icon={<Image src={countryHomes} alt="Homes" width={24} height={24} className="h-6 w-6 object-contain" priority />}
-                                label="Quality Properties"
-                            />
+                            <IconBadge icon={<CountryHouseIconSvg />} label="Quality Properties" />
                         </div>
                     </div>
                 </div>
