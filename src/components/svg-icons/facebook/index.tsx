@@ -1,6 +1,6 @@
 import React from "react";
 
-const Facebook = () => {
+const FacebookIconSvg = () => {
   return (
     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <rect width="25" height="25" fill="url(#pattern0_204_222)" />
@@ -14,5 +14,4 @@ const Facebook = () => {
   );
 };
 
-export default Facebook;
-
+export default FacebookIconSvg;

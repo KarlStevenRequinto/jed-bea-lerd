@@ -1,6 +1,6 @@
 import React from "react";
 
-const Help = () => {
+const HelpIconSvg = () => {
   return (
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <rect width="15" height="15" fill="url(#pattern0_199_20)" />
@@ -14,5 +14,4 @@ const Help = () => {
   );
 };
 
-export default Help;
-
+export default HelpIconSvg;

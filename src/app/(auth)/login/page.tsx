@@ -10,8 +10,7 @@ import { useAppDispatch } from "@/store";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import { login } from "@/store/authSlice";
-import { RefreshIcon } from "@/components/svg-icons/refresh";
-import Eye from "@/components/svg-icons/eye";
+import { RefreshIconSvg } from "@/components/svg-icons/refresh";
 
 const LoginPage = () => {
     const [tab, setTab] = useState<"login" | "register">("login");
@@ -277,7 +276,7 @@ const RegisterFormUI = () => {
                             placeholder="Enter the code above"
                         />
                         <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70" aria-hidden>
-                            <RefreshIcon />
+                            <RefreshIconSvg />
                         </span>
                     </div>
                     <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
