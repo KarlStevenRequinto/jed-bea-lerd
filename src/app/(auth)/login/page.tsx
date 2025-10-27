@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
+import BaseButton from "@/components/forms/BaseButton";
 import { login } from "@/store/authSlice";
 
 const LoginPage = () => {
@@ -199,20 +200,18 @@ const LoginFormUI = () => {
 
             {/* Social buttons */}
             <div className="flex items-center justify-center gap-6">
-                <button
-                    type="button"
-                    className="flex items-center justify-center gap-2 rounded-[10px] border-1 border-success px-4 py-2 text-normal text-sm text-success-dark hover:opacity-90 cursor-pointer w-[212px] h-10"
+                <BaseButton
+                    leftIcon={<GoogleIconSvg />}
+                    className="rounded-[10px] border-1 border-success text-normal text-success-dark w-[212px] h-10"
                 >
-                    <GoogleIconSvg />
                     Google
-                </button>
-                <button
-                    type="button"
-                    className="flex items-center justify-center gap-2 rounded-[10px] border-1 border-brand px-4 py-2 text-normal text-sm text-brand hover:opacity-90 cursor-pointer w-[212px] h-10"
+                </BaseButton>
+                <BaseButton
+                    leftIcon={<FacebookIconSvg />}
+                    className="rounded-[10px] border-1 border-brand text-normal text-brand w-[212px] h-10"
                 >
-                    <FacebookIconSvg />
                     Facebook
-                </button>
+                </BaseButton>
             </div>
 
             <p className="text-center text-sm text-muted-foreground">
@@ -288,9 +287,9 @@ const RegisterFormUI = () => {
                     <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
                 </div>
             </div>
-            <button type="submit" className="w-full rounded-md bg-[var(--color-success-light)] px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90">
+            <BaseButton type="submit" className="w-full bg-[var(--color-success-light)] text-primary-foreground">
                 Create Account
-            </button>
+            </BaseButton>
             <div className="space-y-2 text-center text-[12px]">
                 <p className="text-muted-foreground">
                     By signing up, you agree to our{" "}
