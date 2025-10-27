@@ -1,11 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { shield, help, refresh } from "@/assets/icons/images";
-import { countryHomes, eye, teslaBlue, protect } from "@/assets/icons/images";
+import { countryHomes, eye, teslaBlue, protect, shield, help } from "@/assets/icons/images";
 import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store";
+import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
+import AuthInput from "@/components/forms/AuthInput";
+import { login } from "@/store/authSlice";
+import { RefreshIcon } from "@/components/svg-icons/refresh";
+import Eye from "@/components/svg-icons/eye";
 
 const LoginPage = () => {
     const [tab, setTab] = useState<"login" | "register">("login");
@@ -144,13 +150,6 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store";
-import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
-import AuthInput from "@/components/forms/AuthInput";
-import { login } from "@/store/authSlice";
-import { RefreshIcon } from "@/assets/icons/images/refresh";
 
 const LoginFormUI = () => {
     const router = useRouter();
