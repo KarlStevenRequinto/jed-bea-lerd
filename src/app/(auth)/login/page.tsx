@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { eye, shield, help } from "@/assets/icons/images";
-import { TeslaIconSvg, ProtectIconSvg, CountryHouseIconSvg, RefreshIconSvg } from "@/components/svg-icons";
+import { TeslaIconSvg, ProtectIconSvg, CountryHouseIconSvg, RefreshIconSvg, GoogleIconSvg, FacebookIconSvg, EyeIconSvg } from "@/components/svg-icons";
 import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import IconBadge from "@/components/common/IconBadge";
 import { useState } from "react";
@@ -198,19 +198,19 @@ const LoginFormUI = () => {
             </div>
 
             {/* Social buttons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center gap-6">
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-[10px] border-1 border-success bg-success-muted px-4 py-2.5 text-normal text-sm text-success-dark hover:opacity-90 cursor-pointer"
+                    className="flex items-center justify-center gap-2 rounded-[10px] border-1 border-success px-4 py-2 text-normal text-sm text-success-dark hover:opacity-90 cursor-pointer w-[212px] h-10"
                 >
-                    <Image src="/images/google.png" alt="Google" width={20} height={20} className="h-5 w-5 object-contain" priority />
+                    <GoogleIconSvg />
                     Google
                 </button>
                 <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-2 rounded-[10px] border-1 border-brand bg-brand-muted px-4 py-2.5 text-normal text-sm text-brand hover:opacity-90 cursor-pointer"
+                    className="flex items-center justify-center gap-2 rounded-[10px] border-1 border-brand px-4 py-2 text-normal text-sm text-brand hover:opacity-90 cursor-pointer w-[212px] h-10"
                 >
-                    <Image src="/images/facebook.png" alt="Facebook" width={20} height={20} className="h-5 w-5 object-contain" priority />
+                    <FacebookIconSvg />
                     Facebook
                 </button>
             </div>
@@ -236,23 +236,38 @@ const RegisterFormUI = () => {
                         <span>Password *</span>
                         <Image src={help} alt="help" width={15} height={15} className="h-4 w-4" />
                     </label>
-                    <input
-                        id="passwordReg"
-                        name="passwordReg"
-                        type="password"
-                        className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                        placeholder="Enter your password"
-                        autoComplete="new-password"
-                    />
+                    <div className="relative">
+                        <input
+                            id="passwordReg"
+                            name="passwordReg"
+                            type="password"
+                            className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                            placeholder="Enter your password"
+                            autoComplete="new-password"
+                        />
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70 cursor-pointer" aria-hidden>
+                            <EyeIconSvg />
+                        </span>
+                    </div>
                 </div>
-                <AuthInput
-                    id="passwordConfirm"
-                    name="passwordConfirm"
-                    type="password"
-                    label="Confirm Password *"
-                    placeholder="Re-enter your password"
-                    autoComplete="new-password"
-                />
+                <div className="space-y-1.5">
+                    <label htmlFor="passwordConfirm" className="text-sm text-foreground">
+                        Confirm Password *
+                    </label>
+                    <div className="relative">
+                        <input
+                            id="passwordConfirm"
+                            name="passwordConfirm"
+                            type="password"
+                            className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                            placeholder="Re-enter your password"
+                            autoComplete="new-password"
+                        />
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70 cursor-pointer" aria-hidden>
+                            <EyeIconSvg />
+                        </span>
+                    </div>
+                </div>
                 <div className="space-y-1.5">
                     <label className="inline-flex items-center gap-2 text-sm text-foreground">
                         <Image src={shield} alt="shield" width={16} height={16} className="h-4 w-4" />
@@ -261,32 +276,39 @@ const RegisterFormUI = () => {
                     <div className="rounded-md border border-border bg-muted h-24 flex items-center justify-center select-none text-4xl tracking-widest text-muted-foreground">
                         7 0 6 D E
                     </div>
-                    <div className="relative">
+                    <div className="flex items-center gap-2">
                         <input
-                            className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                            className="flex-1 rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
                             placeholder="Enter the code above"
                         />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 opacity-70" aria-hidden>
+                        <button type="button" className="flex items-center justify-center w-10 h-10 rounded-md border border-border bg-primary-foreground shadow-sm opacity-70 hover:opacity-100 cursor-pointer" aria-label="Refresh code">
                             <RefreshIconSvg />
-                        </span>
+                        </button>
                     </div>
                     <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
                 </div>
             </div>
-            <button type="submit" className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/92">
+            <button type="submit" className="w-full rounded-md bg-[var(--color-success-light)] px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90">
                 Create Account
             </button>
-            <p className="text-center text-[12px] text-muted-foreground">
-                By creating an account, you agree to our
-                <a href="#" className="underline">
-                    Terms of Service
-                </a>
-                and
-                <a href="#" className="underline">
-                    Privacy Policy
-                </a>
-                .
-            </p>
+            <div className="space-y-2 text-center text-[12px]">
+                <p className="text-muted-foreground">
+                    By signing up, you agree to our{" "}
+                    <a href="#" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
+                        Terms of Service
+                    </a>{" "}
+                    and{" "}
+                    <a href="#" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
+                        Privacy Policy
+                    </a>
+                </p>
+                <p className="text-muted-foreground">
+                    Already have an account?{" "}
+                    <a href="#" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
+                        Log in
+                    </a>
+                </p>
+            </div>
         </form>
     );
 };

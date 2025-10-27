@@ -34,6 +34,7 @@
     --color-success: #03A444;
     --color-success-dark: #00733D;
     --color-success-muted: #DBFFEA;
+    --color-success-light: #79c796;
 
     /* Surface */
     --color-surface-muted: #ECEBF0;
@@ -89,6 +90,7 @@
     --color-success: var(--color-success);
     --color-success-dark: var(--color-success-dark);
     --color-success-muted: var(--color-success-muted);
+    --color-success-light: var(--color-success-light);
     --color-surface-muted: var(--color-surface-muted);
     --color-link: var(--color-link);
 }
