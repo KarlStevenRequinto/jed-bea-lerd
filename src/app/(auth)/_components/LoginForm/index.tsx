@@ -44,11 +44,7 @@ const LoginForm = () => {
                 </div>
 
                 {/* Submit: instantly hide when parent tab != login via aria-hidden upstream */}
-                <BaseButton
-                    type="button"
-                    onClick={handleLogin}
-                    className="w-full bg-brand text-primary-foreground transition-none"
-                >
+                <BaseButton type="button" onClick={handleLogin} className="w-full bg-brand text-primary-foreground transition-none">
                     Log In
                 </BaseButton>
             </form>
@@ -75,10 +71,7 @@ const LoginForm = () => {
             </div>
 
             <p className="text-center text-sm text-muted-foreground">
-                Don&apos;t have an account?{" "}
-                <a className="font-medium text-brand-medium hover:underline cursor-pointer" href="#">
-                    Register now
-                </a>
+                Don&apos;t have an account? <a className="font-medium text-brand-medium hover:underline cursor-pointer">Register now</a>
             </p>
         </div>
     );

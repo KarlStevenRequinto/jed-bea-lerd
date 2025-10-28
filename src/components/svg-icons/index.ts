@@ -9,3 +9,4 @@ export { default as FacebookIconSvg } from "./facebook";
 export { default as GoogleIconSvg } from "./google";
 export { default as HelpIconSvg } from "./help";
 export { default as ShieldIconSvg } from "./shield";
+export { default as VerifyIconSvg } from "./verify";

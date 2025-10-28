@@ -7,9 +7,11 @@ import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import BaseButton from "@/components/common/BaseButton";
 import { useRegisterFormViewModel } from "./useViewModel";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
     const { handleRegister } = useRegisterFormViewModel();
+    const router = useRouter();
 
     return (
         <form className="space-y-4" onSubmit={handleRegister}>
@@ -66,7 +68,12 @@ const RegisterForm = () => {
                     <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
                 </div>
             </div>
-            <BaseButton type="submit" className="w-full bg-[var(--color-success-light)] text-primary-foreground">
+            <BaseButton
+                type="button"
+                onClick={() => router.push("/register")}
+                className="w-full bg-[var(--color-success-light)] text-primary-foreground"
+                aria-label="Create account"
+            >
                 Create Account
             </BaseButton>
             <div className="space-y-2 text-center text-[12px]">
@@ -82,7 +89,7 @@ const RegisterForm = () => {
                 </p>
                 <p className="text-muted-foreground">
                     Already have an account?{" "}
-                    <a href="#" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
+                    <a href="/login" className="font-semibold" style={{ color: "var(--color-brand-dark)" }}>
                         Log in
                     </a>
                 </p>
