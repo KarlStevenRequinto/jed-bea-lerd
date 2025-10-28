@@ -4,13 +4,13 @@ import Image from "next/image";
 import { TeslaIconSvg, ProtectIconSvg, CountryHouseIconSvg } from "@/components/svg-icons";
 import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import IconBadge from "@/components/common/IconBadge";
-import { useState } from "react";
+import { useLoginViewModel } from "./useViewModel";
+import BaseButton from "@/components/common/BaseButton";
 import LoginForm from "../_components/LoginForm";
 import RegisterForm from "../_components/RegisterForm";
 
 const LoginPage = () => {
-    const [tab, setTab] = useState<"login" | "register">("login");
-    const [animationKey] = useState(() => Date.now());
+    const { tab, setTab, animationKey, highlightTransform, loginPanelClass, registerPanelClass } = useLoginViewModel();
 
     return (
         <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2" role="main">
@@ -76,43 +76,43 @@ const LoginPage = () => {
                         {/* Sliding highlight */}
                         <div
                             className="absolute top-1/2 h-[29px] w-[calc(50%-5px)] -translate-y-1/2 rounded-[7px] bg-white transition-transform duration-300 ease-out"
-                            style={{ transform: tab === "login" ? "translateX(3px)" : "translateX(calc(100% + 7px))" }}
+                            style={{ transform: highlightTransform }}
                             aria-hidden
                         />
                         {/* Single layer labels with dynamic color */}
                         <div className="relative z-10 grid h-full grid-cols-2 font-semibold tracking-wide select-none">
-                            <button
+                            <BaseButton
                                 type="button"
                                 onClick={() => setTab("login")}
-                                className="relative flex items-center justify-center px-3 h-full cursor-pointer"
+                                className={`relative flex items-center justify-center px-3 h-full cursor-pointer bg-transparent shadow-none `}
                                 role="tab"
                                 id="tab-login"
                                 aria-controls="panel-login"
                                 aria-selected={tab === "login"}
                             >
-                                <span className={`text-normal text-center-flex text-[15px] `}>LOG IN</span>
-                            </button>
-                            <button
+                                <span className={`text-normal text-center-flex text-[15px]`}>LOG IN</span>
+                            </BaseButton>
+                            <BaseButton
                                 type="button"
                                 onClick={() => setTab("register")}
-                                className="relative flex items-center justify-center px-3 h-full cursor-pointer"
+                                className="relative flex items-center justify-center px-3 h-full cursor-pointer bg-transparent shadow-none hover:opacity-100"
                                 role="tab"
                                 id="tab-register"
                                 aria-controls="panel-register"
                                 aria-selected={tab === "register"}
                             >
                                 <span className={`text-normal text-center-flex text-[15px]`}>REGISTER</span>
-                            </button>
+                            </BaseButton>
                         </div>
                     </div>
                 </div>
 
                 <div className="h-[42px]" aria-hidden />
 
-                {/* Content */}
-                <div className="relative w-full max-w-md mt-6 min-h-[540px]">
+                {/* Content with smooth cross-fade/slide transition */}
+                <div className="relative w-full max-w-md mt-6 min-h-[540px] overflow-hidden">
                     <div
-                        className={tab === "login" ? "absolute inset-0 opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}
+                        className={`absolute inset-0 ${loginPanelClass}`}
                         role="tabpanel"
                         id="panel-login"
                         aria-labelledby="tab-login"
@@ -121,7 +121,7 @@ const LoginPage = () => {
                         <LoginForm />
                     </div>
                     <div
-                        className={tab === "register" ? "absolute inset-0 opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}
+                        className={`absolute inset-0 transition-all duration-300 ease-out ${registerPanelClass}`}
                         role="tabpanel"
                         id="panel-register"
                         aria-labelledby="tab-register"

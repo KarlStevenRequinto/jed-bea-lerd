@@ -1,11 +1,8 @@
 import React, { ReactNode } from "react";
 
-interface BaseButtonProps {
+interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
-    onClick?: () => void;
-    type?: "button" | "submit";
     leftIcon?: ReactNode;
-    className?: string;
 }
 
 const BaseButton: React.FC<BaseButtonProps> = ({

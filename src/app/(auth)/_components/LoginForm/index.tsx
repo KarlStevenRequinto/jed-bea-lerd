@@ -5,7 +5,7 @@ import { eye } from "@/assets/icons/images";
 import { GoogleIconSvg, FacebookIconSvg } from "@/components/svg-icons";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
-import BaseButton from "@/components/forms/BaseButton";
+import BaseButton from "@/components/common/BaseButton";
 import { useLoginFormViewModel } from "./useViewModel";
 
 const LoginForm = () => {
@@ -43,11 +43,11 @@ const LoginForm = () => {
                     </a>
                 </div>
 
-                {/* Submit */}
+                {/* Submit: instantly hide when parent tab != login via aria-hidden upstream */}
                 <BaseButton
                     type="button"
                     onClick={handleLogin}
-                    className="w-full bg-brand text-primary-foreground"
+                    className="w-full bg-brand text-primary-foreground transition-none"
                 >
                     Log In
                 </BaseButton>
@@ -69,10 +69,7 @@ const LoginForm = () => {
                 >
                     Google
                 </BaseButton>
-                <BaseButton
-                    leftIcon={<FacebookIconSvg />}
-                    className="rounded-[10px] border-1 border-brand text-normal text-brand w-[212px] h-10"
-                >
+                <BaseButton leftIcon={<FacebookIconSvg />} className="rounded-[10px] border-1 border-brand text-normal text-brand w-[212px] h-10">
                     Facebook
                 </BaseButton>
             </div>
