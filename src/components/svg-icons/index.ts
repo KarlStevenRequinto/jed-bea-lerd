@@ -10,3 +10,6 @@ export { default as GoogleIconSvg } from "./google";
 export { default as HelpIconSvg } from "./help";
 export { default as ShieldIconSvg } from "./shield";
 export { default as VerifyIconSvg } from "./verify";
+export { default as CheckIconSvg } from "./check";
+export { default as BirthDateIconSvg } from "./birth-date";
+export { default as UploadIconSvg } from "./upload";

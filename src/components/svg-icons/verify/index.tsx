@@ -10,8 +10,8 @@ const VerifyIconSvg = () => {
                     <use xlinkHref="#image0_204_228" transform="scale(0.0104167)" />
                 </pattern>
                 <linearGradient id="paint0_linear_204_228" x1="0" y1="0" x2="75.3039" y2="75.862" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#276BF4" />
-                    <stop offset="1" stop-color="#3BF285" />
+                    <stop stopColor="#276BF4" />
+                    <stop offset="1" stopColor="#3BF285" />
                 </linearGradient>
                 <image
                     id="image0_204_228"

@@ -29,6 +29,9 @@
     --color-brand-muted: #EBF2FF;
     --color-brand-light: #B5E1FF;
     --color-link: #135FF9;
+    /* Info/Tip palette */
+    --color-tip-bg: #EFF6FF;      /* light blue background */
+    --color-tip-border: #C6DDF9;  /* subtle blue border */
 
     /* Success palette */
     --color-success: #03A444;
@@ -93,6 +96,8 @@
     --color-success-light: var(--color-success-light);
     --color-surface-muted: var(--color-surface-muted);
     --color-link: var(--color-link);
+    --color-tip-bg: var(--color-tip-bg);
+    --color-tip-border: var(--color-tip-border);
 }
 
 /* Dark theme is applied by toggling .theme-dark on <html> */
