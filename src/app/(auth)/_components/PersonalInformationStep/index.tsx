@@ -67,7 +67,6 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ email
                         placeholder="Enter First Name"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        required
                     />
                     <FormInput
                         id="lastName"
@@ -77,7 +76,6 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ email
                         placeholder="Enter Last Name"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        required
                     />
                 </div>
 
@@ -91,7 +89,6 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ email
                     value={formData.dateOfBirth}
                     onChange={handleInputChange}
                     leftIcon={<BirthDateIconSvg />}
-                    required
                 />
 
                 {/* Phone Number with Country Code */}
@@ -111,7 +108,6 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ email
                             value={formData.phoneNumber}
                             onChange={handleInputChange}
                             className="flex-1 rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-normal placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
-                            required
                         />
                     </div>
                 </div>

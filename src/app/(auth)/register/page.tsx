@@ -7,6 +7,8 @@ import BaseButton from "@/components/common/BaseButton";
 import Link from "next/link";
 import { useState, useLayoutEffect, useRef, useEffect } from "react";
 import PersonalInformationStep, { PersonalInfoData } from "../_components/PersonalInformationStep";
+import AddressInformationStep, { AddressInfoData } from "../_components/AddressInformationStep";
+import IdentityVerificationStep, { IdentityVerificationData } from "../_components/IdentityVerificationStep";
 
 const RegisterPage = () => {
     const [verified, setVerified] = useState(false);
@@ -33,12 +35,44 @@ const RegisterPage = () => {
 
     const handlePersonalInfoSubmit = (data: PersonalInfoData) => {
         console.log("Personal info submitted:", data);
-        // TODO: Handle step 3 transition
+        setCurrentStep(3);
+    };
+
+    const handleAddressInfoSubmit = (data: AddressInfoData) => {
+        console.log("Address info submitted:", data);
+        setCurrentStep(4);
+    };
+
+    const handleIdentityVerificationSubmit = (data: IdentityVerificationData) => {
+        console.log("Identity verification submitted:", data);
+        // TODO: Handle step 5 transition
+    };
+
+    const handleBackToStep2 = () => {
+        setCurrentStep(2);
+    };
+
+    const handleBackToStep3 = () => {
+        setCurrentStep(3);
     };
 
     // Calculate progress
-    const progress = currentStep === 1 ? 20 : 40;
-    const progressWidth = currentStep === 1 ? "w-1/5" : "w-2/5";
+    const getProgress = () => {
+        switch (currentStep) {
+            case 1:
+                return { percent: 20, width: "w-1/5" };
+            case 2:
+                return { percent: 40, width: "w-2/5" };
+            case 3:
+                return { percent: 60, width: "w-3/5" };
+            case 4:
+                return { percent: 80, width: "w-4/5" };
+            default:
+                return { percent: 20, width: "w-1/5" };
+        }
+    };
+
+    const { percent: progress, width: progressWidth } = getProgress();
 
     const handleReset = () => {
         setCurrentStep(1);
@@ -182,6 +216,28 @@ const RegisterPage = () => {
                     {currentStep === 2 && (
                         <div className="animate-fade-in-up">
                             <PersonalInformationStep email="johndoe@email.com" onContinue={handlePersonalInfoSubmit} />
+                        </div>
+                    )}
+
+                    {/* Step 3: Address Information */}
+                    {currentStep === 3 && (
+                        <div className="animate-fade-in-up">
+                            <AddressInformationStep
+                                email="johndoe@email.com"
+                                onContinue={handleAddressInfoSubmit}
+                                onBack={handleBackToStep2}
+                            />
+                        </div>
+                    )}
+
+                    {/* Step 4: Identity Verification */}
+                    {currentStep === 4 && (
+                        <div className="animate-fade-in-up">
+                            <IdentityVerificationStep
+                                email="johndoe@email.com"
+                                onContinue={handleIdentityVerificationSubmit}
+                                onBack={handleBackToStep3}
+                            />
                         </div>
                     )}
                 </div>

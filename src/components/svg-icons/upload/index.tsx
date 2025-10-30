@@ -2,7 +2,7 @@ import React from "react";
 
 const UploadIconSvg = () => {
     return (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
             <rect width="20" height="20" fill="url(#pattern0_74_13)" />
             <defs>
                 <pattern id="pattern0_74_13" patternContentUnits="objectBoundingBox" width="1" height="1">
