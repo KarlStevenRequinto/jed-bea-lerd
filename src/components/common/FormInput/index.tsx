@@ -10,30 +10,23 @@ type FormInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     error?: string;
 };
 
-const FormInput: React.FC<FormInputProps> = ({
-    label,
-    id,
-    leftIcon,
-    rightIcon,
-    error,
-    className = "",
-    ...rest
-}) => {
+const FormInput: React.FC<FormInputProps> = ({ label, id, leftIcon, rightIcon, error, className = "", ...rest }) => {
     return (
-        <div className="space-y-1.5">
-            <label
-                htmlFor={id}
-                className="inline-flex items-center gap-2 text-sm text-foreground"
-            >
-                {leftIcon && <span className="flex items-center">{leftIcon}</span>}
+        <div>
+            <label htmlFor={id} className="flex items-center gap-2 text-normal text-sm ml-1">
                 <span>{label}</span>
             </label>
             <div className="relative">
+                {leftIcon && (
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3" aria-hidden>
+                        {leftIcon}
+                    </span>
+                )}
                 <input
                     id={id}
-                    className={`w-full rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                        rightIcon ? 'pr-10' : ''
-                    } ${error ? 'border-destructive' : ''} ${className}`}
+                    className={`w-full rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-normal placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                        leftIcon ? "pl-10" : ""
+                    } ${rightIcon ? "pr-10" : ""} ${error ? "border-destructive" : ""} ${className}`}
                     {...rest}
                 />
                 {rightIcon && (
@@ -42,9 +35,7 @@ const FormInput: React.FC<FormInputProps> = ({
                     </span>
                 )}
             </div>
-            {error && (
-                <p className="text-xs text-destructive">{error}</p>
-            )}
+            {error && <p className="text-xs text-destructive">{error}</p>}
         </div>
     );
 };

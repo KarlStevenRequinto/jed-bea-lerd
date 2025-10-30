@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
 import { BirthDateIconSvg } from "@/components/svg-icons";
 import BaseButton from "@/components/common/BaseButton";
 import FormInput from "@/components/common/FormInput";
@@ -21,10 +19,7 @@ export interface PersonalInfoData {
     profilePhoto?: File | null;
 }
 
-const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
-    email,
-    onContinue,
-}) => {
+const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ email, onContinue }) => {
     const [formData, setFormData] = useState<PersonalInfoData>({
         firstName: "",
         lastName: "",
@@ -53,9 +48,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
         <div className="flex flex-col items-center text-center">
             {/* Title */}
             <h1 className="text-normal text-2xl text-foreground">Personal Information</h1>
-            <p className="mt-2 text-[13px] text-light">
-                Let&apos;s get to know you better
-            </p>
+            <p className="mt-2 text-[13px] text-light">Let&apos;s get to know you better</p>
 
             {/* Profile Photo Upload */}
             <div className="mt-6 mb-6">
@@ -102,12 +95,12 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
                 />
 
                 {/* Phone Number with Country Code */}
-                <div className="space-y-1.5">
-                    <label htmlFor="phoneNumber" className="text-sm text-foreground">
-                        Phone Number *
+                <div>
+                    <label htmlFor="phoneNumber" className="flex items-center text-normal text-sm ml-1">
+                        <span>Phone Number *</span>
                     </label>
                     <div className="flex gap-2">
-                        <div className="flex items-center justify-center px-3 py-2 rounded-md border border-border bg-muted text-sm text-foreground font-medium min-w-[60px]">
+                        <div className="flex items-center justify-center px-3 py-2 rounded-md border border-border bg-primary-foreground text-sm text-normal min-w-[60px]">
                             +63
                         </div>
                         <input
@@ -117,7 +110,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
                             placeholder="XXX XXX XXXX"
                             value={formData.phoneNumber}
                             onChange={handleInputChange}
-                            className="flex-1 rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                            className="flex-1 rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-normal placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
                             required
                         />
                     </div>
@@ -125,10 +118,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
 
                 {/* Continue Button */}
                 <div className="pt-2">
-                    <BaseButton
-                        type="submit"
-                        className="w-full bg-muted text-foreground"
-                    >
+                    <BaseButton type="submit" className="w-full bg-[var(--color-gray-450)] text-[var(--color-white)]">
                         Continue →
                     </BaseButton>
                 </div>

@@ -6,7 +6,7 @@ import { VerifyIconSvg, CheckIconSvg } from "@/components/svg-icons";
 import BaseButton from "@/components/common/BaseButton";
 import Link from "next/link";
 import { useState, useLayoutEffect, useRef, useEffect } from "react";
-import PersonalInformationStep, { PersonalInfoData } from "@/components/common/PersonalInformationStep";
+import PersonalInformationStep, { PersonalInfoData } from "../_components/PersonalInformationStep";
 
 const RegisterPage = () => {
     const [verified, setVerified] = useState(false);
@@ -79,9 +79,12 @@ const RegisterPage = () => {
                     </button>
                 )}
 
-                <div ref={cardRef} className="bg-white rounded-[12px] shadow-lg px-6 sm:px-10 py-10 mx-4 sm:mx-6">
+                <div
+                    ref={cardRef}
+                    className="bg-white rounded-[10px] shadow-lg px-6 sm:px-10 py-10 mx-4 sm:mx-6 border-[0.2px] border-[var(--color-gray-250)]"
+                >
                     {/* Logo */}
-                    <div className="flex justify-center mb-4 sm:mb-6">
+                    <div className="flex justify-center -mt-4">
                         <Image src={homeNDriveLogo} alt="HomeNDrive" width={140} height={56} className="object-contain" />
                     </div>
 
@@ -169,7 +172,7 @@ const RegisterPage = () => {
                             )}
 
                             {/* Registering as */}
-                            <div className="mt-4 text-sm sm:text-base text-muted-foreground px-4 sm:px-0">
+                            <div className="mt-8 text-sm sm:text-base text-muted-foreground px-4 sm:px-0">
                                 Registering as: <span className="font-semibold text-foreground">johndoe@email.com</span>
                             </div>
                         </div>
