@@ -1,0 +1,23 @@
+import React from "react";
+
+const ExpandArrowIconSvg = () => {
+    return (
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+            <rect width="15" height="15" fill="url(#pattern0_76_146)" />
+            <defs>
+                <pattern id="pattern0_76_146" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image0_76_146" transform="scale(0.0104167)" />
+                </pattern>
+                <image
+                    id="image0_76_146"
+                    width="96"
+                    height="96"
+                    preserveAspectRatio="none"
+                    xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAABqElEQVR4nO3bPUoDURSG4auFUVzrLfKdBZwyIEIWIGQRFmFWZCUIarBUBqYQCTE3mcz9mfeBacdz3pPCIgkBAAAAAAAAAAAAAAAAQEWuhuc0y+XyzsyeJO0kvUp6iDEuRh2xQX0jSY9m9ibpS9LGzO6TX9THN7Pv34+kLUf4N/52T7dNSOHu15I+/76II6THH5rt+qYhhaT3fS/jCGnxh+cjpJK0PvBCjnB8/L7VOlzoxbM+Qrx0I3e/kfR86A+YWefut2FmfKo2HKGAJhyhgBYcIeRvkH2AjIrZvZhBJlTczsUNNMddix1sTjsWP+Acdqtm0JZ3qm7gFnepdvCWdqh5Aa949uoX8QpnbmYhr2jW5hbzCmZsdkEveLbmF/UCZ5rNwl7QLJMqYXEvYIascgbwucfPGcKJny+IEz9fGCd+vkBO/HyhnPhpfMRgxD+RjxCO+GfyMwISfyR+Qkjij8wTghI/83fvxW8YLseP+3TzyS/0CB3x8x2hI36+I3TEz3eEjvj5jtARfyIxxoWZrczsZXhW/KsJAAAAAAAAAAAAAAAAAAACfgDWfm2PiI6wnQAAAABJRU5ErkJggg=="
+                />
+            </defs>
+        </svg>
+    );
+};
+
+export default ExpandArrowIconSvg;

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import BaseButton from "@/components/common/BaseButton";
 import FormInput from "@/components/common/FormInput";
 import Image from "next/image";
-import { ShieldIconSvg } from "@/components/svg-icons";
+import { ShieldIconSvg, ExpandArrowIconSvg } from "@/components/svg-icons";
 import { unverified } from "@/assets/images";
 
 interface IdentityVerificationStepProps {
@@ -53,19 +53,17 @@ const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ ema
 
             {/* Shield Icon */}
             <div className="mt-6 mb-4">
-                <div className="w-[60px] h-[60px] rounded-full bg-gradient-to-br from-[#4A9EF8] to-[#34D399] flex items-center justify-center">
-                    <ShieldIconSvg />
-                </div>
+                <Image src={unverified} alt="Info" width={76} height={76} className="mt-0.5" />
             </div>
 
             {/* Info Box */}
             <div className="w-full max-w-md px-4 sm:px-0 mb-6">
                 <div className="rounded-md border border-[var(--color-link)] bg-[var(--color-tip-bg)] px-4 py-3 text-left">
                     <div className="flex items-start gap-2">
-                        <Image src={unverified} alt="Info" width={20} height={20} className="mt-0.5" />
+                        <ShieldIconSvg />
                         <div>
-                            <p className="text-sm font-semibold text-[var(--color-link)]">Why do we need this?</p>
-                            <p className="text-xs text-[var(--color-link)] mt-1">
+                            <p className="text-[11px] text-medium text-[var(--color-link)]">Why do we need this?</p>
+                            <p className="text-[11px] text-[var(--color-link)] mt-1">
                                 Identity verification helps protect both buyers and sellers, prevents fraud, and builds trust in our marketplace
                                 community.
                             </p>
@@ -81,19 +79,27 @@ const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ ema
                     <label htmlFor="idDocumentType" className="flex items-center text-normal text-sm ml-1 mb-1">
                         <span>ID Document Type</span>
                     </label>
-                    <select
-                        id="idDocumentType"
-                        name="idDocumentType"
-                        value={formData.idDocumentType}
-                        onChange={handleInputChange}
-                        className="w-full rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-normal focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    >
-                        <option value="">Select ID Type</option>
-                        <option value="passport">Passport</option>
-                        <option value="drivers-license">Driver&apos;s License</option>
-                        <option value="national-id">National ID</option>
-                        <option value="voters-id">Voter&apos;s ID</option>
-                    </select>
+                    <div className="relative">
+                        <select
+                            id="idDocumentType"
+                            name="idDocumentType"
+                            value={formData.idDocumentType}
+                            onChange={handleInputChange}
+                            className={`w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-normal focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none ${
+                                formData.idDocumentType === "" ? "select-placeholder" : ""
+                            }`}
+                            style={{ WebkitAppearance: "none", MozAppearance: "none" }}
+                        >
+                            <option value="">Select ID Type</option>
+                            <option value="passport">Passport</option>
+                            <option value="drivers-license">Driver&apos;s License</option>
+                            <option value="national-id">National ID</option>
+                            <option value="voters-id">Voter&apos;s ID</option>
+                        </select>
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <ExpandArrowIconSvg />
+                        </div>
+                    </div>
                 </div>
 
                 {/* ID Number */}

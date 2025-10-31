@@ -13,3 +13,4 @@ export { default as VerifyIconSvg } from "./verify";
 export { default as CheckIconSvg } from "./check";
 export { default as BirthDateIconSvg } from "./birth-date";
 export { default as UploadIconSvg } from "./upload";
+export { default as ExpandArrowIconSvg } from "./expand-arrow-down";

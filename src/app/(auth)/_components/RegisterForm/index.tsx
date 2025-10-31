@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { help, shield } from "@/assets/icons/images";
-import { EyeIconSvg, RefreshIconSvg, HelpIconSvg } from "@/components/svg-icons";
+import { EyeIconSvg, RefreshIconSvg, ShieldIconSvg } from "@/components/svg-icons";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import BaseButton from "@/components/common/BaseButton";
@@ -46,7 +44,7 @@ const RegisterForm = () => {
                 />
                 <div className="space-y-1.5">
                     <label className="inline-flex items-center gap-2 text-sm text-foreground">
-                        <Image src={shield} alt="shield" width={16} height={16} className="h-4 w-4" />
+                        <ShieldIconSvg />
                         <span>Verification Code *</span>
                     </label>
                     <div className="rounded-md border border-border bg-muted h-24 flex items-center justify-center select-none text-4xl tracking-widest text-muted-foreground">

@@ -12,7 +12,7 @@
     --color-gray-250: #e6e6e6;
     --color-gray-300: #d9d9d9;
     --color-gray-400: #e0e0e0;
-    --color-gray-450: #A7A2A2;
+    --color-gray-450: #a7a2a2;
     --color-gray-500: #737373;
     --color-gray-600: #a3a3a3;
     --color-gray-800: #262626;
@@ -24,24 +24,24 @@
     --color-slate-900: #111827;
 
     /* Brand palette */
-    --color-brand: #155DFD;
-    --color-brand-dark: #003AB0;
-    --color-brand-medium: #0A4CD0;
-    --color-brand-muted: #EBF2FF;
-    --color-brand-light: #B5E1FF;
-    --color-link: #135FF9;
+    --color-brand: #155dfd;
+    --color-brand-dark: #003ab0;
+    --color-brand-medium: #0a4cd0;
+    --color-brand-muted: #ebf2ff;
+    --color-brand-light: #b5e1ff;
+    --color-link: #135ff9;
     /* Info/Tip palette */
-    --color-tip-bg: #EFF6FF;      /* light blue background */
-    --color-tip-border: #C6DDF9;  /* subtle blue border */
+    --color-tip-bg: #eff6ff; /* light blue background */
+    --color-tip-border: #c6ddf9; /* subtle blue border */
 
     /* Success palette */
-    --color-success: #03A444;
-    --color-success-dark: #00733D;
-    --color-success-muted: #DBFFEA;
+    --color-success: #03a444;
+    --color-success-dark: #00733d;
+    --color-success-muted: #dbffea;
     --color-success-light: #79c796;
 
     /* Surface */
-    --color-surface-muted: #ECEBF0;
+    --color-surface-muted: #ecebf0;
 
     /* Semantic tokens (light theme) */
     --color-bg: var(--color-white);
@@ -134,6 +134,10 @@ body {
 }
 
 /* Weight/style-only helpers compose with .text-center-flex */
+.text-medium {
+    font-weight: 600;
+}
+
 .text-normal {
     font-weight: 400;
     font-style: normal;
@@ -142,6 +146,31 @@ body {
 .text-light {
     font-weight: 300;
     font-style: normal;
+}
+
+/* Placeholder styles */
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+    color: var(--color-muted-foreground);
+    opacity: 1;
+}
+
+/* Select placeholder styling */
+select.select-placeholder {
+    color: var(--color-muted-foreground) !important;
+}
+
+select.select-placeholder:not(:focus) {
+    color: var(--color-muted-foreground) !important;
+}
+
+select:not(.select-placeholder) {
+    color: var(--color-foreground);
+}
+
+select option {
+    color: var(--color-foreground);
 }
 
 /* Entrance animation */

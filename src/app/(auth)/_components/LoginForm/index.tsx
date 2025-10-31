@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { eye } from "@/assets/icons/images";
-import { GoogleIconSvg, FacebookIconSvg } from "@/components/svg-icons";
+import { GoogleIconSvg, FacebookIconSvg, EyeIconSvg } from "@/components/svg-icons";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import BaseButton from "@/components/common/BaseButton";
@@ -27,9 +25,7 @@ const LoginForm = () => {
                     label="Password"
                     placeholder="Enter your password"
                     autoComplete="current-password"
-                    rightIcon={
-                        <Image src={eye} alt="Toggle password visibility" width={20} height={20} className="h-5 w-5 object-contain opacity-70" />
-                    }
+                    rightIcon={<EyeIconSvg />}
                 />
 
                 {/* Remember me */}
