@@ -6,7 +6,11 @@ import AuthInput from "@/components/forms/AuthInput";
 import BaseButton from "@/components/common/BaseButton";
 import { useLoginFormViewModel } from "./useViewModel";
 
-const LoginForm = () => {
+interface LoginFormProps {
+    onForgotPassword?: () => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
     const { handleLogin } = useLoginFormViewModel();
 
     return (
@@ -34,9 +38,15 @@ const LoginForm = () => {
                         <input type="checkbox" className="h-4 w-4 focus:ring-primary/20" aria-label="Remember me" />
                         Remember Me
                     </label>
-                    <a href="#" className="hover:underline cursor-pointer" style={{ color: "var(--color-link)" }} aria-label="Forgot password">
+                    <button
+                        type="button"
+                        onClick={onForgotPassword}
+                        className="hover:underline cursor-pointer"
+                        style={{ color: "var(--color-link)" }}
+                        aria-label="Forgot password"
+                    >
                         Forgot password?
-                    </a>
+                    </button>
                 </div>
 
                 {/* Submit: instantly hide when parent tab != login via aria-hidden upstream */}
