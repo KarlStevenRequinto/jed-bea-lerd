@@ -10,6 +10,7 @@ import AddressInformationStep from "../_components/AddressInformationStep";
 import IdentityVerificationStep from "../_components/IdentityVerificationStep";
 import PreferencesStep from "../_components/PreferencesStep";
 import ProgressBar from "@/components/common/ProgressBar";
+import SuccessAlert from "@/components/common/SuccessAlert";
 import { useRegisterViewModel } from "./useViewModel";
 
 const RegisterPage = () => {
@@ -104,24 +105,11 @@ const RegisterPage = () => {
 
                             {/* Verified banner */}
                             {verified && (
-                                <div className="w-full max-w-md mt-6 px-4 sm:px-0 animate-fade-in-up">
-                                    <div className="rounded-[12px] border bg-[var(--color-success-muted)] border-[var(--color-success-light)] text-[var(--color-success-dark)] px-4 py-4 shadow-sm">
-                                        <div className="flex items-start gap-3">
-                                            <span className="mt-0.5">
-                                                <CheckIconSvg />
-                                            </span>
-
-                                            <div className="text-left">
-                                                <div className="text-base font-semibold">Email verified</div>
-                                                <div className="text-sm opacity-80">
-                                                    Your email has been successfully verified.
-                                                    <br />
-                                                    Proceeding to profile setup...
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <SuccessAlert
+                                    title="Email verified"
+                                    message="Your email has been successfully verified. Proceeding to profile setup..."
+                                    className="mt-6"
+                                />
                             )}
 
                             {/* Resend */}

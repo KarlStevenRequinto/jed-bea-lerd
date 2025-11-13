@@ -27,6 +27,7 @@
     /* Brand palette */
     --color-brand: #155dfd;
     --color-brand-dark: #003ab0;
+    --color-brand-darker: #023aad;
     --color-brand-medium: #0a4cd0;
     --color-brand-muted: #ebf2ff;
     --color-brand-light: #b5e1ff;
@@ -91,6 +92,7 @@
     --color-slate-900: var(--color-slate-900);
     --color-brand: var(--color-brand);
     --color-brand-dark: var(--color-brand-dark);
+    --color-brand-darker: var(--color-brand-darker);
     --color-brand-medium: var(--color-brand-medium);
     --color-brand-muted: var(--color-brand-muted);
     --color-brand-light: var(--color-brand-light);
