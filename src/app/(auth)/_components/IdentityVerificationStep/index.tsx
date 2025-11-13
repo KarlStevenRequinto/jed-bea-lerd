@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import BaseButton from "@/components/common/BaseButton";
 import FormInput from "@/components/common/FormInput";
 import Image from "next/image";
-import { ShieldIconSvg, ExpandArrowIconSvg, UploadIconSvg } from "@/components/svg-icons";
+import { ShieldIconSvg, UploadIconSvg } from "@/components/svg-icons";
+import CustomSelect from "@/components/common/CustomSelect";
 import { unverified } from "@/assets/images";
+import { useIdentityVerificationViewModel } from "./useViewModel";
 
 interface IdentityVerificationStepProps {
     email: string;
@@ -20,30 +22,7 @@ export interface IdentityVerificationData {
 }
 
 const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ email, onContinue, onBack }) => {
-    const [formData, setFormData] = useState<IdentityVerificationData>({
-        idDocumentType: "",
-        idNumber: "",
-        idDocument: null,
-    });
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setFormData((prev) => ({ ...prev, idDocument: file }));
-        }
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (onContinue) {
-            onContinue(formData);
-        }
-    };
+    const { formData, handleInputChange, handleFileChange, handleSubmit, idDocumentOptions } = useIdentityVerificationViewModel({ onContinue });
 
     return (
         <div className="flex flex-col items-center text-center">
@@ -79,27 +58,14 @@ const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ ema
                     <label htmlFor="idDocumentType" className="flex items-center text-normal text-sm ml-1 mb-1">
                         <span>ID Document Type</span>
                     </label>
-                    <div className="relative">
-                        <select
-                            id="idDocumentType"
-                            name="idDocumentType"
-                            value={formData.idDocumentType}
-                            onChange={handleInputChange}
-                            className={`w-full rounded-md border border-border bg-primary-foreground px-3 py-2 pr-10 text-sm text-normal focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none ${
-                                formData.idDocumentType === "" ? "select-placeholder" : ""
-                            }`}
-                            style={{ WebkitAppearance: "none", MozAppearance: "none" }}
-                        >
-                            <option value="">Select ID Type</option>
-                            <option value="passport">Passport</option>
-                            <option value="drivers-license">Driver&apos;s License</option>
-                            <option value="national-id">National ID</option>
-                            <option value="voters-id">Voter&apos;s ID</option>
-                        </select>
-                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                            <ExpandArrowIconSvg />
-                        </div>
-                    </div>
+                    <CustomSelect
+                        id="idDocumentType"
+                        name="idDocumentType"
+                        value={formData.idDocumentType}
+                        onChange={handleInputChange}
+                        options={idDocumentOptions}
+                        placeholder="Select ID Type"
+                    />
                 </div>
 
                 {/* ID Number */}

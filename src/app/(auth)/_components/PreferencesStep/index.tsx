@@ -67,7 +67,7 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({ email, onComplete, on
                 <div>
                     <label className="flex items-center text-normal text-sm ml-1 mb-2">
                         <span>What are you interested in?</span>
-                        <span className="text-red-500 ml-1">*</span>
+                        <span className="ml-1">*</span>
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                         {interestOptions.map((option) => {

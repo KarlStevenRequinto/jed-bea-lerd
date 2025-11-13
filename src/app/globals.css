@@ -176,6 +176,28 @@ select option {
     color: var(--color-foreground);
 }
 
+/* Custom select dropdown styling */
+select.custom-select option {
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 2px 4px;
+}
+
+select.custom-select option:checked,
+select.custom-select option:hover {
+    background-color: var(--color-gray-300) !important;
+    color: var(--color-foreground) !important;
+    background: var(--color-gray-300) !important;
+}
+
+/* Firefox specific */
+@-moz-document url-prefix() {
+    select.custom-select option:checked {
+        background-color: var(--color-gray-300) !important;
+        background: linear-gradient(var(--color-gray-300), var(--color-gray-300)) !important;
+    }
+}
+
 /* Entrance animation */
 @keyframes fade-in-up {
     from {

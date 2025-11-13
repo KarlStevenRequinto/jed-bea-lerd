@@ -9,6 +9,7 @@ import PersonalInformationStep from "../_components/PersonalInformationStep";
 import AddressInformationStep from "../_components/AddressInformationStep";
 import IdentityVerificationStep from "../_components/IdentityVerificationStep";
 import PreferencesStep from "../_components/PreferencesStep";
+import ProgressBar from "@/components/common/ProgressBar";
 import { useRegisterViewModel } from "./useViewModel";
 
 const RegisterPage = () => {
@@ -33,15 +34,7 @@ const RegisterPage = () => {
     return (
         <div className="min-h-screen w-full bg-primary-foreground" role="main">
             {/* Progress bar */}
-            <div className="w-full max-w-3xl mx-auto pt-4 px-4 sm:px-6">
-                <div className="flex items-center justify-between text-[10px] sm:text-xs text-muted-foreground mb-2 gap-2">
-                    <span className="truncate">Step {currentStep} of 5</span>
-                    <span className="whitespace-nowrap">{progress}% Complete</span>
-                </div>
-                <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
-                    <div className={`h-full bg-[var(--color-success-light)] ${progressWidth} transition-all duration-500 ease-in-out`} />
-                </div>
-            </div>
+            <ProgressBar currentStep={currentStep} totalSteps={5} percent={progress} width={progressWidth} />
 
             {/* Card with X button */}
             <div className="max-w-3xl mx-auto mt-6 mb-10 relative">
