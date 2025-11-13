@@ -14,3 +14,8 @@ export { default as CheckIconSvg } from "./check";
 export { default as BirthDateIconSvg } from "./birth-date";
 export { default as UploadIconSvg } from "./upload";
 export { default as ExpandArrowIconSvg } from "./expand-arrow-down";
+export { default as ApartmentIconSvg } from "./apartment";
+export { default as CityBuildingsIconSvg } from "./city-buildings";
+export { default as SedanIconSvg } from "./sedan";
+export { default as SuvIconSvg } from "./suv";
+export { default as ConvertibleIconSvg } from "./convertible";

@@ -20,8 +20,8 @@ const RootLayout = ({
     children: React.ReactNode;
 }>) => {
     return (
-        <html lang="en">
-            <body className={`${inter.variable} antialiased`}>
+        <html lang="en" suppressHydrationWarning>
+            <body className={`${inter.variable} antialiased`} suppressHydrationWarning>
                 <StoreProvider>
                     <NavbarGate />
                     <main className="flex min-h-[calc(100vh-5rem)] w-full flex-col gap-0">{children}</main>

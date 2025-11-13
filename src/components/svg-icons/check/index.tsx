@@ -2,7 +2,7 @@ import React from "react";
 
 const CheckIconSvg = () => {
     return (
-        <svg width="20" height="20" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
+        <svg width="20" height="20" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <rect width="20" height="20" fill="url(#pattern0_204_325)" />
             <defs>
                 <pattern id="pattern0_204_325" patternContentUnits="objectBoundingBox" width="1" height="1">

@@ -6,11 +6,17 @@ import { VerifyIconSvg, CheckIconSvg } from "@/components/svg-icons";
 import BaseButton from "@/components/common/BaseButton";
 import Link from "next/link";
 import { useState, useLayoutEffect, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store";
+import { login } from "@/store/authSlice";
 import PersonalInformationStep, { PersonalInfoData } from "../_components/PersonalInformationStep";
 import AddressInformationStep, { AddressInfoData } from "../_components/AddressInformationStep";
 import IdentityVerificationStep, { IdentityVerificationData } from "../_components/IdentityVerificationStep";
+import PreferencesStep, { PreferencesData } from "../_components/PreferencesStep";
 
 const RegisterPage = () => {
+    const router = useRouter();
+    const dispatch = useAppDispatch();
     const [verified, setVerified] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const cardRef = useRef<HTMLDivElement>(null);
@@ -45,7 +51,14 @@ const RegisterPage = () => {
 
     const handleIdentityVerificationSubmit = (data: IdentityVerificationData) => {
         console.log("Identity verification submitted:", data);
-        // TODO: Handle step 5 transition
+        setCurrentStep(5);
+    };
+
+    const handlePreferencesSubmit = (data: PreferencesData) => {
+        console.log("Preferences submitted:", data);
+        console.log("Registration complete! Redirecting to homepage...");
+        dispatch(login());
+        router.push("/");
     };
 
     const handleBackToStep2 = () => {
@@ -54,6 +67,10 @@ const RegisterPage = () => {
 
     const handleBackToStep3 = () => {
         setCurrentStep(3);
+    };
+
+    const handleBackToStep4 = () => {
+        setCurrentStep(4);
     };
 
     // Calculate progress
@@ -67,6 +84,8 @@ const RegisterPage = () => {
                 return { percent: 60, width: "w-3/5" };
             case 4:
                 return { percent: 80, width: "w-4/5" };
+            case 5:
+                return { percent: 100, width: "w-full" };
             default:
                 return { percent: 20, width: "w-1/5" };
         }
@@ -238,6 +257,13 @@ const RegisterPage = () => {
                                 onContinue={handleIdentityVerificationSubmit}
                                 onBack={handleBackToStep3}
                             />
+                        </div>
+                    )}
+
+                    {/* Step 5: Preferences */}
+                    {currentStep === 5 && (
+                        <div className="animate-fade-in-up">
+                            <PreferencesStep email="johndoe@email.com" onComplete={handlePreferencesSubmit} onBack={handleBackToStep4} />
                         </div>
                     )}
                 </div>

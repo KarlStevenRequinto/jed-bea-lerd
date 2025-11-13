@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import BaseButton from "@/components/common/BaseButton";
 import FormInput from "@/components/common/FormInput";
 import Image from "next/image";
-import { ShieldIconSvg, ExpandArrowIconSvg } from "@/components/svg-icons";
+import { ShieldIconSvg, ExpandArrowIconSvg, UploadIconSvg } from "@/components/svg-icons";
 import { unverified } from "@/assets/images";
 
 interface IdentityVerificationStepProps {
@@ -118,7 +118,7 @@ const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ ema
                     <label htmlFor="idDocument" className="flex items-center text-normal text-sm ml-1 mb-1">
                         <span>Upload ID Document</span>
                     </label>
-                    <div className="relative border-2 border-dashed border-border rounded-md px-4 py-8 text-center hover:border-[var(--color-link)] transition-colors">
+                    <div className="relative border-2 border-dashed border-border rounded-md px-4 py-4 hover:border-[var(--color-link)] transition-colors">
                         <input
                             id="idDocument"
                             name="idDocument"
@@ -127,25 +127,22 @@ const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ ema
                             onChange={handleFileChange}
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         />
-                        <div className="flex flex-col items-center gap-2">
-                            <div className="w-10 h-10 rounded-full bg-[var(--color-link)] flex items-center justify-center">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M10 13V5M10 5L7 8M10 5L13 8M3 15H17"
-                                        stroke="white"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-[7px] bg-[var(--color-gray-150)] flex items-center justify-center flex-shrink-0">
+                                    <UploadIconSvg />
+                                </div>
+                                <div className="text-left">
+                                    <p className="text-sm font-medium text-foreground">Choose file to upload</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">
+                                        {formData.idDocument ? formData.idDocument.name : "Clear photo of your ID (front side)"}
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="text-sm font-medium text-foreground">Choose file to upload</p>
-                                <p className="text-xs text-muted-foreground mt-1">
-                                    {formData.idDocument ? formData.idDocument.name : "Clear photo of your ID (front side)"}
-                                </p>
-                            </div>
-                            <button type="button" className="text-sm text-[var(--color-link)] font-medium hover:underline">
+                            <button
+                                type="button"
+                                className="h-[15px] w-[50px] bg-[var(--color-gray-150)] text-medium text-[8px] rounded-[5px] hover:opacity-80 transition-opacity flex-shrink-0 flex items-center justify-center"
+                            >
                                 Browse
                             </button>
                         </div>

@@ -2,18 +2,18 @@ import React from "react";
 
 const UploadIconSvg = () => {
     return (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
-            <rect width="20" height="20" fill="url(#pattern0_74_13)" />
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+            <rect width="20" height="20" fill="url(#pattern0_76_237)" />
             <defs>
-                <pattern id="pattern0_74_13" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image0_74_13" transform="scale(0.0104167)" />
+                <pattern id="pattern0_76_237" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image0_76_237" transform="scale(0.0104167)" />
                 </pattern>
                 <image
-                    id="image0_74_13"
+                    id="image0_76_237"
                     width="96"
                     height="96"
                     preserveAspectRatio="none"
-                    xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAADSElEQVR4nO2czU4UQRSFWxcgQtSFifgywougvgISfQZdafwJrPAFEIwLw9KN6BMornClK0GDyPIzJdVJRbqb7hm6bsM9XzIbZqbvufcU1VWdulMUQgghhBBCCCGEEEIMGGASeAR8B74BD8PfrHW5AJgA3nCcTeCStT6vxS+RCYbFL5EJhsUvkQmGxS+RCYbFL5EJhsUvkQmGxS+RCYbFL5EJLXe4b2mm6f0239WOeYyRvxlGccP7ra9hne9ZHfmT8fOVjHItUfwr2rMuBWsyoIMJT8wSHhLAReCgy2g9yYCWJuwDFwrvcGTAYdvitzWghQkh5sVsiQ4Z4GXb4ncx4AQTVntP7KwAzEQTDuPU8LjpJtnFgMSEJ/HaIcZqiNlbQmcVWs7JXQ1Ir695/xRgRAPEKYEMsAUZcBzgGnAX2AC2gd8VNdoDngNTQzMAuAy8AH5WXPp3zGkduBNyLYZCfDbzIBa3LSsDNGClg/5d4L754wzgJvCR7hyMswnilA2Im8E/I+TxAZgtDIv/dQTR58kAYg3ymhA3NqOM/JLlMeNXknEK+p+trNNRnPNHIcydTwd6E56KT2W73MtSlsaJ33W10yRyDZgDpnvUUEmP8aZjTmEVVMcP4GpfGlIxYalZx+J53wcASw35384hIKzzq3jVe/ABGGBeA+BLTfBbvQcfjgFhOqpiO0fw8Ei3ihlHBszUSNg/98kX3jW4Tj5BBnjVYBY4wbUG18knyACvGswCJ7jW4Dr5BBngVYNZ4ATXGlwnnyADvGowC5zgWoPr5BNkgFcNZoETXGtwnXyCDPCqwSxwgmsNrpNP8G7AXoWE3cwaXBvwvELC08waXBswFQ/THsTX8rjnTUfQ4NeAIXQ9ygBjZIAxMsAYGeDYAPPDudYAV2pq8MvyePpc4QRg3vJ4el2bznrhBOB1TQ3WcgQPneK2jWqGxAbtOhZyNemFbsc6NuK/aG9NermJTXrzDSM/X5Nei1HglcUsxU8atUObvjjiffjN0mwGRBNmgZ0owDM7wI2sxU9MuA68wy9bZj/WkZgwEZuXw03ICz+Ae9mnnSbCCiB0iodmZeBzw475LLIPfIq5LWRb7QghhBBCCCGEEEKI4jzxFyBGSgvPSMx0AAAAAElFTkSuQmCC"
+                    xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAADoElEQVR4nO2cQU/UQBzFBw8iYtSDifpl1C+CeiYpMP+HcuxVTxLEwEm/AIrxYDh6UfwEiic86WlBA8ixZsKQNNB22106093/+yVzYZed9/5vOtt2Z2oMIYQQQgghhBBCCCEdJkmSSQDPReQ3gF8i8sz9LbYuFaRpellEPgDIzrStNE2vxNantfgZQ4hf/IwhxC9+xhDiFz9jCPGLnzGE+MXPGEL84mcMIX7xM4ZQkyRJJkXkY1Uhq16v87+8Yh5u5G+5UVz2epPPiO13JEd+4kdv2XsG+SxijBGRl00KVhVA3RAALEcz3CXSNL0kIkdNRmu/AGqGcGCMmTDaSU8COG4yVdQJoF8Irk/XdzCjXQbAmybzdN0AqkIQkdetGxsVZmdnr7kQ/JFwICIvqr4kmwSQ+wFn2X/2sSu+67M1QyPMRJ03NQ3gzOdz3h8WDB4AuQjAAOICBnCe+fn5myLyGMCmiOyIyGFBkfYBrFprp7oWQJqmV0XklYj8KThjOvSe3gF45LyaruDuq4jIU1/crGZb71oAANbr6heRPQBPot/OWFhYuCsiXxsU/tTA0TAXQbjgAJwWAP+a+gCwvbi4eMdELP7PAUSPUwCZq0HwEPzVZeORnxO9NspTEM77+RJ0OvJz/iBC3dy50sUvYWvtlL8r2+S7LN9gQuDOAPqI3LDW3gcw3ZYGtBBAn/6mnSd/FlTmu7e0tHTDtI0/1SwTYcf9OgAnFPZvrX0YQsBmyfTytvXOOxBA9BoA+FFSgHutd96RAPwUWxTATuudu1u6RZ2HvL2LyAH42+dlv7KNt3mjXYNq8zkYAJRqUG0+BwOAUg2qzedgAFCqQbX5HAwASjWoNp+DAUCpBtXmczAAKNWg2nwOBgClGlSbz8EAoFSDavM5GACUalBtPof2APaLVt0F1qA6gNUCDSuBNegNwFo75RbTulXWvq0Nu960KaoD6MKuRwYQGQYQGQYQGQagOIDoi3NjkyTJ9ZIA/kZbnu6WbBslAHgQbXl62TYd93ejBBF5X3IEbLTeudspHn2jWkTcBu0K/zOhHkmwVyFi0x+irW3SC43z4jxVjPxwm/RqjAKtzZpQ+CdQbXfAdNaR9tk9s9SExG3PB7DbAfNZ5LY7Nzd328RARG4B+NSBImQxmntEQbSHdZziDj2/ebkXuyAI13oiIsGnnSrcGYDbKe42KwP4XnbFPKLtAMA3720m2NkOIYQQQgghhBBCCDHjxH9+NKDjy3VluQAAAABJRU5ErkJggg=="
                 />
             </defs>
         </svg>

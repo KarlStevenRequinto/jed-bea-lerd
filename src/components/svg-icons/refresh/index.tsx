@@ -2,7 +2,7 @@ import React from "react";
 
 const RefreshIconSvg = () => {
     return (
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <rect width="30" height="30" fill="url(#pattern0_76_13)" />
             <defs>
                 <pattern id="pattern0_76_13" patternContentUnits="objectBoundingBox" width="1" height="1">
