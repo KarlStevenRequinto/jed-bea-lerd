@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import BaseButton from "@/components/common/BaseButton";
 import Image from "next/image";
 import { verified } from "@/assets/images";
-import { CountryHouseIconSvg, ApartmentIconSvg, CityBuildingsIconSvg, SedanIconSvg, SuvIconSvg, ConvertibleIconSvg } from "@/components/svg-icons";
+import { HomeIconSvg, ApartmentIconSvg, CityBuildingsIconSvg, SedanIconSvg, SuvIconSvg, ConvertibleIconSvg } from "@/components/svg-icons";
 
 interface PreferencesStepProps {
     email: string;
@@ -42,7 +42,7 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({ email, onComplete, on
     };
 
     const interestOptions = [
-        { id: "houses", label: "Houses", icon: CountryHouseIconSvg },
+        { id: "houses", label: "Houses", icon: HomeIconSvg },
         { id: "sedans", label: "Sedans", icon: SedanIconSvg },
         { id: "apartments", label: "Apartments", icon: ApartmentIconSvg },
         { id: "suvs", label: "SUVs", icon: SuvIconSvg },

@@ -19,3 +19,4 @@ export { default as CityBuildingsIconSvg } from "./city-buildings";
 export { default as SedanIconSvg } from "./sedan";
 export { default as SuvIconSvg } from "./suv";
 export { default as ConvertibleIconSvg } from "./convertible";
+export { default as HomeIconSvg } from "./home";
