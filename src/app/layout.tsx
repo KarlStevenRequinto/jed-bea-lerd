@@ -12,6 +12,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
     title: "Auto Real Estate Ecommerce",
     description: "Discover and manage automotive and real estate listings in one place.",
+    icons: {
+        icon: "/home-n-drive-logo.png",
+    },
 };
 
 const RootLayout = ({
