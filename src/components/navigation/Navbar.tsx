@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { logout } from "@/store/authSlice";
+import { logoutUser } from "@/lib/auth/actions";
 
 const navItemsBase = [
     { href: "/", label: "Home" },
@@ -19,9 +19,13 @@ export const Navbar = () => {
 
     const navItems = loggedIn ? [...navItemsBase, { href: "/logout", label: "Logout" }] : [...navItemsBase, { href: "/login", label: "Login" }];
 
-    const handleLogout = () => {
-        dispatch(logout());
-        router.push("/login");
+    const handleLogout = async () => {
+        const result = await logoutUser(dispatch);
+        if (result.success) {
+            router.push("/login");
+        } else {
+            alert("Logout failed. Please try again.");
+        }
     };
 
     return (

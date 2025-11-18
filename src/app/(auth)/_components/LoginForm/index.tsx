@@ -11,14 +11,30 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
-    const { handleLogin } = useLoginFormViewModel();
+    const { email, setEmail, password, setPassword, rememberMe, setRememberMe, handleLogin, loading, error } = useLoginFormViewModel();
 
     return (
         <div className="space-y-6" aria-labelledby="welcome-heading">
             <AuthSectionHeader title="Welcome Back!" subtitle="Sign in to your account to continue" />
 
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()} aria-describedby="identifier-help password-help">
-                <AuthInput id="identifier" name="identifier" type="text" label="Email" placeholder="Enter your email" autoComplete="email" />
+            {error && (
+                <div className="rounded-md bg-red-50 p-3 text-sm text-red-800 border border-red-200">
+                    {error}
+                </div>
+            )}
+
+            <form className="space-y-4" onSubmit={handleLogin} aria-describedby="identifier-help password-help">
+                <AuthInput
+                    id="identifier"
+                    name="identifier"
+                    type="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
                 <p id="identifier-help" className="sr-only">
                     Enter the email you used to register.
                 </p>
@@ -30,12 +46,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
                     placeholder="Enter your password"
                     autoComplete="current-password"
                     rightIcon={<EyeIconSvg />}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
 
                 {/* Remember me */}
                 <div className="flex items-center justify-between text-light text-sm">
                     <label className="inline-flex items-center gap-2 text-foreground">
-                        <input type="checkbox" className="h-4 w-4 focus:ring-primary/20" aria-label="Remember me" />
+                        <input
+                            type="checkbox"
+                            className="h-4 w-4 focus:ring-primary/20"
+                            aria-label="Remember me"
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                        />
                         Remember Me
                     </label>
                     <button
@@ -50,8 +75,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
                 </div>
 
                 {/* Submit: instantly hide when parent tab != login via aria-hidden upstream */}
-                <BaseButton type="button" onClick={handleLogin} className="w-full bg-brand text-primary-foreground transition-none">
-                    Log In
+                <BaseButton type="submit" className="w-full bg-brand text-primary-foreground transition-none" disabled={loading}>
+                    {loading ? "Logging in..." : "Log In"}
                 </BaseButton>
             </form>
 
