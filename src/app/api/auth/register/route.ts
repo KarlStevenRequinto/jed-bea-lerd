@@ -6,6 +6,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -77,8 +78,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Step 2: Create user profile in database
-    const { error: profileError } = await supabase
+    // Step 2: Create user profile in database using admin client
+    // Use admin client to bypass RLS for user creation
+    const adminClient = createAdminClient()
+    const { error: profileError } = await adminClient
       .from('profiles')
       .insert({
         id: authData.user.id,
@@ -97,15 +100,19 @@ export async function POST(request: NextRequest) {
         document_url: documentUrl,
         interests,
         bio,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        // Don't set created_at and updated_at - they have defaults
       })
 
     if (profileError) {
       console.error('Profile creation error:', profileError)
       // User is created but profile failed - you may want to handle this
       return NextResponse.json(
-        { error: 'Failed to create user profile', details: profileError.message },
+        {
+          error: 'Failed to create user profile',
+          details: profileError.message,
+          code: profileError.code,
+          hint: profileError.hint
+        },
         { status: 500 }
       )
     }

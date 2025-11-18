@@ -19,6 +19,7 @@ const RegisterPage = () => {
         setVerified,
         currentStep,
         cardRef,
+        registrationData,
         handlePersonalInfoSubmit,
         handleAddressInfoSubmit,
         handleIdentityVerificationSubmit,
@@ -44,7 +45,7 @@ const RegisterPage = () => {
                     <button
                         onClick={handleReset}
                         className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-muted hover:bg-gray-300 flex items-center justify-center transition-colors z-20 shadow-md"
-                        aria-label="Go back to step 1"
+                        aria-label="Go back to login"
                     >
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -72,7 +73,7 @@ const RegisterPage = () => {
                         <div className="flex flex-col items-center text-center">
                             <h1 className="text-normal text-2xl text-foreground">Verify Your Email</h1>
                             <p className="mt-2 text-[13px] text-light px-4 sm:px-0">
-                                We&apos;ve sent a 6-digit code to <span className="font-medium text-foreground">username@email.com</span>
+                                We&apos;ve sent a 6-digit code to <span className="font-medium text-foreground">{registrationData.email || "your email"}</span>
                             </p>
 
                             {/* Center icon */}
@@ -138,23 +139,25 @@ const RegisterPage = () => {
                             )}
 
                             {/* Registering as */}
-                            <div className="mt-8 text-sm sm:text-base text-muted-foreground px-4 sm:px-0">
-                                Registering as: <span className="font-semibold text-foreground">johndoe@email.com</span>
-                            </div>
+                            {registrationData.email && (
+                                <div className="mt-8 text-sm sm:text-base text-muted-foreground px-4 sm:px-0">
+                                    Registering as: <span className="font-semibold text-foreground">{registrationData.email}</span>
+                                </div>
+                            )}
                         </div>
                     )}
 
                     {/* Step 2: Personal Information */}
                     {currentStep === 2 && (
                         <div className="animate-fade-in-up">
-                            <PersonalInformationStep email="johndoe@email.com" onContinue={handlePersonalInfoSubmit} />
+                            <PersonalInformationStep email={registrationData.email || ""} onContinue={handlePersonalInfoSubmit} />
                         </div>
                     )}
 
                     {/* Step 3: Address Information */}
                     {currentStep === 3 && (
                         <div className="animate-fade-in-up">
-                            <AddressInformationStep email="johndoe@email.com" onContinue={handleAddressInfoSubmit} onBack={handleBackToStep2} />
+                            <AddressInformationStep email={registrationData.email || ""} onContinue={handleAddressInfoSubmit} onBack={handleBackToStep2} />
                         </div>
                     )}
 
@@ -162,7 +165,7 @@ const RegisterPage = () => {
                     {currentStep === 4 && (
                         <div className="animate-fade-in-up">
                             <IdentityVerificationStep
-                                email="johndoe@email.com"
+                                email={registrationData.email || ""}
                                 onContinue={handleIdentityVerificationSubmit}
                                 onBack={handleBackToStep3}
                             />
@@ -172,7 +175,7 @@ const RegisterPage = () => {
                     {/* Step 5: Preferences */}
                     {currentStep === 5 && (
                         <div className="animate-fade-in-up">
-                            <PreferencesStep email="johndoe@email.com" onComplete={handlePreferencesSubmit} onBack={handleBackToStep4} />
+                            <PreferencesStep email={registrationData.email || ""} onComplete={handlePreferencesSubmit} onBack={handleBackToStep4} />
                         </div>
                     )}
                 </div>

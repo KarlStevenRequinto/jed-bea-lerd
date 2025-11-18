@@ -1,5 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@/store";
 import { registerUser } from "@/lib/auth/actions";
 import { PersonalInfoData } from "../_components/PersonalInformationStep";
@@ -10,16 +10,21 @@ import { RegistrationRequest } from "@/lib/types/auth";
 
 export const useRegisterViewModel = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const dispatch = useAppDispatch();
     const [verified, setVerified] = useState(false);
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(1); // Start at 1 (email verification)
     const [loading, setLoading] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
 
+    // Get email and password from URL params
+    const emailFromUrl = searchParams.get("email") || "";
+    const passwordFromUrl = searchParams.get("password") || "";
+
     // Store all registration data
     const [registrationData, setRegistrationData] = useState<Partial<RegistrationRequest>>({
-        email: "johndoe@email.com", // TODO: Get from Step 1 form
-        password: "password123", // TODO: Get from Step 1 form
+        email: emailFromUrl,
+        password: passwordFromUrl,
     });
 
     // Set minimum height for card to prevent layout shifts
@@ -31,7 +36,7 @@ export const useRegisterViewModel = () => {
         }
     }, []);
 
-    // Handle transition from step 1 to step 2
+    // Handle transition from step 1 (verification) to step 2 (personal info)
     useEffect(() => {
         if (verified) {
             const timer = setTimeout(() => {
@@ -49,7 +54,7 @@ export const useRegisterViewModel = () => {
             lastName: data.lastName,
             dateOfBirth: data.dateOfBirth,
             phoneNumber: data.phoneNumber,
-            profilePhotoUrl: data.profilePhotoUrl,
+            profilePhotoUrl: data.profilePhoto ? URL.createObjectURL(data.profilePhoto) : undefined,
         }));
         setCurrentStep(3);
     };
@@ -58,7 +63,7 @@ export const useRegisterViewModel = () => {
         console.log("Address info submitted:", data);
         setRegistrationData((prev) => ({
             ...prev,
-            streetAddress: data.streetAddress,
+            streetAddress: `${data.streetAddress1}${data.streetAddress2 ? ', ' + data.streetAddress2 : ''}`,
             city: data.city,
             province: data.province,
             zipCode: data.zipCode,
@@ -69,11 +74,22 @@ export const useRegisterViewModel = () => {
 
     const handleIdentityVerificationSubmit = (data: IdentityVerificationData) => {
         console.log("Identity verification submitted:", data);
+
+        // Map the idDocumentType to match the database enum
+        let idType: "passport" | "drivers_license" | "national_id" = "passport";
+        if (data.idDocumentType === "Driver's License") {
+            idType = "drivers_license";
+        } else if (data.idDocumentType === "National ID") {
+            idType = "national_id";
+        } else if (data.idDocumentType === "Passport") {
+            idType = "passport";
+        }
+
         setRegistrationData((prev) => ({
             ...prev,
-            idType: data.idType as "passport" | "drivers_license" | "national_id",
+            idType,
             idNumber: data.idNumber,
-            documentUrl: data.documentUrl,
+            documentUrl: data.idDocument ? URL.createObjectURL(data.idDocument) : undefined,
         }));
         setCurrentStep(5);
     };
@@ -124,8 +140,7 @@ export const useRegisterViewModel = () => {
     };
 
     const handleReset = () => {
-        setCurrentStep(1);
-        setVerified(false);
+        router.push("/login");
     };
 
     const getProgress = () => {
@@ -150,6 +165,8 @@ export const useRegisterViewModel = () => {
         setVerified,
         currentStep,
         cardRef,
+        registrationData,
+        loading,
         handlePersonalInfoSubmit,
         handleAddressInfoSubmit,
         handleIdentityVerificationSubmit,
