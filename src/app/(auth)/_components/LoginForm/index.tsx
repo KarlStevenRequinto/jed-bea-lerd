@@ -1,6 +1,6 @@
 "use client";
 
-import { GoogleIconSvg, FacebookIconSvg, EyeIconSvg } from "@/components/svg-icons";
+import { GoogleIconSvg, FacebookIconSvg } from "@/components/svg-icons";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import BaseButton from "@/components/common/BaseButton";
@@ -45,7 +45,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
                     label="Password"
                     placeholder="Enter your password"
                     autoComplete="current-password"
-                    rightIcon={<EyeIconSvg />}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required

@@ -1,6 +1,6 @@
 "use client";
 
-import { EyeIconSvg, RefreshIconSvg, ShieldIconSvg } from "@/components/svg-icons";
+import { RefreshIconSvg, ShieldIconSvg } from "@/components/svg-icons";
 import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
 import AuthInput from "@/components/forms/AuthInput";
 import BaseButton from "@/components/common/BaseButton";
@@ -50,11 +50,6 @@ const RegisterForm = () => {
                         autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        rightIcon={
-                            <span className="opacity-70 cursor-pointer">
-                                <EyeIconSvg />
-                            </span>
-                        }
                         required
                     />
                     {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
@@ -69,11 +64,6 @@ const RegisterForm = () => {
                         autoComplete="new-password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        rightIcon={
-                            <span className="opacity-70 cursor-pointer">
-                                <EyeIconSvg />
-                            </span>
-                        }
                         required
                     />
                     {errors.confirmPassword && <p className="mt-1 text-xs text-red-600">{errors.confirmPassword}</p>}
