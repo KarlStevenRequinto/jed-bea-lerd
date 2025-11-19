@@ -1,10 +1,7 @@
-"use client";
-
-import { Navbar } from "./Navbar";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const NavbarGate = () => {
+export const useNavbarGateViewModel = () => {
     const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
 
@@ -15,9 +12,8 @@ const NavbarGate = () => {
     // Hide navbar on auth pages
     const isAuthPage = pathname === "/login" || pathname === "/register";
 
-    if (!mounted) return null;
-    if (isAuthPage) return null;
-    return <Navbar />;
+    return {
+        mounted,
+        isAuthPage,
+    };
 };
-
-export default NavbarGate;

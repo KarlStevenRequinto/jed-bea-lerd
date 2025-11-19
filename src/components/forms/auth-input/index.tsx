@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { EyeVisibleIconSvg, EyeInvisibleIconSvg } from "@/components/svg-icons";
+import { useAuthInputViewModel } from "./useViewModel";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
     label: string;
@@ -10,14 +11,7 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const AuthInput: React.FC<Props> = ({ label, id, rightIcon, className = "", type, ...rest }) => {
-    const [showPassword, setShowPassword] = useState(false);
-    const isPasswordField = type === "password";
-
-    const togglePasswordVisibility = () => {
-        setShowPassword((prev) => !prev);
-    };
-
-    const inputType = isPasswordField ? (showPassword ? "text" : "password") : type;
+    const { showPassword, isPasswordField, togglePasswordVisibility, inputType } = useAuthInputViewModel(type);
 
     return (
         <div className="space-y-1.5">

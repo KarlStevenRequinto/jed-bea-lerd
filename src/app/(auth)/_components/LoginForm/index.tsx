@@ -1,8 +1,8 @@
 "use client";
 
 import { GoogleIconSvg, FacebookIconSvg } from "@/components/svg-icons";
-import AuthSectionHeader from "@/components/forms/AuthSectionHeader";
-import AuthInput from "@/components/forms/AuthInput";
+import AuthSectionHeader from "@/components/forms/auth-section-header";
+import AuthInput from "@/components/forms/auth-input";
 import BaseButton from "@/components/common/BaseButton";
 import { useLoginFormViewModel } from "./useViewModel";
 

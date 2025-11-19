@@ -12,9 +12,23 @@ const loadPreloadedState = () => {
         // If missing, default to false (user not logged in)
         if (v === null) {
             window.localStorage.setItem("auth.loggedIn", "false");
-            return { auth: { loggedIn: false } } as const;
+            return {
+                auth: {
+                    loggedIn: false,
+                    user: null,
+                    loading: false,
+                    error: null
+                }
+            };
         }
-        return { auth: { loggedIn: v === "true" } } as const;
+        return {
+            auth: {
+                loggedIn: v === "true",
+                user: null,
+                loading: false,
+                error: null
+            }
+        };
     } catch {
         return undefined;
     }
