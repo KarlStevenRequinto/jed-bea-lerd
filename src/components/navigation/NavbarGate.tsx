@@ -1,11 +1,9 @@
 "use client";
 
-import { useAppSelector } from "@/store";
 import { Navbar } from "./Navbar";
 import { useEffect, useState } from "react";
 
 const NavbarGate = () => {
-    const loggedIn = useAppSelector((s) => s.auth.loggedIn);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -13,7 +11,6 @@ const NavbarGate = () => {
     }, []);
 
     if (!mounted) return null;
-    if (!loggedIn) return null;
     return <Navbar />;
 };
 
