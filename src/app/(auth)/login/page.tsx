@@ -120,11 +120,11 @@ const LoginPage = () => {
 
                     {/* Content with smooth cross-fade/slide transition */}
                     <div
-                        className={`w-full ${mode === "login" ? "mt-6" : "flex items-center justify-center"}`}
+                        className={`relative w-full ${mode === "login" ? "mt-6 min-h-[650px]" : "flex items-center justify-center"}`}
                     >
                         {tab === "login" && mode === "login" && (
                             <div
-                                className={`w-full ${loginPanelClass}`}
+                                className={`absolute inset-0 overflow-y-auto ${loginPanelClass}`}
                                 role="tabpanel"
                                 id="panel-login"
                                 aria-labelledby="tab-login"
@@ -138,17 +138,15 @@ const LoginPage = () => {
                                 <ForgotPasswordForm onBackToLogin={handleBackToLogin} />
                             </div>
                         )}
-                        {tab === "register" && (
-                            <div
-                                className={`w-full transition-all duration-300 ease-out ${registerPanelClass}`}
-                                role="tabpanel"
-                                id="panel-register"
-                                aria-labelledby="tab-register"
-                                aria-hidden={false}
-                            >
-                                <RegisterForm />
-                            </div>
-                        )}
+                        <div
+                            className={`absolute inset-0 overflow-y-auto transition-all duration-300 ease-out ${registerPanelClass}`}
+                            role="tabpanel"
+                            id="panel-register"
+                            aria-labelledby="tab-register"
+                            aria-hidden={tab !== "register"}
+                        >
+                            <RegisterForm />
+                        </div>
                     </div>
                 </div>
             </section>
