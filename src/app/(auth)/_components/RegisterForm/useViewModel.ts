@@ -5,6 +5,8 @@ export const useRegisterFormViewModel = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [verificationCode, setVerificationCode] = useState("");
+    const [captchaId, setCaptchaId] = useState("");
+    const [isValidating, setIsValidating] = useState(false);
     const [errors, setErrors] = useState<{
         email?: string;
         password?: string;
@@ -12,7 +14,7 @@ export const useRegisterFormViewModel = () => {
         verificationCode?: string;
     }>({});
 
-    const handleRegister = (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Validate
@@ -34,8 +36,8 @@ export const useRegisterFormViewModel = () => {
             newErrors.confirmPassword = "Passwords do not match";
         }
 
-        if (!verificationCode || verificationCode.toLowerCase() !== "706de") {
-            newErrors.verificationCode = "Incorrect verification code";
+        if (!verificationCode) {
+            newErrors.verificationCode = "Verification code is required";
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -43,8 +45,43 @@ export const useRegisterFormViewModel = () => {
             return false;
         }
 
-        setErrors({});
-        return true;
+        // Validate CAPTCHA with server
+        if (!captchaId) {
+            newErrors.verificationCode = "CAPTCHA session expired. Please refresh.";
+            setErrors(newErrors);
+            return false;
+        }
+
+        setIsValidating(true);
+        try {
+            const response = await fetch("/api/captcha/validate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    captchaId,
+                    code: verificationCode,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!data.valid) {
+                newErrors.verificationCode = data.error || "Incorrect verification code";
+                setErrors(newErrors);
+                setVerificationCode(""); // Clear input on error
+                return false;
+            }
+
+            setErrors({});
+            return true;
+        } catch (error) {
+            console.error("CAPTCHA validation error:", error);
+            newErrors.verificationCode = "Failed to validate CAPTCHA. Please try again.";
+            setErrors(newErrors);
+            return false;
+        } finally {
+            setIsValidating(false);
+        }
     };
 
     return {
@@ -56,6 +93,9 @@ export const useRegisterFormViewModel = () => {
         setConfirmPassword,
         verificationCode,
         setVerificationCode,
+        captchaId,
+        setCaptchaId,
+        isValidating,
         errors,
         handleRegister,
     };

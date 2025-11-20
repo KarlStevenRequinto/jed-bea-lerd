@@ -1,20 +1,32 @@
 "use client";
 
-import { RefreshIconSvg, ShieldIconSvg } from "@/components/svg-icons";
 import AuthSectionHeader from "@/components/forms/auth-section-header";
 import AuthInput from "@/components/forms/auth-input";
 import BaseButton from "@/components/common/BaseButton";
+import Captcha from "@/components/common/Captcha";
 import { useRegisterFormViewModel } from "./useViewModel";
 import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
-    const { email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, verificationCode, setVerificationCode, errors, handleRegister } =
-        useRegisterFormViewModel();
+    const {
+        email,
+        setEmail,
+        password,
+        setPassword,
+        confirmPassword,
+        setConfirmPassword,
+        verificationCode,
+        setVerificationCode,
+        setCaptchaId,
+        isValidating,
+        errors,
+        handleRegister
+    } = useRegisterFormViewModel();
     const router = useRouter();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const isValid = handleRegister(e);
+        const isValid = await handleRegister(e);
 
         if (isValid) {
             // Pass email and password to the /register route via URL params
@@ -68,36 +80,20 @@ const RegisterForm = () => {
                     />
                     {errors.confirmPassword && <p className="mt-1 text-xs text-red-600">{errors.confirmPassword}</p>}
                 </div>
-                <div className="space-y-1.5">
-                    <label className="inline-flex items-center gap-2 text-sm text-foreground">
-                        <ShieldIconSvg />
-                        <span>Verification Code *</span>
-                    </label>
-                    <div className="rounded-md border border-border bg-muted h-24 flex items-center justify-center select-none text-4xl tracking-widest text-muted-foreground">
-                        7 0 6 D E
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <input
-                            className="flex-1 rounded-md border border-border bg-primary-foreground px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
-                            placeholder="Enter the code above"
-                            value={verificationCode}
-                            onChange={(e) => setVerificationCode(e.target.value)}
-                            required
-                        />
-                        <button
-                            type="button"
-                            className="flex items-center justify-center w-10 h-10 rounded-md border border-border bg-primary-foreground opacity-70 hover:opacity-100 cursor-pointer"
-                            aria-label="Refresh code"
-                        >
-                            <RefreshIconSvg />
-                        </button>
-                    </div>
-                    {errors.verificationCode && <p className="text-xs text-red-600">{errors.verificationCode}</p>}
-                    <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
-                </div>
+                <Captcha
+                    value={verificationCode}
+                    onChange={setVerificationCode}
+                    error={errors.verificationCode}
+                    onCaptchaIdChange={setCaptchaId}
+                />
             </div>
-            <BaseButton type="submit" className="w-full bg-[var(--color-success-light)] text-primary-foreground" aria-label="Create account">
-                Create Account
+            <BaseButton
+                type="submit"
+                className="w-full bg-[var(--color-success-light)] text-primary-foreground"
+                aria-label="Create account"
+                disabled={isValidating}
+            >
+                {isValidating ? "Validating..." : "Create Account"}
             </BaseButton>
             <div className="space-y-2 text-center text-[12px]">
                 <p className="text-muted-foreground">
