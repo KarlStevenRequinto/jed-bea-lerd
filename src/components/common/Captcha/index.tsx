@@ -22,7 +22,7 @@ const Captcha: React.FC<CaptchaProps> = ({ value, onChange, error, onCaptchaIdCh
             </label>
 
             {/* CAPTCHA Display - Canvas based */}
-            <div className="relative rounded-md border border-border bg-muted h-24 flex items-center justify-center overflow-hidden">
+            <div className="relative rounded-md border border-border bg-muted h-20 flex items-center justify-center overflow-hidden">
                 {isLoading ? (
                     <div className="text-sm text-muted-foreground">Loading...</div>
                 ) : (
@@ -54,11 +54,14 @@ const Captcha: React.FC<CaptchaProps> = ({ value, onChange, error, onCaptchaIdCh
                 </button>
             </div>
 
-            {error && (
-                <p id="captcha-error" className="text-xs text-red-600">
-                    {error}
-                </p>
-            )}
+            {/* Fixed height container for error message to prevent layout shift */}
+            <div className="min-h-[20px]">
+                {error && (
+                    <p id="captcha-error" className="text-xs text-red-600">
+                        {error}
+                    </p>
+                )}
+            </div>
 
             <p className="text-[12px] text-muted-foreground">Enter the code shown above to verify you&apos;re human</p>
         </div>

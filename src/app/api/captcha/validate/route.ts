@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Case-insensitive comparison
-    const isValid = storedCode.toLowerCase() === code.toLowerCase()
+    // Case-SENSITIVE comparison (exact match required)
+    const isValid = storedCode === code
 
     // Delete the captcha after validation attempt (one-time use)
     cookieStore.delete(`captcha_${captchaId}`)

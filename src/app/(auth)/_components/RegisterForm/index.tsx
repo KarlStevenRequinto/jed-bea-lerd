@@ -35,9 +35,9 @@ const RegisterForm = () => {
     };
 
     return (
-        <form className="space-y-4" onSubmit={handleSubmit}>
-            <AuthSectionHeader title="Create an account" subtitle="Join HomeNDrive today" className="mb-2" />
-            <div className="[&>*+*]:mt-3">
+        <form className="space-y-3" onSubmit={handleSubmit}>
+            <AuthSectionHeader title="Create an account" subtitle="Join HomeNDrive today" className="mb-1" />
+            <div className="[&>*+*]:mt-2.5">
                 <div>
                     <AuthInput
                         id="email"

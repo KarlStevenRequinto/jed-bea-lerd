@@ -120,11 +120,11 @@ const LoginPage = () => {
 
                     {/* Content with smooth cross-fade/slide transition */}
                     <div
-                        className={`relative w-full overflow-hidden ${mode === "login" ? "mt-6 min-h-[540px]" : "flex items-center justify-center"}`}
+                        className={`w-full ${mode === "login" ? "mt-6" : "flex items-center justify-center"}`}
                     >
                         {tab === "login" && mode === "login" && (
                             <div
-                                className={`absolute inset-0 ${loginPanelClass}`}
+                                className={`w-full ${loginPanelClass}`}
                                 role="tabpanel"
                                 id="panel-login"
                                 aria-labelledby="tab-login"
@@ -138,15 +138,17 @@ const LoginPage = () => {
                                 <ForgotPasswordForm onBackToLogin={handleBackToLogin} />
                             </div>
                         )}
-                        <div
-                            className={`absolute inset-0 transition-all duration-300 ease-out ${registerPanelClass}`}
-                            role="tabpanel"
-                            id="panel-register"
-                            aria-labelledby="tab-register"
-                            aria-hidden={tab !== "register"}
-                        >
-                            <RegisterForm />
-                        </div>
+                        {tab === "register" && (
+                            <div
+                                className={`w-full transition-all duration-300 ease-out ${registerPanelClass}`}
+                                role="tabpanel"
+                                id="panel-register"
+                                aria-labelledby="tab-register"
+                                aria-hidden={false}
+                            >
+                                <RegisterForm />
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
