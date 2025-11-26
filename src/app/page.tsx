@@ -2,45 +2,59 @@
 
 import { useHomePageViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
+import CategoryCard from "@/components/common/CategoryCard";
 import { RealEstateSvgIcon, CarSvgIcon } from "@/components/svg-icons";
 
 const HomePage = () => {
     useHomePageViewModel();
 
     return (
-        <div className="min-h-screen w-full flex flex-col items-center justify-center gap-6 bg-background p-8">
-            <h1 className="text-3xl font-bold text-foreground mb-8">Homepage</h1>
+        <div className="min-h-screen w-full flex flex-col items-center justify-center gap-6 p-8 relative overflow-hidden">
+            {/* Gradient background with circles */}
+            <div
+                className="absolute inset-0 -z-10"
+                style={{
+                    background: `linear-gradient(to bottom right, var(--color-blue-primary), var(--color-blue-light), var(--color-green-primary))`,
+                }}
+            >
+                {/* Decorative circles */}
+                <div
+                    className="absolute w-[400px] h-[400px] rounded-full opacity-30 blur-3xl top-20 right-40"
+                    style={{ background: "var(--color-blue-medium)" }}
+                />
+                <div
+                    className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl bottom-10 left-20"
+                    style={{ background: "var(--color-blue-dark)" }}
+                />
+            </div>
+
+            <h1 className="text-3xl font-bold text-white mb-8">Homepage</h1>
 
             {/* Top buttons - Get Started Free & Sign In */}
             <div className="flex gap-4 mb-8">
-                <BaseButton className="bg-white text-[#4169E1] border-2 border-[#4169E1] px-8 py-3 text-base font-semibold rounded-lg">
+                <BaseButton
+                    className="bg-white px-8 py-3 text-base font-semibold rounded-lg"
+                    style={{
+                        color: "var(--color-blue-primary)",
+                        border: "2px solid var(--color-blue-primary)",
+                    }}
+                >
                     Get Started Free
                 </BaseButton>
-                <BaseButton className="bg-white text-[#4CAF50] border-2 border-[#4CAF50] px-8 py-3 text-base font-semibold rounded-lg">
+                <BaseButton
+                    className="bg-white px-8 py-3 text-base font-semibold rounded-lg"
+                    style={{
+                        color: "var(--color-green-primary)",
+                        border: "2px solid var(--color-green-primary)",
+                    }}
+                >
                     Sign In
                 </BaseButton>
             </div>
 
-            {/* Category buttons */}
-            <div className="flex flex-col gap-4 w-full max-w-md">
-                <BaseButton
-                    leftIcon={<RealEstateSvgIcon />}
-                    className="bg-[#6B9EFF] text-foreground border border-gray-300 px-6 py-4 text-lg font-semibold rounded-lg w-full"
-                >
-                    ALL LISTING
-                </BaseButton>
-                <BaseButton
-                    leftIcon={<RealEstateSvgIcon />}
-                    className="bg-white text-foreground border border-gray-300 px-6 py-4 text-lg font-semibold rounded-lg w-full"
-                >
-                    PROPERTIES
-                </BaseButton>
-                <BaseButton
-                    leftIcon={<CarSvgIcon />}
-                    className="bg-white text-foreground border border-gray-300 px-6 py-4 text-lg font-semibold rounded-lg w-full"
-                >
-                    VEHICLES
-                </BaseButton>
+            {/* Category Cards */}
+            <div className="flex flex-col gap-6 w-full max-w-[820px]">
+                <CategoryCard icon={<CarSvgIcon />} title="Vehicles" description="Explore SUVs, Sedans, trucks, and more" />
             </div>
         </div>
     );

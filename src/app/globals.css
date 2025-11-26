@@ -42,6 +42,14 @@
     --color-success-muted: #dbffea;
     --color-success-light: #79c796;
 
+    /* Homepage/Category colors */
+    --color-category-card-bg: #BDD0FF;
+    --color-blue-primary: #4169E1;
+    --color-blue-light: #6B9EFF;
+    --color-blue-medium: #5B8FFF;
+    --color-blue-dark: #3D7EE8;
+    --color-green-primary: #4CAF50;
+
     /* Surface */
     --color-surface-muted: #ecebf0;
 
@@ -104,6 +112,12 @@
     --color-link: var(--color-link);
     --color-tip-bg: var(--color-tip-bg);
     --color-tip-border: var(--color-tip-border);
+    --color-category-card-bg: var(--color-category-card-bg);
+    --color-blue-primary: var(--color-blue-primary);
+    --color-blue-light: var(--color-blue-light);
+    --color-blue-medium: var(--color-blue-medium);
+    --color-blue-dark: var(--color-blue-dark);
+    --color-green-primary: var(--color-green-primary);
 }
 
 /* Dark theme is applied by toggling .theme-dark on <html> */
