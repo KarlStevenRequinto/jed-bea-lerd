@@ -23,3 +23,7 @@ export { default as HomeIconSvg } from "./home";
 export { default as CarSvgIcon } from "./car";
 export { default as RealEstateSvgIcon } from "./real-estate";
 export { default as LockIconSvg } from "./lock";
+export { default as PriceTagSvgIcon } from "./price-tag";
+export { default as SearchSvgIcon } from "./search";
+export { default as SpeedBubbleSvgIcon } from "./speed-bubble";
+export { default as HeartSvgIcon } from "./heart";
