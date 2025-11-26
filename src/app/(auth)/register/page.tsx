@@ -16,10 +16,14 @@ import { useRegisterViewModel } from "./useViewModel";
 const RegisterPage = () => {
     const {
         verified,
-        setVerified,
         currentStep,
         cardRef,
         registrationData,
+        loading,
+        verificationCode,
+        setVerificationCode,
+        verificationError,
+        countdown,
         handlePersonalInfoSubmit,
         handleAddressInfoSubmit,
         handleIdentityVerificationSubmit,
@@ -28,6 +32,8 @@ const RegisterPage = () => {
         handleBackToStep3,
         handleBackToStep4,
         handleReset,
+        handleSendVerification,
+        handleVerifyCode,
         getProgress,
     } = useRegisterViewModel();
 
@@ -83,23 +89,32 @@ const RegisterPage = () => {
 
                             <p className="text-normal text-sm text-muted-foreground px-4 sm:px-0">Enter verification code</p>
 
-                            {/* 6-digit code blocks (static placeholder) */}
-                            <div className="mt-3 flex gap-2 sm:gap-3">
-                                {[0, 2, 1, 1, 2, 5].map((d, idx) => (
-                                    <div
-                                        key={idx}
-                                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-md bg-muted flex items-center justify-center text-foreground/80 font-semibold"
-                                    >
-                                        {d}
-                                    </div>
-                                ))}
+                            {/* 6-digit code input */}
+                            <div className="mt-3 w-full max-w-md px-4 sm:px-0">
+                                <input
+                                    type="text"
+                                    inputMode="numeric"
+                                    maxLength={6}
+                                    value={verificationCode}
+                                    onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ""))}
+                                    className="w-full text-center text-3xl tracking-[1rem] font-semibold rounded-md border border-border bg-muted px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                    placeholder="000000"
+                                    disabled={loading || verified}
+                                />
+                                {verificationError && (
+                                    <p className="mt-2 text-xs text-red-600 text-center">{verificationError}</p>
+                                )}
                             </div>
 
                             {/* Verify button */}
                             {!verified && (
                                 <div className="w-full max-w-md mt-6 px-4 sm:px-0">
-                                    <BaseButton className="w-full bg-brand text-primary-foreground" onClick={() => setVerified(true)}>
-                                        Verify Email
+                                    <BaseButton
+                                        className="w-full bg-brand text-primary-foreground"
+                                        onClick={handleVerifyCode}
+                                        disabled={loading || verificationCode.length !== 6}
+                                    >
+                                        {loading ? "Verifying..." : "Verify Email"}
                                     </BaseButton>
                                 </div>
                             )}
@@ -116,7 +131,17 @@ const RegisterPage = () => {
                             {/* Resend */}
                             {!verified && (
                                 <div className="mt-4 text-normal text-sm text-muted-foreground px-4 sm:px-0">
-                                    Didn&apos;t receive the code? <span className="text-brand-medium cursor-pointer">Resend code in 59s</span>
+                                    Didn&apos;t receive the code?{" "}
+                                    {countdown > 0 ? (
+                                        <span className="text-muted-foreground">Resend code in {countdown}s</span>
+                                    ) : (
+                                        <span
+                                            className="text-brand-medium cursor-pointer hover:underline"
+                                            onClick={handleSendVerification}
+                                        >
+                                            Resend code
+                                        </span>
+                                    )}
                                 </div>
                             )}
 

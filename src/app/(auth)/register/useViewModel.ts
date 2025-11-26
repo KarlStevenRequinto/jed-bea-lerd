@@ -15,6 +15,9 @@ export const useRegisterViewModel = () => {
     const [verified, setVerified] = useState(false);
     const [currentStep, setCurrentStep] = useState(1); // Start at 1 (email verification)
     const [loading, setLoading] = useState(false);
+    const [verificationCode, setVerificationCode] = useState("");
+    const [verificationError, setVerificationError] = useState("");
+    const [countdown, setCountdown] = useState(0);
     const cardRef = useRef<HTMLDivElement>(null);
 
     // Get email and password from URL params
@@ -35,6 +38,21 @@ export const useRegisterViewModel = () => {
             cardRef.current.style.minHeight = `${h}px`;
         }
     }, []);
+
+    // Send initial verification email when component mounts
+    useEffect(() => {
+        if (emailFromUrl) {
+            handleSendVerification();
+        }
+    }, [emailFromUrl]);
+
+    // Countdown timer for resend
+    useEffect(() => {
+        if (countdown > 0) {
+            const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [countdown]);
 
     // Handle transition from step 1 (verification) to step 2 (personal info)
     useEffect(() => {
@@ -143,6 +161,74 @@ export const useRegisterViewModel = () => {
         router.push("/login");
     };
 
+    const handleSendVerification = async () => {
+        if (!emailFromUrl) return;
+
+        setLoading(true);
+        setVerificationError("");
+
+        try {
+            const response = await fetch("/api/auth/send-verification", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: emailFromUrl,
+                    password: passwordFromUrl // Send password to store temporarily
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setVerificationError(data.error || "Failed to send verification code");
+                return;
+            }
+
+            setCountdown(59); // Start 59 second countdown
+        } catch (error) {
+            console.error("Send verification error:", error);
+            setVerificationError("Failed to send verification code");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleVerifyCode = async () => {
+        if (!verificationCode || verificationCode.length !== 6) {
+            setVerificationError("Please enter the 6-digit code");
+            return;
+        }
+
+        setLoading(true);
+        setVerificationError("");
+
+        try {
+            const response = await fetch("/api/auth/verify-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: emailFromUrl,
+                    token: verificationCode,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setVerificationError(data.error || "Invalid verification code");
+                return;
+            }
+
+            // Verification successful
+            setVerified(true);
+        } catch (error) {
+            console.error("Verification error:", error);
+            setVerificationError("Failed to verify code");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const getProgress = () => {
         switch (currentStep) {
             case 1:
@@ -167,6 +253,10 @@ export const useRegisterViewModel = () => {
         cardRef,
         registrationData,
         loading,
+        verificationCode,
+        setVerificationCode,
+        verificationError,
+        countdown,
         handlePersonalInfoSubmit,
         handleAddressInfoSubmit,
         handleIdentityVerificationSubmit,
@@ -175,6 +265,8 @@ export const useRegisterViewModel = () => {
         handleBackToStep3,
         handleBackToStep4,
         handleReset,
+        handleSendVerification,
+        handleVerifyCode,
         getProgress,
     };
 };
