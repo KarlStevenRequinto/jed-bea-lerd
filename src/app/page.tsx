@@ -3,6 +3,7 @@
 import { useHomePageViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
 import CategoryCard from "@/components/common/CategoryCard";
+import ProductCard from "@/components/common/ProductCard";
 import { CarSvgIcon, LockIconSvg } from "@/components/svg-icons";
 
 const HomePage = () => {
@@ -65,6 +66,25 @@ const HomePage = () => {
                 >
                     CONTACT
                 </BaseButton>
+            </div>
+
+            {/* Product Card Example */}
+            <div className="mt-12 w-full max-w-[1120px]">
+                <ProductCard
+                    category="VEHICLE"
+                    price="₱1,195,000"
+                    title="2025 NISSAN ALMERA VL"
+                    location="Bacolod City, Negros Occidental"
+                    year="2025"
+                    color="Moon Pearl Gray"
+                    mileage="5,000 km"
+                    fuelType="GASOLINE"
+                    bodyType="SEDAN"
+                    description="Modern, reliable subcompact sedan offering great mileage, smart connectivity, and a comfortable ride for both city and highway travel."
+                    image="/images/sample-car.jpg"
+                    onContactClick={() => console.log("Contact clicked")}
+                    onViewDetailsClick={() => console.log("View details clicked")}
+                />
             </div>
         </div>
     );
