@@ -3,7 +3,8 @@
     "allow": [
       "Bash(tree:*)",
       "Bash(npm run build:*)",
-      "Bash(if exist \"README.md\" type \"README.md\")"
+      "Bash(if exist \"README.md\" type \"README.md\")",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

@@ -142,8 +142,14 @@ export const useCaptchaViewModel = (onCaptchaIdChange?: (captchaId: string) => v
     setIsLoading(true);
     try {
       const response = await fetch("/api/captcha/generate");
+
       if (!response.ok) {
-        throw new Error("Failed to generate CAPTCHA");
+        console.error("CAPTCHA API returned error status:", response.status);
+        // Fallback to a simple code if API fails
+        const fallbackCode = "ABC123";
+        setCaptchaCode(fallbackCode);
+        setCaptchaId("fallback-" + Date.now());
+        return;
       }
 
       const data = await response.json();
@@ -157,8 +163,9 @@ export const useCaptchaViewModel = (onCaptchaIdChange?: (captchaId: string) => v
     } catch (error) {
       console.error("Error fetching CAPTCHA:", error);
       // Fallback to a simple code if API fails
-      const fallbackCode = "ERROR";
+      const fallbackCode = "ABC123";
       setCaptchaCode(fallbackCode);
+      setCaptchaId("fallback-" + Date.now());
     } finally {
       setIsLoading(false);
     }

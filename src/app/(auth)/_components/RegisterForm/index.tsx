@@ -3,7 +3,7 @@
 import AuthSectionHeader from "@/components/forms/auth-section-header";
 import AuthInput from "@/components/forms/auth-input";
 import BaseButton from "@/components/common/BaseButton";
-import Captcha from "@/components/common/Captcha";
+import Captcha from "../Captcha";
 import { useRegisterFormViewModel } from "./useViewModel";
 import { useRouter } from "next/navigation";
 
