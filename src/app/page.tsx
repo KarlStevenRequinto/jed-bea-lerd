@@ -3,7 +3,7 @@
 import { useHomePageViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
 import CategoryCard from "@/components/common/CategoryCard";
-import { RealEstateSvgIcon, CarSvgIcon } from "@/components/svg-icons";
+import { CarSvgIcon, LockIconSvg } from "@/components/svg-icons";
 
 const HomePage = () => {
     useHomePageViewModel();
@@ -55,6 +55,16 @@ const HomePage = () => {
             {/* Category Cards */}
             <div className="flex flex-col gap-6 w-full max-w-[820px]">
                 <CategoryCard icon={<CarSvgIcon />} title="Vehicles" description="Explore SUVs, Sedans, trucks, and more" />
+            </div>
+
+            {/* Contact Button */}
+            <div className="mt-8">
+                <BaseButton
+                    rightIcon={<LockIconSvg />}
+                    className="bg-white text-foreground border-2 border-gray-300 px-12 py-4 text-xl font-normal rounded-[50px]"
+                >
+                    CONTACT
+                </BaseButton>
             </div>
         </div>
     );

@@ -22,3 +22,4 @@ export { default as ConvertibleIconSvg } from "./convertible";
 export { default as HomeIconSvg } from "./home";
 export { default as CarSvgIcon } from "./car";
 export { default as RealEstateSvgIcon } from "./real-estate";
+export { default as LockIconSvg } from "./lock";
