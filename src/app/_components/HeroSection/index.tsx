@@ -21,15 +21,13 @@ const HeroSection = () => {
             />
 
             <div className="relative container mx-auto px-6 py-16">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-60 items-center">
                     {/* Left Side - Content */}
                     <div className="text-white">
-                        <h1 className="text-5xl font-bold mb-6 leading-tight">
-                            Find your dream home or vehicle
-                        </h1>
+                        <h1 className="text-4xl font-bold mb-6 leading-tight">Find your dream home or vehicle</h1>
                         <p className="text-lg mb-8 leading-relaxed opacity-95">
-                            Join thousands of users discovering amazing properties and vehicles. Sign up now to unlock
-                            exclusive features and personalized recommendations.
+                            Join thousands of users discovering amazing properties and vehicles. Sign up now to unlock exclusive features and
+                            personalized recommendations.
                         </p>
 
                         {/* Action Buttons */}
@@ -42,9 +40,7 @@ const HeroSection = () => {
                             >
                                 Get Started Free
                             </BaseButton>
-                            <BaseButton
-                                className="bg-transparent text-white border-2 border-white px-8 py-3 text-base font-semibold rounded-lg"
-                            >
+                            <BaseButton className="bg-transparent text-white border-2 border-white px-8 py-3 text-base font-semibold rounded-lg">
                                 Sign In
                             </BaseButton>
                         </div>
@@ -81,7 +77,11 @@ const HeroSection = () => {
                     {/* Right Side - Category Cards */}
                     <div className="flex flex-col gap-6">
                         <CategoryCard
-                            icon={<RealEstateSvgIcon />}
+                            icon={
+                                <div style={{ filter: "brightness(0) saturate(100%) invert(100%)" }}>
+                                    <RealEstateSvgIcon width="70" height="70" fill="url(#pattern0_407_1725)" />
+                                </div>
+                            }
                             title="Properties"
                             description="Browse houses, apartments, and more"
                             onClick={() => console.log("Properties clicked")}

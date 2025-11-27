@@ -48,7 +48,7 @@ const ListingsSidebar = () => {
                     <div className="text-6xl mb-4">📢</div>
                     <p className="text-xl font-bold mb-2">PIONEER INSURANCE</p>
                     <p className="text-sm opacity-90">
-                        Secure your life's biggest investments — Pioneer insurance keeps your home and your vehicle safe.
+                        Secure your life&apos;s biggest investments — Pioneer insurance keeps your home and your vehicle safe.
                     </p>
                 </div>
             </div>

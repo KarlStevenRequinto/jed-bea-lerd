@@ -1,9 +1,22 @@
 import React from "react";
 
-const RealEstateSvgIcon = () => {
+interface RealEstateSvgIconProps {
+    width?: string;
+    height?: string;
+    fill?: string;
+}
+
+const RealEstateSvgIcon = ({ width, height, fill }: RealEstateSvgIconProps) => {
     return (
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-            <rect width="30" height="30" fill="url(#pattern0_407_1725)" />
+        <svg
+            width={width}
+            height={height}
+            viewBox="0 0 30 30"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+        >
+            <rect width="30" height="30" fill={fill} />
             <defs>
                 <pattern id="pattern0_407_1725" patternContentUnits="objectBoundingBox" width="1" height="1">
                     <use xlinkHref="#image0_407_1725" transform="scale(0.0104167)" />

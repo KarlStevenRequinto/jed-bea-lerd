@@ -17,9 +17,7 @@ const ListingsArea = () => {
                         Browse listings for free. Sign up to save favorites, contact sellers, and get personalized recommendations.
                     </p>
                 </div>
-                <BaseButton className="bg-blue-600 text-white px-6 py-2 text-sm font-semibold rounded-lg whitespace-nowrap">
-                    Register Here
-                </BaseButton>
+                <BaseButton className="bg-blue-600 text-white px-6 py-2 text-sm font-semibold rounded-lg whitespace-nowrap">Register Here</BaseButton>
             </div>
 
             {/* View Toggle */}
