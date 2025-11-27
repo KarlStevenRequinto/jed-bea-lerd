@@ -3,6 +3,7 @@
 import Image, { StaticImageData } from "next/image";
 import { useProductCardViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
+import Badge from "@/components/common/Badge";
 import { LockIconSvg } from "@/components/svg-icons";
 
 interface ProductCardProps {
@@ -40,7 +41,7 @@ const ProductCard = ({
 
     return (
         <div
-            className="w-full max-w-[1120px] bg-white rounded-[10px] overflow-hidden"
+            className="w-full bg-white rounded-[10px] overflow-hidden"
             style={{
                 border: "1px solid #737373",
             }}
@@ -50,11 +51,11 @@ const ProductCard = ({
                 <Image src={image} alt={title} fill className="object-cover" sizes="(max-width: 1120px) 100vw, 1120px" priority />
                 {/* Category Badge */}
                 <div className="absolute top-6 left-6">
-                    <div className="bg-white px-5 py-2 rounded-md text-xs font-medium tracking-wide">{category}</div>
+                    <Badge className="text-[15px] ">{category}</Badge>
                 </div>
                 {/* Price Badge */}
                 <div className="absolute bottom-6 left-6">
-                    <div className="bg-white px-5 py-2.5 rounded-md text-xl font-bold">{price}</div>
+                    <Badge className="font-bold text-xl">{price}</Badge>
                 </div>
             </div>
 
@@ -64,15 +65,15 @@ const ProductCard = ({
                 <h2 className="text-xl font-bold text-foreground mb-1.5">{title}</h2>
 
                 {/* Location */}
-                <p className="text-xs text-muted-foreground mb-3">{location}</p>
+                <p className="text-normal text-sm text-muted-foreground mb-3">{location}</p>
 
                 {/* Specs */}
                 <div className="flex flex-wrap gap-2 mb-3.5">
                     <span className="px-3.5 py-1 bg-white rounded-full text-xs border border-gray-300">{year}</span>
                     <span className="px-3.5 py-1 bg-white rounded-full text-xs border border-gray-300">{color}</span>
                     <span className="px-3.5 py-1 bg-white rounded-full text-xs border border-gray-300">{mileage}</span>
-                    <span className="px-3.5 py-1 bg-white rounded-full text-xs border border-gray-300 uppercase">{fuelType}</span>
-                    <span className="px-3.5 py-1 bg-white rounded-full text-xs border border-gray-300 uppercase">{bodyType}</span>
+                    <span className="px-3.5 py-1 bg-white rounded-full text-xs border border-gray-300">{fuelType}</span>
+                    <span className="px-3.5 py-1 bg-white rounded-full text-xs border border-gray-300">{bodyType}</span>
                 </div>
 
                 {/* Description */}
