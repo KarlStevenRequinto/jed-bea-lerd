@@ -4,7 +4,8 @@
       "Bash(tree:*)",
       "Bash(npm run build:*)",
       "Bash(if exist \"README.md\" type \"README.md\")",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { Suspense } from "react";
 import homeNDriveLogo from "@/assets/images/home-n-drive-logo.png";
-import { VerifyIconSvg, CheckIconSvg } from "@/components/svg-icons";
+import { VerifyIconSvg } from "@/components/svg-icons";
 import BaseButton from "@/components/common/BaseButton";
 import Link from "next/link";
 import PersonalInformationStep from "../_components/PersonalInformationStep";
@@ -13,7 +14,7 @@ import ProgressBar from "@/components/common/ProgressBar";
 import SuccessAlert from "@/components/common/SuccessAlert";
 import { useRegisterViewModel } from "./useViewModel";
 
-const RegisterPage = () => {
+const RegisterPageContent = () => {
     const {
         verified,
         currentStep,
@@ -211,6 +212,21 @@ const RegisterPage = () => {
                 Need help? <span className="text-brand-medium cursor-pointer">Contact Support</span>
             </div>
         </div>
+    );
+};
+
+const RegisterPage = () => {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen w-full bg-primary-foreground flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand mx-auto"></div>
+                    <p className="mt-4 text-muted-foreground">Loading...</p>
+                </div>
+            </div>
+        }>
+            <RegisterPageContent />
+        </Suspense>
     );
 };
 
