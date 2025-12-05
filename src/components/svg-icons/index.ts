@@ -25,5 +25,5 @@ export { default as RealEstateSvgIcon } from "./real-estate";
 export { default as LockIconSvg } from "./lock";
 export { default as PriceTagSvgIcon } from "./price-tag";
 export { default as SearchSvgIcon } from "./search";
-export { default as SpeedBubbleSvgIcon } from "./speed-bubble";
+export { default as SpeechBubbleSvgIcon } from "./speech-bubble";
 export { default as HeartSvgIcon } from "./heart";

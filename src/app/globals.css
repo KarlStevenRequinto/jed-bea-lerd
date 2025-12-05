@@ -39,6 +39,7 @@
     /* Success palette */
     --color-success: #03a444;
     --color-success-dark: #00733d;
+    --color-success-deep: #24740c;
     --color-success-muted: #dbffea;
     --color-success-light: #79c796;
 
@@ -106,6 +107,7 @@
     --color-brand-light: var(--color-brand-light);
     --color-success: var(--color-success);
     --color-success-dark: var(--color-success-dark);
+    --color-success-deep: var(--color-success-deep);
     --color-success-muted: var(--color-success-muted);
     --color-success-light: var(--color-success-light);
     --color-surface-muted: var(--color-surface-muted);

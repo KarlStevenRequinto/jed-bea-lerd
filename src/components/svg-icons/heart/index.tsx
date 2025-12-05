@@ -1,6 +1,11 @@
 import React from "react";
 
-const HeartSvgIcon = () => {
+interface HeartSvgIconProps {
+    color?: string;
+    className?: string;
+}
+
+const HeartSvgIcon: React.FC<HeartSvgIconProps> = () => {
     return (
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <rect width="15" height="15" fill="url(#pattern0_407_1781)" />

@@ -3,13 +3,14 @@
 import { useHeroSectionViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
 import CategoryCard from "@/components/common/CategoryCard";
-import { RealEstateSvgIcon, CarSvgIcon, PriceTagSvgIcon, SearchSvgIcon, SpeedBubbleSvgIcon, HeartSvgIcon } from "@/components/svg-icons";
+import FeatureIconItem from "@/components/common/FeatureIconItem";
+import { RealEstateSvgIcon, CarSvgIcon, PriceTagSvgIcon, SearchSvgIcon, SpeechBubbleSvgIcon, HeartSvgIcon } from "@/components/svg-icons";
 
 const HeroSection = () => {
     useHeroSectionViewModel();
 
     return (
-        <div className="relative w-full bg-gradient-to-br from-[var(--color-blue-primary)] via-[var(--color-blue-light)] to-[var(--color-green-primary)] overflow-hidden">
+        <div className="relative w-full bg-gradient-to-br from-[var(--color-blue-primary)] via-[var(--color-blue-light)] to-[var(--color-green-primary)] overflow-hidden lg:h-[520px]">
             {/* Decorative circles */}
             <div
                 className="absolute w-[400px] h-[400px] rounded-full opacity-30 blur-3xl top-20 right-40"
@@ -33,44 +34,29 @@ const HeroSection = () => {
                         {/* Action Buttons */}
                         <div className="flex gap-4 mb-12">
                             <BaseButton
-                                className="bg-white px-8 py-3 text-base font-semibold rounded-lg"
+                                className="bg-white w-[159px] h-[38px] text-[15px] font-bold leading-[1] rounded-[7px]"
                                 style={{
-                                    color: "var(--color-blue-primary)",
+                                    color: "var(--color-brand-dark)",
                                 }}
                             >
                                 Get Started Free
                             </BaseButton>
-                            <BaseButton className="bg-transparent text-white border-2 border-white px-8 py-3 text-base font-semibold rounded-lg">
+                            <BaseButton
+                                className="bg-white w-[159px] h-[38px] text-[15px] font-bold leading-[1] rounded-[7px]"
+                                style={{
+                                    color: "var(--color-success-deep)",
+                                }}
+                            >
                                 Sign In
                             </BaseButton>
                         </div>
 
                         {/* Feature Icons */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                                    <SearchSvgIcon />
-                                </div>
-                                <span className="text-sm">Advanced Search</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                                    <HeartSvgIcon />
-                                </div>
-                                <span className="text-sm">Save Favorites</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                                    <SpeedBubbleSvgIcon />
-                                </div>
-                                <span className="text-sm">Contact Sellers</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                                    <PriceTagSvgIcon />
-                                </div>
-                                <span className="text-sm">Price Alerts</span>
-                            </div>
+                            <FeatureIconItem icon={<SearchSvgIcon />} label="Advanced Search" />
+                            <FeatureIconItem icon={<HeartSvgIcon />} label="Save Favorites" />
+                            <FeatureIconItem icon={<SpeechBubbleSvgIcon />} label="Contact Sellers" />
+                            <FeatureIconItem icon={<PriceTagSvgIcon />} label="Price Alerts" />
                         </div>
                     </div>
 

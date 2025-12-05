@@ -43,11 +43,11 @@ const ProductCard = ({
         <div
             className="w-full bg-white rounded-[10px] overflow-hidden"
             style={{
-                border: "1px solid #737373",
+                border: "1px solid var(--color-gray-500)",
             }}
         >
             {/* Image Section */}
-            <div className="relative w-full" style={{ height: "482.56px" }}>
+            <div className="relative w-full" style={{ height: "482.56px", borderBottom: "1px solid var(--color-gray-500)" }}>
                 <Image src={image} alt={title} fill className="object-cover" sizes="(max-width: 1120px) 100vw, 1120px" priority />
                 {/* Category Badge */}
                 <div className="absolute top-6 left-6">
@@ -60,7 +60,7 @@ const ProductCard = ({
             </div>
 
             {/* Content Section */}
-            <div className="px-6 py-5">
+            <div className="px-4 sm:px-6 lg:px-[72px] py-5">
                 {/* Title */}
                 <h2 className="text-xl font-bold text-foreground mb-1.5">{title}</h2>
 
@@ -102,8 +102,8 @@ const ProductCard = ({
 
                 {/* Sign In Prompt */}
                 <div className="mt-4 text-center">
-                    <span className="text-xs text-muted-foreground">
-                        <a href="/login" className="font-bold" style={{ color: "var(--color-blue-primary)" }}>
+                    <span className="text-xs">
+                        <a href="/login" className="font-bold" style={{ color: "var(--color-brand-darker)" }}>
                             Sign In
                         </a>{" "}
                         to see more details
