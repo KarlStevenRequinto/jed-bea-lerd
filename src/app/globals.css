@@ -49,6 +49,7 @@
     --color-blue-light: #6B9EFF;
     --color-blue-medium: #5B8FFF;
     --color-blue-dark: #3D7EE8;
+    --color-blue-border: #6195FF;
     --color-green-primary: #4CAF50;
 
     /* Surface */
@@ -119,6 +120,7 @@
     --color-blue-light: var(--color-blue-light);
     --color-blue-medium: var(--color-blue-medium);
     --color-blue-dark: var(--color-blue-dark);
+    --color-blue-border: var(--color-blue-border);
     --color-green-primary: var(--color-green-primary);
 }
 

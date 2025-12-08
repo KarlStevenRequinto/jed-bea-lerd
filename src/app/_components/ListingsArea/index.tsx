@@ -10,10 +10,10 @@ const ListingsArea = () => {
     return (
         <div className="flex-1 flex flex-col gap-4">
             {/* Info Banner */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center justify-between">
+            <div className="bg-blue-50 rounded-lg px-4 h-[60px] flex items-center justify-between border border-[var(--color-blue-border)]">
                 <div className="flex items-center gap-3">
                     <span className="text-blue-600 text-xl">ℹ️</span>
-                    <p className="text-sm text-blue-900">
+                    <p className="text-sm text-[var(--color-blue-border)]">
                         Browse listings for free. Sign up to save favorites, contact sellers, and get personalized recommendations.
                     </p>
                 </div>
