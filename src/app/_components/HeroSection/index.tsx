@@ -32,7 +32,7 @@ const HeroSection = () => {
                         </p>
 
                         {/* Action Buttons */}
-                        <div className="flex gap-4 mb-12">
+                        <div className="flex gap-x-8 mb-12">
                             <BaseButton
                                 className="bg-white w-[159px] h-[38px] text-[15px] font-bold leading-[1] rounded-[7px]"
                                 style={{
@@ -52,7 +52,7 @@ const HeroSection = () => {
                         </div>
 
                         {/* Feature Icons */}
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-y-4 max-w-sm">
                             <FeatureIconItem icon={<SearchSvgIcon />} label="Advanced Search" />
                             <FeatureIconItem icon={<HeartSvgIcon />} label="Save Favorites" />
                             <FeatureIconItem icon={<SpeechBubbleSvgIcon />} label="Contact Sellers" />
