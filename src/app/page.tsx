@@ -9,7 +9,7 @@ const HomePage = () => {
     useHomePageViewModel();
 
     return (
-        <div className="min-h-screen w-full flex flex-col">
+        <div className="w-full">
             {/* Hero Section */}
             <HeroSection />
 

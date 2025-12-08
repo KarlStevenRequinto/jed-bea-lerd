@@ -39,7 +39,7 @@ const ListingsArea = () => {
                 </button>
             </div>
 
-            {/* Listings - Scrollable */}
+            {/* Listings */}
             <div className="flex flex-col gap-6">
                 {listings.map((listing) => (
                     <ProductCard

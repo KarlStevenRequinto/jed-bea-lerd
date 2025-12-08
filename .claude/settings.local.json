@@ -5,7 +5,8 @@
       "Bash(npm run build:*)",
       "Bash(if exist \"README.md\" type \"README.md\")",
       "Bash(ls:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
