@@ -14,7 +14,6 @@ export const SmoothScrollProvider = ({ children }: { children: React.ReactNode }
             orientation: "vertical",
             gestureOrientation: "vertical",
             smoothWheel: true,
-            smoothTouch: false,
             wheelMultiplier: 1,
             touchMultiplier: 2,
             infinite: false,
