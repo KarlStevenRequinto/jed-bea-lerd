@@ -16,7 +16,7 @@ export const Footer = () => {
                     <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-2">
                             <Image src={logo} alt="HomeNDrive Logo" width={40} height={40} />
-                            <span className="text-lg font-bold text-[var(--color-foreground)]">HomeNDrive</span>
+                            <span className="text-lg font-bold text-[var(--color-brand-darker)]">HomeNDrive</span>
                         </div>
                         <p className="text-sm text-[var(--color-muted-foreground)] leading-relaxed">
                             Your trusted platform for buying and selling properties and vehicles. Connect with verified sellers and find your perfect
