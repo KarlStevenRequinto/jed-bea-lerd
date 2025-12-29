@@ -1,3 +1,19 @@
+/**
+ * Legacy Mock Listings
+ *
+ * DEPRECATED: This file contains mock data for development.
+ * In production, listings should be fetched from Supabase via:
+ * - src/lib/services/listings.ts (service layer)
+ * - src/app/api/listings/route.ts (API routes)
+ *
+ * Use FormattedListing type from src/lib/types/listing.ts for new implementations.
+ */
+
+import { FormattedListing } from '@/lib/types/listing'
+
+/**
+ * @deprecated Use FormattedListing from @/lib/types/listing instead
+ */
 export interface Listing {
     id: number;
     category: string;
@@ -13,6 +29,10 @@ export interface Listing {
     image: string;
 }
 
+/**
+ * Mock listings for development/testing
+ * @deprecated Fetch real data from Supabase using getListings() from @/lib/services/listings
+ */
 export const MOCK_LISTINGS: Listing[] = [
     {
         id: 1,

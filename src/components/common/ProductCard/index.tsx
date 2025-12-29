@@ -6,6 +6,12 @@ import BaseButton from "@/components/common/BaseButton";
 import Badge from "@/components/common/Badge";
 import { LockIconSvg } from "@/components/svg-icons";
 
+/**
+ * Product Card Component (List View)
+ *
+ * Displays a single listing in list view format.
+ * Compatible with both legacy Listing and new FormattedListing types.
+ */
 interface ProductCardProps {
     category: string;
     price: string;

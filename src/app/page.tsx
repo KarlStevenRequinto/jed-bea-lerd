@@ -1,12 +1,23 @@
-"use client";
+/**
+ * Home Page (Server Component)
+ *
+ * Fetches listings server-side from Supabase for optimal performance and SEO.
+ * Data is passed down to client components via props.
+ */
 
-import { useHomePageViewModel } from "./useViewModel";
+import { getListings } from "@/lib/services/listings";
+import { formatListings } from "@/lib/utils/formatters";
 import HeroSection from "./_components/HeroSection";
 import ListingsSidebar from "./_components/ListingsSidebar";
 import ListingsArea from "./_components/ListingsArea";
 
-const HomePage = () => {
-    useHomePageViewModel();
+const HomePage = async () => {
+    // Fetch listings server-side from Supabase
+    // This runs on the server, so it's fast and SEO-friendly
+    const { listings } = await getListings();
+
+    // Format listings for UI display
+    const formattedListings = formatListings(listings);
 
     return (
         <div className="w-full">
@@ -20,7 +31,7 @@ const HomePage = () => {
                     <ListingsSidebar />
 
                     {/* Right Side - Listings */}
-                    <ListingsArea />
+                    <ListingsArea initialListings={formattedListings} />
                 </div>
             </div>
         </div>

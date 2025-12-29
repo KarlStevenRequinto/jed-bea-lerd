@@ -6,9 +6,14 @@ import GridProductCard from "@/components/common/GridProductCard";
 import BaseButton from "@/components/common/BaseButton";
 import BulletedListIconSvg from "@/components/svg-icons/bulleted-list";
 import GridIconSvg from "@/components/svg-icons/grid";
+import { FormattedListing } from "@/lib/types/listing";
 
-const ListingsArea = () => {
-    const { listings, viewMode, handleViewModeChange } = useListingsAreaViewModel();
+interface ListingsAreaProps {
+    initialListings: FormattedListing[];
+}
+
+const ListingsArea = ({ initialListings }: ListingsAreaProps) => {
+    const { listings, viewMode, handleViewModeChange } = useListingsAreaViewModel(initialListings);
 
     return (
         <div className="flex-1 flex flex-col gap-4">

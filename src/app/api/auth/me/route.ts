@@ -23,23 +23,50 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // TODO: Fetch additional profile data from your profiles table
-    // For now, return just the auth user data
-    /*
-    const { data: profile } = await supabase
+    // Fetch additional profile data from profiles table
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', user.id)
       .single()
-    */
 
+    if (profileError) {
+      console.error('Profile fetch error:', profileError)
+      // Return basic user info if profile not found
+      return NextResponse.json({
+        user: {
+          id: user.id,
+          email: user.email,
+          emailVerified: user.email_confirmed_at !== null,
+          createdAt: user.created_at,
+        },
+      })
+    }
+
+    // Return merged user + profile data
     return NextResponse.json({
       user: {
         id: user.id,
         email: user.email,
         emailVerified: user.email_confirmed_at !== null,
         createdAt: user.created_at,
-        // ...profile, // Uncomment after creating profiles table
+        // Profile data
+        firstName: profile?.first_name,
+        lastName: profile?.last_name,
+        dateOfBirth: profile?.date_of_birth,
+        phoneNumber: profile?.phone_number,
+        profilePhotoUrl: profile?.profile_photo_url,
+        streetAddress: profile?.street_address,
+        city: profile?.city,
+        province: profile?.province,
+        zipCode: profile?.zip_code,
+        country: profile?.country,
+        idType: profile?.id_type,
+        idNumber: profile?.id_number,
+        documentUrl: profile?.document_url,
+        verified: profile?.verified || false,
+        interests: profile?.interests || [],
+        bio: profile?.bio,
       },
     })
   } catch (error) {

@@ -6,6 +6,12 @@ import BaseButton from "@/components/common/BaseButton";
 import Badge from "@/components/common/Badge";
 import { LockIconSvg } from "@/components/svg-icons";
 
+/**
+ * Grid Product Card Component (Grid View)
+ *
+ * Displays a single listing in grid view format.
+ * Compatible with both legacy Listing and new FormattedListing types.
+ */
 interface GridProductCardProps {
     category: string;
     price: string;
