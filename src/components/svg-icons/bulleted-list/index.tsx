@@ -6,6 +6,11 @@ interface BulletedListIconSvgProps {
 }
 
 const BulletedListIconSvg: React.FC<BulletedListIconSvgProps> = ({ color = "black", className = "" }) => {
+    // Unique ID to avoid conflicts when multiple instances render
+    const uniqueId = React.useId();
+    const patternId = `pattern-list-${uniqueId}`;
+    const imageId = `image-list-${uniqueId}`;
+
     // CSS filter to convert black to white (invert the colors)
     const filterStyle = color === "white" ? { filter: "brightness(0) saturate(100%) invert(100%)" } : {};
 
@@ -18,15 +23,15 @@ const BulletedListIconSvg: React.FC<BulletedListIconSvgProps> = ({ color = "blac
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             className={className}
-            style={filterStyle}
+            style={{ ...filterStyle, display: 'block' }}
         >
-            <rect width="30" height="30" fill="url(#pattern0_407_1906)" />
+            <rect width="30" height="30" fill={`url(#${patternId})`} />
             <defs>
-                <pattern id="pattern0_407_1906" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image0_407_1906" transform="scale(0.0104167)" />
+                <pattern id={patternId} patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref={`#${imageId}`} transform="scale(0.0104167)" />
                 </pattern>
                 <image
-                    id="image0_407_1906"
+                    id={imageId}
                     width="96"
                     height="96"
                     preserveAspectRatio="none"

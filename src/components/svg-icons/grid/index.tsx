@@ -6,6 +6,11 @@ interface GridIconSvgProps {
 }
 
 const GridIconSvg: React.FC<GridIconSvgProps> = ({ color = "white", className = "" }) => {
+    // Unique ID to avoid conflicts when multiple instances render
+    const uniqueId = React.useId();
+    const patternId = `pattern-grid-${uniqueId}`;
+    const imageId = `image-grid-${uniqueId}`;
+
     // CSS filter to convert white to black
     const filterStyle = color === "black" ? { filter: "brightness(0) saturate(100%)" } : {};
 
@@ -18,15 +23,15 @@ const GridIconSvg: React.FC<GridIconSvgProps> = ({ color = "white", className = 
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             className={className}
-            style={filterStyle}
+            style={{ ...filterStyle, display: 'block' }}
         >
-            <rect width="30" height="30" fill="url(#pattern0_407_1905)" />
+            <rect width="30" height="30" fill={`url(#${patternId})`} />
             <defs>
-                <pattern id="pattern0_407_1905" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image0_407_1905" transform="scale(0.0104167)" />
+                <pattern id={patternId} patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref={`#${imageId}`} transform="scale(0.0104167)" />
                 </pattern>
                 <image
-                    id="image0_407_1905"
+                    id={imageId}
                     width="96"
                     height="96"
                     preserveAspectRatio="none"
