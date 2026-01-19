@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useProfileHeaderViewModel } from "./useViewModel";
 import CameraIconSvg from "@/components/svg-icons/camera";
+import VerifiedBadgeIconSvg from "@/components/svg-icons/verified-badge";
 
 interface ProfileHeaderProps {
     profileImage?: string;
@@ -37,15 +38,8 @@ const ProfileHeader = ({ profileImage }: ProfileHeaderProps) => {
                     {/* Name with Verified Badge */}
                     <div className="flex items-center gap-2 mb-1">
                         <h2 className="text-2xl font-semibold text-[var(--color-gray-900)]">{userData.name}</h2>
-                        {userData.isVerified && (
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M10 0L12.2451 2.90983L16.1803 2.36068L15.4 6.24L18.0902 9.04L14.55 10.8L14.4721 14.8944L10.5 13.8L6.52786 14.8944L6.45 10.8L2.90983 9.04L5.6 6.24L4.81966 2.36068L8.75486 2.90983L10 0Z"
-                                    fill="var(--color-brand)"
-                                />
-                                <path d="M7 10L9 12L13 8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        )}
+
+                        {userData.isVerified && <VerifiedBadgeIconSvg />}
                     </div>
 
                     {/* Role and Email */}
