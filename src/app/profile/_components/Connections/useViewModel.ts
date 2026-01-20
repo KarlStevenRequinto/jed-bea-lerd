@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSlidingTabs } from "@/hooks/useSlidingTabs";
 
 export interface Connection {
     id: string;
@@ -55,6 +56,14 @@ export const useConnectionsViewModel = () => {
     const followingCount = 156;
     const followersCount = 342;
 
+    // Sliding tab animation
+    const { highlightTransform, transitionClasses, highlightWidth } = useSlidingTabs({
+        tabCount: 2,
+        activeIndex: activeTab === "following" ? 0 : 1,
+        paddingOffset: 4,
+        gap: 0,
+    });
+
     const handleTabChange = (tab: TabType) => {
         setActiveTab(tab);
     };
@@ -74,6 +83,9 @@ export const useConnectionsViewModel = () => {
         connections,
         followingCount,
         followersCount,
+        highlightTransform,
+        transitionClasses,
+        highlightWidth,
         handleTabChange,
         handleFollow,
         handleSeeMore,

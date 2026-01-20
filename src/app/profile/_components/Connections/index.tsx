@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useConnectionsViewModel, Connection, TabType } from "./useViewModel";
+import { useConnectionsViewModel, Connection } from "./useViewModel";
 
 const Connections = () => {
     const {
@@ -9,6 +9,9 @@ const Connections = () => {
         connections,
         followingCount,
         followersCount,
+        highlightTransform,
+        transitionClasses,
+        highlightWidth,
         handleTabChange,
         handleFollow,
         handleSeeMore,
@@ -22,7 +25,13 @@ const Connections = () => {
             </h3>
 
             {/* Tabs */}
-            <div className="flex mb-4 bg-[var(--color-gray-100)] rounded-full p-1">
+            <div className="relative flex mb-4 bg-[var(--color-gray-100)] rounded-full p-1">
+                {/* Sliding highlight */}
+                <div
+                    className={`absolute top-1/2 -translate-y-1/2 h-[calc(100%-8px)] rounded-full bg-[var(--color-brand)] ${transitionClasses}`}
+                    style={{ transform: highlightTransform, width: highlightWidth }}
+                    aria-hidden="true"
+                />
                 <TabButton
                     label={`Following (${followingCount})`}
                     isActive={activeTab === "following"}
@@ -66,9 +75,9 @@ interface TabButtonProps {
 const TabButton = ({ label, isActive, onClick }: TabButtonProps) => (
     <button
         onClick={onClick}
-        className={`flex-1 text-xs font-medium py-2 px-3 rounded-full transition-colors ${
+        className={`relative z-10 flex-1 text-xs font-medium py-2 px-3 rounded-full transition-colors duration-300 ${
             isActive
-                ? "bg-[var(--color-brand)] text-white"
+                ? "text-white"
                 : "text-[var(--color-gray-600)] hover:text-[var(--color-gray-900)]"
         }`}
     >

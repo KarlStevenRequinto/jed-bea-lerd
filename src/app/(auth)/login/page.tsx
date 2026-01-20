@@ -11,7 +11,7 @@ import RegisterForm from "../_components/RegisterForm";
 import ForgotPasswordForm from "../_components/ForgotPasswordForm";
 
 const LoginPage = () => {
-    const { tab, setTab, mode, animationKey, highlightTransform, loginPanelClass, registerPanelClass, handleShowForgotPassword, handleBackToLogin } =
+    const { tab, setTab, mode, animationKey, highlightTransform, highlightWidth, loginPanelClass, registerPanelClass, handleShowForgotPassword, handleBackToLogin } =
         useLoginViewModel();
 
     return (
@@ -82,8 +82,8 @@ const LoginPage = () => {
                                 >
                                     {/* Sliding highlight */}
                                     <div
-                                        className="absolute top-1/2 h-[29px] w-[calc(50%-5px)] -translate-y-1/2 rounded-[7px] bg-white transition-transform duration-300 ease-out"
-                                        style={{ transform: highlightTransform }}
+                                        className="absolute top-1/2 h-[29px] -translate-y-1/2 rounded-[7px] bg-white transition-transform duration-300 ease-out"
+                                        style={{ transform: highlightTransform, width: highlightWidth }}
                                         aria-hidden
                                     />
                                     {/* Single layer labels with dynamic color */}

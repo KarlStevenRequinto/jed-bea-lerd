@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useSlidingTabs } from "@/hooks/useSlidingTabs";
 
 export type AuthTab = "login" | "register";
 export type AuthMode = "login" | "forgot-password";
@@ -10,10 +11,12 @@ export const useLoginViewModel = () => {
     const [mode, setMode] = useState<AuthMode>("login");
     const [animationKey] = useState(() => Date.now());
 
-    const highlightTransform = useMemo(
-        () => (tab === "login" ? "translateX(3px)" : "translateX(calc(100% + 7px))"),
-        [tab]
-    );
+    const { highlightTransform, highlightWidth } = useSlidingTabs({
+        tabCount: 2,
+        activeIndex: tab === "login" ? 0 : 1,
+        paddingOffset: 3,
+        gap: 4,
+    });
 
     const loginPanelClass = useMemo(
         () =>
@@ -45,6 +48,7 @@ export const useLoginViewModel = () => {
         mode,
         animationKey,
         highlightTransform,
+        highlightWidth,
         loginPanelClass,
         registerPanelClass,
         handleShowForgotPassword,
