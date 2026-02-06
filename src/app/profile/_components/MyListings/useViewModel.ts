@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSlidingTabs } from "@/hooks/useSlidingTabs";
 
 export interface Listing {
     id: string;
@@ -42,6 +43,28 @@ export const useMyListingsViewModel = () => {
     const [activeTab, setActiveTab] = useState<ListingTab>("all");
     const [listings] = useState(mockListings);
 
+    // Get active tab index for animation
+    const getActiveIndex = () => {
+        switch (activeTab) {
+            case "all":
+                return 0;
+            case "properties":
+                return 1;
+            case "vehicles":
+                return 2;
+            default:
+                return 0;
+        }
+    };
+
+    // Sliding tab animation
+    const { highlightTransform, transitionClasses, highlightWidth } = useSlidingTabs({
+        tabCount: 3,
+        activeIndex: getActiveIndex(),
+        paddingOffset: 6,
+        gap: 0,
+    });
+
     const counts = {
         all: 12,
         properties: 12,
@@ -78,6 +101,9 @@ export const useMyListingsViewModel = () => {
         activeTab,
         listings: filteredListings,
         counts,
+        highlightTransform,
+        transitionClasses,
+        highlightWidth,
         handleTabChange,
         handleAddListing,
         handleViewDetails,

@@ -44,7 +44,6 @@ const ReviewsAndRatings = () => {
                         <ReviewCard
                             review={review}
                             onHelpful={handleHelpful}
-                            starVariant={index === 0 ? "yellow" : index === 1 ? "blue" : "gradient"}
                         />
                         {index < reviews.length - 1 && (
                             <div className="border-b border-[var(--color-gray-200)] mt-5" />
@@ -64,15 +63,12 @@ const ReviewsAndRatings = () => {
     );
 };
 
-type StarVariant = "yellow" | "blue" | "gradient";
-
 interface ReviewCardProps {
     review: Review;
     onHelpful: (id: string) => void;
-    starVariant?: StarVariant;
 }
 
-const ReviewCard = ({ review, onHelpful, starVariant = "yellow" }: ReviewCardProps) => {
+const ReviewCard = ({ review, onHelpful }: ReviewCardProps) => {
     // Get initials from name for avatar placeholder
     const initials = review.reviewerName
         .split(" ")
@@ -111,7 +107,7 @@ const ReviewCard = ({ review, onHelpful, starVariant = "yellow" }: ReviewCardPro
                         {/* Star Rating */}
                         <div className="flex gap-0.5">
                             {[1, 2, 3, 4, 5].map((star) => (
-                                <StarIcon key={star} filled={star <= review.rating} small variant={starVariant} />
+                                <StarIcon key={star} filled={star <= review.rating} small />
                             ))}
                         </div>
                         <span className="text-xs text-[var(--color-gray-500)]">
@@ -162,29 +158,12 @@ const ReviewCard = ({ review, onHelpful, starVariant = "yellow" }: ReviewCardPro
 interface StarIconProps {
     filled?: boolean;
     small?: boolean;
-    variant?: StarVariant;
 }
 
-const StarIcon = ({ filled = false, small = false, variant = "yellow" }: StarIconProps) => {
+const StarIcon = ({ filled = false, small = false }: StarIconProps) => {
     const size = small ? 14 : 18;
-    const gradientId = `starGradient-${small ? "small" : "large"}`;
+    const filledColor = "var(--color-brand)";
     const emptyColor = "var(--color-gray-300)";
-
-    // Color based on variant
-    const getFilledColor = () => {
-        switch (variant) {
-            case "yellow":
-                return "#FFC107";
-            case "blue":
-                return "var(--color-brand)";
-            case "gradient":
-                return `url(#${gradientId})`;
-            default:
-                return "#FFC107";
-        }
-    };
-
-    const filledColor = getFilledColor();
 
     return (
         <svg
@@ -194,14 +173,6 @@ const StarIcon = ({ filled = false, small = false, variant = "yellow" }: StarIco
             fill={filled ? filledColor : "none"}
             xmlns="http://www.w3.org/2000/svg"
         >
-            {variant === "gradient" && (
-                <defs>
-                    <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="var(--color-brand)" />
-                        <stop offset="100%" stopColor="var(--color-success)" />
-                    </linearGradient>
-                </defs>
-            )}
             <path
                 d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
                 stroke={filled ? filledColor : emptyColor}

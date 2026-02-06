@@ -43,3 +43,4 @@ next-env.d.ts
 # conversation logs (personal development notes)
 CONVERSATION_LOG.md
 AI_GUIDELINES.md
+ARCHITECTURE.md

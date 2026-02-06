@@ -9,6 +9,9 @@ const MyListings = () => {
         activeTab,
         listings,
         counts,
+        highlightTransform,
+        transitionClasses,
+        highlightWidth,
         handleTabChange,
         handleAddListing,
         handleViewDetails,
@@ -52,7 +55,13 @@ const MyListings = () => {
             </div>
 
             {/* Tabs */}
-            <div className="flex bg-[var(--color-gray-900)] rounded-full p-1 mb-6">
+            <div className="relative flex bg-[var(--color-brand)] rounded-lg p-1 mb-6">
+                {/* Sliding highlight */}
+                <div
+                    className={`absolute top-1/2 -translate-y-1/2 h-[calc(100%-8px)] rounded-md bg-white ${transitionClasses}`}
+                    style={{ transform: highlightTransform, width: highlightWidth }}
+                    aria-hidden="true"
+                />
                 <TabButton
                     label={`All (${counts.all})`}
                     isActive={activeTab === "all"}
@@ -112,10 +121,10 @@ interface TabButtonProps {
 const TabButton = ({ label, isActive, onClick }: TabButtonProps) => (
     <button
         onClick={onClick}
-        className={`flex-1 text-sm font-medium py-2.5 px-4 rounded-full transition-colors ${
+        className={`relative z-10 flex-1 text-sm font-medium py-2.5 px-4 rounded-md transition-colors duration-300 ${
             isActive
-                ? "bg-white text-[var(--color-gray-900)]"
-                : "text-white hover:text-[var(--color-gray-300)]"
+                ? "text-[var(--color-brand)]"
+                : "text-white hover:text-[var(--color-gray-100)]"
         }`}
     >
         {label}
