@@ -124,7 +124,7 @@ const LoginPage = () => {
                     >
                         {tab === "login" && mode === "login" && (
                             <div
-                                className={`absolute inset-0 overflow-y-auto ${loginPanelClass}`}
+                                className={`absolute inset-0 overflow-y-auto px-1 ${loginPanelClass}`}
                                 role="tabpanel"
                                 id="panel-login"
                                 aria-labelledby="tab-login"
@@ -139,7 +139,7 @@ const LoginPage = () => {
                             </div>
                         )}
                         <div
-                            className={`absolute inset-0 overflow-y-auto transition-all duration-300 ease-out ${registerPanelClass}`}
+                            className={`absolute inset-0 overflow-y-auto px-1 transition-all duration-300 ease-out ${registerPanelClass}`}
                             role="tabpanel"
                             id="panel-register"
                             aria-labelledby="tab-register"

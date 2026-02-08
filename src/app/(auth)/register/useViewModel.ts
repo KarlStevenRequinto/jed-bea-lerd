@@ -18,6 +18,7 @@ export const useRegisterViewModel = () => {
     const [verificationCode, setVerificationCode] = useState("");
     const [verificationError, setVerificationError] = useState("");
     const [countdown, setCountdown] = useState(0);
+    const [hasSignedUp, setHasSignedUp] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
 
     // Get email and password from URL params
@@ -41,7 +42,7 @@ export const useRegisterViewModel = () => {
 
     // Send initial verification email when component mounts
     useEffect(() => {
-        if (emailFromUrl) {
+        if (emailFromUrl && passwordFromUrl) {
             handleSendVerification();
         }
     }, [emailFromUrl]);
@@ -65,7 +66,6 @@ export const useRegisterViewModel = () => {
     }, [verified]);
 
     const handlePersonalInfoSubmit = (data: PersonalInfoData) => {
-        console.log("Personal info submitted:", data);
         setRegistrationData((prev) => ({
             ...prev,
             firstName: data.firstName,
@@ -78,7 +78,6 @@ export const useRegisterViewModel = () => {
     };
 
     const handleAddressInfoSubmit = (data: AddressInfoData) => {
-        console.log("Address info submitted:", data);
         setRegistrationData((prev) => ({
             ...prev,
             streetAddress: `${data.streetAddress1}${data.streetAddress2 ? ', ' + data.streetAddress2 : ''}`,
@@ -91,8 +90,6 @@ export const useRegisterViewModel = () => {
     };
 
     const handleIdentityVerificationSubmit = (data: IdentityVerificationData) => {
-        console.log("Identity verification submitted:", data);
-
         // Map the idDocumentType to match the database enum
         let idType: "passport" | "drivers_license" | "national_id" = "passport";
         if (data.idDocumentType === "Driver's License") {
@@ -113,8 +110,6 @@ export const useRegisterViewModel = () => {
     };
 
     const handlePreferencesSubmit = async (data: PreferencesData) => {
-        console.log("Preferences submitted:", data);
-
         // Merge all data together
         const finalData: RegistrationRequest = {
             ...(registrationData as RegistrationRequest),
@@ -122,23 +117,19 @@ export const useRegisterViewModel = () => {
             bio: data.bio,
         };
 
-        console.log("Final registration data:", finalData);
         setLoading(true);
 
         try {
-            // Submit to API
+            // Submit to API — user is already authenticated via verify-otp session
             const result = await registerUser(dispatch, finalData);
 
             if (result.success) {
-                console.log("Registration successful!");
                 alert(result.message || "Registration successful! Welcome to HomeNDrive.");
-                router.push("/login"); // Redirect to login to sign in with new account
+                router.push("/login");
             } else {
-                console.error("Registration failed:", result.error);
                 alert(result.error || "Registration failed. Please try again.");
             }
         } catch (error) {
-            console.error("Registration error:", error);
             alert("An unexpected error occurred. Please try again.");
         } finally {
             setLoading(false);
@@ -171,10 +162,11 @@ export const useRegisterViewModel = () => {
             const response = await fetch("/api/auth/send-verification", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: emailFromUrl,
-                    password: passwordFromUrl // Send password to store temporarily
-                }),
+                body: JSON.stringify(
+                    hasSignedUp
+                        ? { email: emailFromUrl, isResend: true }
+                        : { email: emailFromUrl, password: passwordFromUrl }
+                ),
             });
 
             const data = await response.json();
@@ -184,9 +176,12 @@ export const useRegisterViewModel = () => {
                 return;
             }
 
+            if (!hasSignedUp) {
+                setHasSignedUp(true);
+            }
+
             setCountdown(59); // Start 59 second countdown
         } catch (error) {
-            console.error("Send verification error:", error);
             setVerificationError("Failed to send verification code");
         } finally {
             setLoading(false);
@@ -219,10 +214,9 @@ export const useRegisterViewModel = () => {
                 return;
             }
 
-            // Verification successful
+            // Verification successful — Supabase session is now established
             setVerified(true);
         } catch (error) {
-            console.error("Verification error:", error);
             setVerificationError("Failed to verify code");
         } finally {
             setLoading(false);

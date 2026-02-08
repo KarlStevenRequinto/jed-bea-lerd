@@ -1,11 +1,12 @@
 /**
  * POST /api/auth/verify-otp
  *
- * Verifies the OTP code sent to user's email
+ * Verifies the 6-digit OTP code from the signup confirmation email.
+ * On success, Supabase confirms the user's email and establishes a session.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,33 +19,27 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const cookieStore = await cookies()
-    const storedOTP = cookieStore.get(`otp_${email}`)?.value
+    const supabase = await createClient()
 
-    if (!storedOTP) {
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: 'signup',
+    })
+
+    if (error) {
       return NextResponse.json(
-        { error: 'Verification code expired or not found' },
+        { error: error.message },
         { status: 400 }
       )
     }
-
-    // Verify OTP matches
-    if (storedOTP !== token) {
-      return NextResponse.json(
-        { error: 'Invalid verification code' },
-        { status: 400 }
-      )
-    }
-
-    // Delete OTP after successful verification
-    cookieStore.delete(`otp_${email}`)
 
     return NextResponse.json({
       message: 'Email verified successfully',
-      success: true
+      success: true,
+      userId: data.user?.id,
     })
   } catch (error) {
-    console.error('OTP verification error:', error)
     return NextResponse.json(
       { error: 'Failed to verify code' },
       { status: 500 }

@@ -1,8 +1,9 @@
 /**
  * POST /api/auth/register
  *
- * Registers a new user with Supabase Auth and creates user profile.
- * This handles the complete registration flow from your multi-step form.
+ * Creates the user profile in the database after email verification.
+ * The Supabase Auth account is already created during the send-verification step.
+ * The user must be authenticated (session established via verify-otp).
  */
 
 import { createClient } from '@/lib/supabase/server'
@@ -13,79 +14,48 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const {
-      // Step 1: Email & Password
-      email,
-      password,
-
-      // Step 2: Personal Information
+      // Personal Information
       firstName,
       lastName,
       dateOfBirth,
       phoneNumber,
       profilePhotoUrl,
 
-      // Step 3: Address Information
+      // Address Information
       streetAddress,
       city,
       province,
       zipCode,
       country,
 
-      // Step 4: Identity Verification
+      // Identity Verification
       idType,
       idNumber,
       documentUrl,
 
-      // Step 5: Preferences
-      interests, // Array of interest strings
+      // Preferences
+      interests,
       bio,
     } = body
 
-    // Validate required fields
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
-      )
-    }
-
+    // Get the authenticated user from the session
     const supabase = await createClient()
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
 
-    // Step 1: Create Supabase Auth user
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName,
-        },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
-      },
-    })
-
-    if (authError) {
+    if (userError || !user) {
       return NextResponse.json(
-        { error: authError.message },
-        { status: 400 }
+        { error: 'Not authenticated. Please verify your email first.' },
+        { status: 401 }
       )
     }
 
-    if (!authData.user) {
-      return NextResponse.json(
-        { error: 'Failed to create user' },
-        { status: 500 }
-      )
-    }
-
-    // Step 2: Create user profile in database using admin client
-    // Use admin client to bypass RLS for user creation
+    // Create user profile in database using admin client to bypass RLS
     const adminClient = createAdminClient()
     const { error: profileError } = await adminClient
       .from('profiles')
       .insert({
-        id: authData.user.id,
-        email: email, // Store email for easier querying
+        id: user.id,
+        email: user.email,
         first_name: firstName,
         last_name: lastName,
         date_of_birth: dateOfBirth,
@@ -101,12 +71,9 @@ export async function POST(request: NextRequest) {
         document_url: documentUrl,
         interests,
         bio,
-        // Don't set created_at and updated_at - they have defaults
       })
 
     if (profileError) {
-      console.error('Profile creation error:', profileError)
-      // User is created but profile failed - you may want to handle this
       return NextResponse.json(
         {
           error: 'Failed to create user profile',
@@ -119,17 +86,14 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      message: 'Registration successful. Please check your email to verify your account.',
+      message: 'Registration successful. Welcome to HomeNDrive!',
       user: {
-        id: authData.user.id,
-        email: authData.user.email,
-        emailVerified: false,
+        id: user.id,
+        email: user.email,
+        emailVerified: true,
       },
-      // Note: Supabase may auto-confirm email depending on your settings
-      // Check your Supabase Auth settings for email confirmation requirements
     })
   } catch (error) {
-    console.error('Registration error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -1,18 +1,21 @@
 /**
  * POST /api/auth/send-verification
  *
- * Generates and sends a 6-digit OTP to user's email
- * Stores OTP in cookies for verification
+ * Creates a new user account via Supabase Auth and triggers a confirmation
+ * email with a 6-digit OTP code. For resend requests, uses Supabase's
+ * dedicated resend API instead of creating a duplicate account.
+ *
+ * Supabase Dashboard Setup Required:
+ * 1. Authentication → Email Templates → "Confirm signup"
+ * 2. Include {{ .Token }} in the template to show the 6-digit code
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-import { generateOTP, getOTPExpiry } from '@/lib/otp/generator'
 import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json()
+    const { email, password, isResend } = await request.json()
 
     if (!email) {
       return NextResponse.json(
@@ -21,48 +24,57 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generate 6-digit OTP
-    const otp = generateOTP()
-    const otpExpiry = getOTPExpiry(5) // 5 minutes
-
-    // Store OTP in httpOnly cookie
-    const cookieStore = await cookies()
-    cookieStore.set(`otp_${email}`, otp, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 300, // 5 minutes
-      path: '/',
-    })
-
-    // Send OTP email using Supabase Auth with custom email
     const supabase = await createClient()
 
-    // Use signInWithOtp to send email with OTP code
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        shouldCreateUser: false,
-        data: {
-          otp_code: otp // This will be available in email template
-        }
+    if (isResend) {
+      // Resend confirmation email for an existing unconfirmed account
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+      })
+
+      if (error) {
+        return NextResponse.json(
+          { error: error.message },
+          { status: 400 }
+        )
       }
+
+      return NextResponse.json({
+        message: 'Verification code resent to your email',
+        success: true,
+      })
+    }
+
+    // Initial signup — create the account, Supabase sends confirmation email
+    if (!password) {
+      return NextResponse.json(
+        { error: 'Password is required' },
+        { status: 400 }
+      )
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      },
     })
 
     if (error) {
-      console.error('Supabase OTP error:', error)
-      // Even if Supabase fails, we can continue with stored OTP
-      // In production, you'd want to use a proper email service
+      return NextResponse.json(
+        { error: error.message },
+        { status: 400 }
+      )
     }
 
     return NextResponse.json({
       message: 'Verification code sent to your email',
       success: true,
-      // For development only - remove in production
-      ...(process.env.NODE_ENV === 'development' && { dev_otp: otp })
+      userId: data.user?.id,
     })
   } catch (error) {
-    console.error('Send verification error:', error)
     return NextResponse.json(
       { error: 'Failed to send verification code' },
       { status: 500 }
