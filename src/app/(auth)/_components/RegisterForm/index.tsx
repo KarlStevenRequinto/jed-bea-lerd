@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import AuthSectionHeader from "@/components/forms/auth-section-header";
 import AuthInput from "@/components/forms/auth-input";
 import BaseButton from "@/components/common/BaseButton";
@@ -23,14 +24,42 @@ const RegisterForm = () => {
         handleRegister
     } = useRegisterFormViewModel();
     const router = useRouter();
+    const [submitError, setSubmitError] = useState("");
+    const [emailServerError, setEmailServerError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setSubmitError("");
+        setEmailServerError("");
         const isValid = await handleRegister(e);
 
-        if (isValid) {
-            // Pass email and password to the /register route via URL params
-            router.push(`/register?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
+        if (!isValid) return;
+
+        setIsSubmitting(true);
+        try {
+            const response = await fetch("/api/auth/send-verification", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                const serverMessage = data.error || "Failed to start registration";
+                if (response.status === 409) {
+                    setEmailServerError(serverMessage);
+                } else {
+                    setSubmitError(serverMessage);
+                }
+                return;
+            }
+
+            router.push("/register");
+        } catch {
+            setSubmitError("Failed to start registration");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -47,10 +76,14 @@ const RegisterForm = () => {
                         placeholder="Enter your email address"
                         autoComplete="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (emailServerError) setEmailServerError("");
+                        }}
                         required
                     />
                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+                    {emailServerError && <p className="mt-1 text-xs text-red-600">{emailServerError}</p>}
                 </div>
                 <div>
                     <AuthInput
@@ -91,10 +124,11 @@ const RegisterForm = () => {
                 type="submit"
                 className="w-full bg-[var(--color-success-light)] text-primary-foreground"
                 aria-label="Create account"
-                disabled={isValidating}
+                disabled={isValidating || isSubmitting}
             >
-                {isValidating ? "Validating..." : "Create Account"}
+                {isValidating ? "Validating..." : isSubmitting ? "Sending code..." : "Create Account"}
             </BaseButton>
+            {submitError && <p className="mt-1 text-xs text-red-600">{submitError}</p>}
             <div className="space-y-2 text-center text-[12px]">
                 <p className="text-muted-foreground">
                     By signing up, you agree to our{" "}

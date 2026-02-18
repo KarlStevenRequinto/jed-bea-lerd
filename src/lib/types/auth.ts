@@ -88,6 +88,22 @@ export interface RegistrationRequest {
   bio?: string
 }
 
+export interface PersonalInfoStepRequest {
+  firstName: string
+  lastName: string
+  dateOfBirth: string
+  phoneNumber: string
+  profilePhotoUrl?: string
+}
+
+export interface AddressInfoStepRequest {
+  streetAddress: string
+  city: string
+  province: string
+  zipCode: string
+  country: string
+}
+
 export interface RegistrationResponse {
   message: string
   user: {

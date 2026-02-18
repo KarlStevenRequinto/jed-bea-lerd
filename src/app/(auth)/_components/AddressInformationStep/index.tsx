@@ -8,7 +8,7 @@ import { location } from "@/assets/images";
 
 interface AddressInformationStepProps {
     email: string;
-    onContinue?: (data: AddressInfoData) => void;
+    onContinue?: (data: AddressInfoData) => Promise<void> | void;
     onBack?: () => void;
 }
 
@@ -22,6 +22,7 @@ export interface AddressInfoData {
 }
 
 const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ email, onContinue, onBack }) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState<AddressInfoData>({
         streetAddress1: "",
         streetAddress2: "",
@@ -36,27 +37,35 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ email, 
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const isFormValid =
+        formData.streetAddress1.trim().length > 0 &&
+        formData.city.trim().length > 0 &&
+        formData.province.trim().length > 0 &&
+        formData.zipCode.trim().length > 0 &&
+        formData.country.trim().length > 0;
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (onContinue) {
-            onContinue(formData);
+        if (!isFormValid || !onContinue || isSubmitting) return;
+
+        try {
+            setIsSubmitting(true);
+            await onContinue(formData);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
         <div className="flex flex-col items-center text-center">
-            {/* Title */}
             <h1 className="text-normal text-2xl text-foreground">Address Information</h1>
             <p className="mt-2 text-[13px] text-light">Where are you located?</p>
 
-            {/* Location Icon */}
             <div className="mt-6 mb-6">
                 <Image src={location} alt="Location" width={76} height={76} className="object-contain" />
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 px-4 sm:px-0">
-                {/* Street Address 1 */}
                 <FormInput
                     id="streetAddress1"
                     name="streetAddress1"
@@ -67,7 +76,6 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ email, 
                     onChange={handleInputChange}
                 />
 
-                {/* Street Address 2 */}
                 <FormInput
                     id="streetAddress2"
                     name="streetAddress2"
@@ -78,7 +86,6 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ email, 
                     onChange={handleInputChange}
                 />
 
-                {/* City and Province Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FormInput
                         id="city"
@@ -100,7 +107,6 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ email, 
                     />
                 </div>
 
-                {/* ZIP Code and Country Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FormInput
                         id="zipCode"
@@ -122,18 +128,24 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ email, 
                     />
                 </div>
 
-                {/* Buttons */}
                 <div className="pt-2 flex gap-3">
                     <BaseButton type="button" onClick={onBack} className="w-full bg-primary-foreground text-foreground border border-border">
-                        ← Back
+                        Back
                     </BaseButton>
-                    <BaseButton type="submit" className="w-full bg-[var(--color-gray-450)] text-[var(--color-white)]">
-                        Continue →
+                    <BaseButton
+                        type="submit"
+                        disabled={!isFormValid || isSubmitting}
+                        className={`w-full text-[var(--color-white)] transition-colors ${
+                            isFormValid && !isSubmitting
+                                ? "bg-[var(--color-brand)] hover:bg-[var(--color-brand-medium)]"
+                                : "bg-[var(--color-gray-450)] cursor-not-allowed hover:opacity-100"
+                        }`}
+                    >
+                        {isSubmitting ? "Saving..." : "Continue"}
                     </BaseButton>
                 </div>
             </form>
 
-            {/* Registering as */}
             <div className="mt-6 text-sm text-muted-foreground">
                 Registering as: <span className="font-semibold text-foreground">{email}</span>
             </div>

@@ -40,10 +40,20 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      return NextResponse.json({
+      const response = NextResponse.json({
         message: 'Verification code resent to your email',
         success: true,
       })
+
+      response.cookies.set('registration_email', email, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 60 * 30,
+      })
+
+      return response
     }
 
     // Initial signup — create the account, Supabase sends confirmation email
@@ -69,11 +79,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    return NextResponse.json({
+    const isLikelyExistingConfirmedUser = Array.isArray(data.user?.identities) && data.user?.identities.length === 0
+
+    if (isLikelyExistingConfirmedUser) {
+      return NextResponse.json(
+        { error: 'This email is already registered. Please log in instead.' },
+        { status: 409 }
+      )
+    }
+
+    const response = NextResponse.json({
       message: 'Verification code sent to your email',
       success: true,
       userId: data.user?.id,
     })
+
+    response.cookies.set('registration_email', email, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 30,
+    })
+
+    return response
   } catch (error) {
     return NextResponse.json(
       { error: 'Failed to send verification code' },

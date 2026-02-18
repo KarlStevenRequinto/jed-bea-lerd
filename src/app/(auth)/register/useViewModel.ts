@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store";
-import { registerUser } from "@/lib/auth/actions";
+import { registerUser, saveAddressInfo, savePersonalInfo } from "@/lib/auth/actions";
 import { PersonalInfoData } from "../_components/PersonalInformationStep";
 import { AddressInfoData } from "../_components/AddressInformationStep";
 import { IdentityVerificationData } from "../_components/IdentityVerificationStep";
@@ -10,28 +10,19 @@ import { RegistrationRequest } from "@/lib/types/auth";
 
 export const useRegisterViewModel = () => {
     const router = useRouter();
-    const searchParams = useSearchParams();
     const dispatch = useAppDispatch();
     const [verified, setVerified] = useState(false);
-    const [currentStep, setCurrentStep] = useState(1); // Start at 1 (email verification)
+    const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [verificationError, setVerificationError] = useState("");
     const [countdown, setCountdown] = useState(0);
     const [hasSignedUp, setHasSignedUp] = useState(false);
+    const [registrationEmail, setRegistrationEmail] = useState("");
     const cardRef = useRef<HTMLDivElement>(null);
 
-    // Get email and password from URL params
-    const emailFromUrl = searchParams.get("email") || "";
-    const passwordFromUrl = searchParams.get("password") || "";
+    const [registrationData, setRegistrationData] = useState<Partial<RegistrationRequest>>({});
 
-    // Store all registration data
-    const [registrationData, setRegistrationData] = useState<Partial<RegistrationRequest>>({
-        email: emailFromUrl,
-        password: passwordFromUrl,
-    });
-
-    // Set minimum height for card to prevent layout shifts
     useLayoutEffect(() => {
         if (!cardRef.current) return;
         const h = cardRef.current.offsetHeight;
@@ -40,14 +31,35 @@ export const useRegisterViewModel = () => {
         }
     }, []);
 
-    // Send initial verification email when component mounts
     useEffect(() => {
-        if (emailFromUrl && passwordFromUrl) {
-            handleSendVerification();
-        }
-    }, [emailFromUrl]);
+        const loadRegistrationContext = async () => {
+            try {
+                const response = await fetch("/api/auth/register/context");
+                if (!response.ok) {
+                    router.push("/login");
+                    return;
+                }
 
-    // Countdown timer for resend
+                const data = await response.json();
+                const email = data.email || "";
+
+                if (!email) {
+                    router.push("/login");
+                    return;
+                }
+
+                setRegistrationEmail(email);
+                setRegistrationData((prev) => ({ ...prev, email }));
+                setHasSignedUp(true);
+                setCountdown(59);
+            } catch {
+                router.push("/login");
+            }
+        };
+
+        loadRegistrationContext();
+    }, [router]);
+
     useEffect(() => {
         if (countdown > 0) {
             const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -55,17 +67,29 @@ export const useRegisterViewModel = () => {
         }
     }, [countdown]);
 
-    // Handle transition from step 1 (verification) to step 2 (personal info)
     useEffect(() => {
         if (verified) {
             const timer = setTimeout(() => {
                 setCurrentStep(2);
-            }, 2000); // 2 second delay before transitioning
+            }, 2000);
             return () => clearTimeout(timer);
         }
     }, [verified]);
 
-    const handlePersonalInfoSubmit = (data: PersonalInfoData) => {
+    const handlePersonalInfoSubmit = async (data: PersonalInfoData) => {
+        const result = await savePersonalInfo(dispatch, {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            dateOfBirth: data.dateOfBirth,
+            phoneNumber: data.phoneNumber,
+            profilePhotoUrl: data.profilePhoto ? URL.createObjectURL(data.profilePhoto) : undefined,
+        });
+
+        if (!result.success) {
+            alert(result.error || "Failed to save personal information. Please try again.");
+            return;
+        }
+
         setRegistrationData((prev) => ({
             ...prev,
             firstName: data.firstName,
@@ -77,10 +101,25 @@ export const useRegisterViewModel = () => {
         setCurrentStep(3);
     };
 
-    const handleAddressInfoSubmit = (data: AddressInfoData) => {
+    const handleAddressInfoSubmit = async (data: AddressInfoData) => {
+        const payload = {
+            streetAddress: `${data.streetAddress1}${data.streetAddress2 ? ", " + data.streetAddress2 : ""}`,
+            city: data.city,
+            province: data.province,
+            zipCode: data.zipCode,
+            country: data.country,
+        };
+
+        const result = await saveAddressInfo(dispatch, payload);
+
+        if (!result.success) {
+            alert(result.error || "Failed to save address information. Please try again.");
+            return;
+        }
+
         setRegistrationData((prev) => ({
             ...prev,
-            streetAddress: `${data.streetAddress1}${data.streetAddress2 ? ', ' + data.streetAddress2 : ''}`,
+            streetAddress: payload.streetAddress,
             city: data.city,
             province: data.province,
             zipCode: data.zipCode,
@@ -90,7 +129,6 @@ export const useRegisterViewModel = () => {
     };
 
     const handleIdentityVerificationSubmit = (data: IdentityVerificationData) => {
-        // Map the idDocumentType to match the database enum
         let idType: "passport" | "drivers_license" | "national_id" = "passport";
         if (data.idDocumentType === "Driver's License") {
             idType = "drivers_license";
@@ -110,7 +148,6 @@ export const useRegisterViewModel = () => {
     };
 
     const handlePreferencesSubmit = async (data: PreferencesData) => {
-        // Merge all data together
         const finalData: RegistrationRequest = {
             ...(registrationData as RegistrationRequest),
             interests: data.interests,
@@ -120,16 +157,16 @@ export const useRegisterViewModel = () => {
         setLoading(true);
 
         try {
-            // Submit to API — user is already authenticated via verify-otp session
             const result = await registerUser(dispatch, finalData);
 
             if (result.success) {
+                await fetch("/api/auth/register/context", { method: "DELETE" });
                 alert(result.message || "Registration successful! Welcome to HomeNDrive.");
                 router.push("/login");
             } else {
                 alert(result.error || "Registration failed. Please try again.");
             }
-        } catch (error) {
+        } catch {
             alert("An unexpected error occurred. Please try again.");
         } finally {
             setLoading(false);
@@ -149,11 +186,12 @@ export const useRegisterViewModel = () => {
     };
 
     const handleReset = () => {
+        fetch("/api/auth/register/context", { method: "DELETE" }).catch(() => undefined);
         router.push("/login");
     };
 
     const handleSendVerification = async () => {
-        if (!emailFromUrl) return;
+        if (!registrationEmail) return;
 
         setLoading(true);
         setVerificationError("");
@@ -162,11 +200,7 @@ export const useRegisterViewModel = () => {
             const response = await fetch("/api/auth/send-verification", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(
-                    hasSignedUp
-                        ? { email: emailFromUrl, isResend: true }
-                        : { email: emailFromUrl, password: passwordFromUrl }
-                ),
+                body: JSON.stringify({ email: registrationEmail, isResend: true }),
             });
 
             const data = await response.json();
@@ -180,8 +214,8 @@ export const useRegisterViewModel = () => {
                 setHasSignedUp(true);
             }
 
-            setCountdown(59); // Start 59 second countdown
-        } catch (error) {
+            setCountdown(59);
+        } catch {
             setVerificationError("Failed to send verification code");
         } finally {
             setLoading(false);
@@ -194,6 +228,11 @@ export const useRegisterViewModel = () => {
             return;
         }
 
+        if (!registrationEmail) {
+            setVerificationError("Missing registration session. Please restart registration.");
+            return;
+        }
+
         setLoading(true);
         setVerificationError("");
 
@@ -202,7 +241,7 @@ export const useRegisterViewModel = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    email: emailFromUrl,
+                    email: registrationEmail,
                     token: verificationCode,
                 }),
             });
@@ -214,9 +253,8 @@ export const useRegisterViewModel = () => {
                 return;
             }
 
-            // Verification successful — Supabase session is now established
             setVerified(true);
-        } catch (error) {
+        } catch {
             setVerificationError("Failed to verify code");
         } finally {
             setLoading(false);

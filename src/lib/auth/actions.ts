@@ -5,7 +5,7 @@
  * These functions call your API routes and update Redux state.
  */
 
-import { LoginRequest, RegistrationRequest, UserProfile } from "@/lib/types/auth";
+import { AddressInfoStepRequest, LoginRequest, PersonalInfoStepRequest, RegistrationRequest, UserProfile } from "@/lib/types/auth";
 import { AppDispatch } from "@/store";
 import { login as loginAction, logout as logoutAction, setLoading, setError } from "@/store/authSlice";
 
@@ -77,6 +77,72 @@ export async function registerUser(
     return { success: true, message: result.message };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Registration failed";
+    dispatch(setError(errorMessage));
+    return { success: false, error: errorMessage };
+  } finally {
+    dispatch(setLoading(false));
+  }
+}
+
+/**
+ * Save registration step-2 personal information
+ */
+export async function savePersonalInfo(
+  dispatch: AppDispatch,
+  data: PersonalInfoStepRequest
+) {
+  try {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
+
+    const response = await fetch("/api/auth/register/personal-info", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Failed to save personal information");
+    }
+
+    return { success: true, message: result.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to save personal information";
+    dispatch(setError(errorMessage));
+    return { success: false, error: errorMessage };
+  } finally {
+    dispatch(setLoading(false));
+  }
+}
+
+/**
+ * Save registration step-3 address information
+ */
+export async function saveAddressInfo(
+  dispatch: AppDispatch,
+  data: AddressInfoStepRequest
+) {
+  try {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
+
+    const response = await fetch("/api/auth/register/address-info", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Failed to save address information");
+    }
+
+    return { success: true, message: result.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to save address information";
     dispatch(setError(errorMessage));
     return { success: false, error: errorMessage };
   } finally {

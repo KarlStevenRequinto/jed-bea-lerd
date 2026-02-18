@@ -49,11 +49,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create user profile in database using admin client to bypass RLS
+    // Upsert profile so this works whether step-2 already created a partial row or not.
     const adminClient = createAdminClient()
     const { error: profileError } = await adminClient
       .from('profiles')
-      .insert({
+      .upsert({
         id: user.id,
         email: user.email,
         first_name: firstName,
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
         document_url: documentUrl,
         interests,
         bio,
-      })
+      }, { onConflict: 'id' })
 
     if (profileError) {
       return NextResponse.json(

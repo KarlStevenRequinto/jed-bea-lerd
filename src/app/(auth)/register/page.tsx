@@ -99,7 +99,7 @@ const RegisterPageContent = () => {
                                     value={verificationCode}
                                     onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ""))}
                                     className="w-full text-center text-3xl tracking-[1rem] font-semibold rounded-md border border-border bg-muted px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
-                                    placeholder="000000"
+                                    placeholder="_ _ _ _ _ _"
                                     disabled={loading || verified}
                                 />
                                 {verificationError && (
@@ -157,7 +157,9 @@ const RegisterPageContent = () => {
                             {!verified && (
                                 <div className="w-full max-w-md mt-6 px-4 sm:px-0">
                                     <Link href="/login" className="block">
-                                        <BaseButton className="w-full bg-primary-foreground text-foreground border border-border">
+                                        <BaseButton
+                                            className="w-full bg-primary-foreground text-foreground border border-border transition-colors hover:bg-gray-100 hover:border-gray-300"
+                                        >
                                             Back to Login
                                         </BaseButton>
                                     </Link>
