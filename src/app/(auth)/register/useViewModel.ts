@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store";
-import { registerUser, saveAddressInfo, savePersonalInfo } from "@/lib/auth/actions";
+import { getCurrentUser, registerUser, saveAddressInfo, savePersonalInfo } from "@/lib/auth/actions";
 import { PersonalInfoData } from "../_components/PersonalInformationStep";
 import { AddressInfoData } from "../_components/AddressInformationStep";
 import { IdentityVerificationData } from "../_components/IdentityVerificationStep";
@@ -161,8 +161,8 @@ export const useRegisterViewModel = () => {
 
             if (result.success) {
                 await fetch("/api/auth/register/context", { method: "DELETE" });
-                alert(result.message || "Registration successful! Welcome to HomeNDrive.");
-                router.push("/login");
+                await getCurrentUser(dispatch);
+                router.push("/");
             } else {
                 alert(result.error || "Registration failed. Please try again.");
             }

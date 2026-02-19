@@ -22,7 +22,9 @@ export interface IdentityVerificationData {
 }
 
 const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ email, onContinue, onBack }) => {
-    const { formData, handleInputChange, handleFileChange, handleSubmit, idDocumentOptions } = useIdentityVerificationViewModel({ onContinue });
+    const { formData, handleInputChange, handleFileChange, handleSubmit, idDocumentOptions } = useIdentityVerificationViewModel({
+        onContinue,
+    });
 
     return (
         <div className="flex flex-col items-center text-center">
@@ -120,7 +122,10 @@ const IdentityVerificationStep: React.FC<IdentityVerificationStepProps> = ({ ema
                     <BaseButton type="button" onClick={onBack} className="w-full bg-primary-foreground text-foreground border border-border">
                         ← Back
                     </BaseButton>
-                    <BaseButton type="submit" className="w-full bg-black text-[var(--color-white)]">
+                    <BaseButton
+                        type="submit"
+                        className="w-full text-[var(--color-white)] transition-colors bg-[var(--color-brand)] hover:bg-[var(--color-brand-medium)]"
+                    >
                         Continue →
                     </BaseButton>
                 </div>
