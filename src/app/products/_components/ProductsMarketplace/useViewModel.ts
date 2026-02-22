@@ -251,7 +251,7 @@ const MOCK_LISTINGS: MockListing[] = [
         fuelType: "Hybrid (Gas + Electric)",
         bodyType: "SUV",
         description: "Toyota RAV4 Hybrid with fuel-efficient engine. Well maintained, complete records.",
-        image: "https://images.unsplash.com/photo-1548085341-92b6b9f03d15?w=640&h=400&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=640&h=400&fit=crop&auto=format",
         brand: "Toyota",
     },
     {
