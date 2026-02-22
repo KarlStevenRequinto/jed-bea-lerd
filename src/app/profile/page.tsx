@@ -13,7 +13,7 @@ const PROFILE_IMAGE = "/images/profile-user.png";
 export default function ProfilePage() {
     return (
         <div className="min-h-screen bg-[var(--color-gray-50)]">
-            <div className="container mx-auto px-4 md:px-6 py-8">
+            <div className="container mx-auto px-6 py-8">
                 {/* Page Header */}
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold text-[var(--color-gray-900)] mb-1">
