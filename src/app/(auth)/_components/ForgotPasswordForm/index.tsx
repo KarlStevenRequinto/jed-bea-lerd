@@ -1,29 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import AuthSectionHeader from "@/components/forms/auth-section-header";
 import AuthInput from "@/components/forms/auth-input";
 import BaseButton from "@/components/common/BaseButton";
 import SuccessAlert from "@/components/common/SuccessAlert";
+import { useForgotPasswordFormViewModel } from "./useViewModel";
 
 interface ForgotPasswordFormProps {
-    onBackToLogin: () => void;
+    onBackToLogin?: () => void;
 }
 
 const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onBackToLogin }) => {
-    const [emailSent, setEmailSent] = useState(false);
-    const [email, setEmail] = useState("");
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // TODO: Handle password reset logic
-        console.log("Send reset link to:", email);
-        setEmailSent(true);
-    };
+    const { emailSent, setEmailSent, email, loading, error, handleBackToLogin, handleSubmit, handleEmailChange } = useForgotPasswordFormViewModel({
+        onBackToLogin,
+    });
 
     return (
         <div className="space-y-6" aria-labelledby="reset-password-heading">
             <AuthSectionHeader title="Reset your password" subtitle="Enter your email to receive reset instructions" />
+
+            {error && (
+                <div className="rounded-md bg-red-50 p-3 text-sm text-red-800 border border-red-200">
+                    {error}
+                </div>
+            )}
 
             {emailSent ? (
                 <>
@@ -46,7 +47,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onBackToLogin }
                     {/* Back to Login Button */}
                     <BaseButton
                         type="button"
-                        onClick={onBackToLogin}
+                        onClick={handleBackToLogin}
                         className="w-full bg-primary-foreground text-foreground border border-border hover:bg-muted transition-none"
                     >
                         Back to Login
@@ -58,26 +59,27 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onBackToLogin }
                         <AuthInput
                             id="email"
                             name="email"
-                            type="text"
+                            type="email"
                             label="Email Address"
                             placeholder="Enter your email"
                             autoComplete="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => handleEmailChange(e.target.value)}
+                            required
                         />
 
                         {/* Submit Button */}
-                        <BaseButton type="submit" className="w-full bg-brand text-primary-foreground transition-none">
-                            Send Reset Link
+                        <BaseButton type="submit" className="w-full bg-brand text-primary-foreground transition-none" disabled={loading}>
+                            {loading ? "Sending..." : "Send Reset Link"}
                         </BaseButton>
                     </form>
 
                     {/* Back to Login */}
                     <p className="text-center text-sm text-muted-foreground">
                         Remember your password?{" "}
-                        <button type="button" onClick={onBackToLogin} className="font-medium text-brand-medium hover:underline cursor-pointer">
+                        <Link href="/login" className="font-medium text-brand-medium hover:underline cursor-pointer">
                             Back to login
-                        </button>
+                        </Link>
                     </p>
                 </>
             )}

@@ -1,16 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { GoogleIconSvg, FacebookIconSvg } from "@/components/svg-icons";
 import AuthSectionHeader from "@/components/forms/auth-section-header";
 import AuthInput from "@/components/forms/auth-input";
 import BaseButton from "@/components/common/BaseButton";
 import { useLoginFormViewModel } from "./useViewModel";
 
-interface LoginFormProps {
-    onForgotPassword?: () => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
+const LoginForm: React.FC = () => {
     const { email, setEmail, password, setPassword, rememberMe, setRememberMe, handleLogin, loading, error } = useLoginFormViewModel();
 
     return (
@@ -62,15 +59,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onForgotPassword }) => {
                         />
                         Remember Me
                     </label>
-                    <button
-                        type="button"
-                        onClick={onForgotPassword}
+                    <Link
+                        href="/forgot-password"
                         className="hover:underline cursor-pointer"
                         style={{ color: "var(--color-link)" }}
                         aria-label="Forgot password"
                     >
                         Forgot password?
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Submit: instantly hide when parent tab != login via aria-hidden upstream */}
