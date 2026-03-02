@@ -207,6 +207,9 @@ export const useRegisterViewModel = () => {
 
             if (!response.ok) {
                 setVerificationError(data.error || "Failed to send verification code");
+                if (response.status === 429 && typeof data.retryAfterSeconds === "number") {
+                    setCountdown(data.retryAfterSeconds);
+                }
                 return;
             }
 
@@ -214,7 +217,7 @@ export const useRegisterViewModel = () => {
                 setHasSignedUp(true);
             }
 
-            setCountdown(59);
+            setCountdown(typeof data.retryAfterSeconds === "number" ? data.retryAfterSeconds : 59);
         } catch {
             setVerificationError("Failed to send verification code");
         } finally {

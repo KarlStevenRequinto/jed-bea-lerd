@@ -12,7 +12,8 @@ interface ForgotPasswordFormProps {
 }
 
 const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onBackToLogin }) => {
-    const { emailSent, setEmailSent, email, loading, error, handleBackToLogin, handleSubmit, handleEmailChange } = useForgotPasswordFormViewModel({
+    const { emailSent, setEmailSent, email, loading, cooldownSeconds, error, handleBackToLogin, handleSubmit, handleEmailChange } =
+        useForgotPasswordFormViewModel({
         onBackToLogin,
     });
 
@@ -38,8 +39,13 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onBackToLogin }
                         <p className="text-sm font-semibold mb-1">Didn&apos;t receive the email?</p>
                         <p className="text-sm">
                             Check your spam folder or{" "}
-                            <button type="button" onClick={() => setEmailSent(false)} className="underline underline-offset-2 cursor-pointer font-semibold">
-                                resend the link
+                            <button
+                                type="button"
+                                onClick={() => setEmailSent(false)}
+                                className="underline underline-offset-2 cursor-pointer font-semibold disabled:no-underline disabled:opacity-70 disabled:cursor-not-allowed"
+                                disabled={cooldownSeconds > 0}
+                            >
+                                {cooldownSeconds > 0 ? `resend in ${cooldownSeconds}s` : "resend the link"}
                             </button>
                         </p>
                     </div>
@@ -69,8 +75,12 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onBackToLogin }
                         />
 
                         {/* Submit Button */}
-                        <BaseButton type="submit" className="w-full bg-brand text-primary-foreground transition-none" disabled={loading}>
-                            {loading ? "Sending..." : "Send Reset Link"}
+                        <BaseButton
+                            type="submit"
+                            className="w-full bg-brand text-primary-foreground transition-none"
+                            disabled={loading || cooldownSeconds > 0}
+                        >
+                            {loading ? "Sending..." : cooldownSeconds > 0 ? `Try again in ${cooldownSeconds}s` : "Send Reset Link"}
                         </BaseButton>
                     </form>
 

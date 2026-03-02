@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { enforceAuthEmailRateLimit, getClientIpAddress } from "@/lib/security/authRateLimit";
 
 export async function POST(request: NextRequest) {
     try {
@@ -16,6 +17,23 @@ export async function POST(request: NextRequest) {
         }
 
         const supabase = await createClient();
+        const ipAddress = getClientIpAddress(request.headers);
+        const limit = enforceAuthEmailRateLimit({
+            bucket: "forgot-password",
+            email,
+            ipAddress,
+        });
+
+        if (!limit.allowed) {
+            return NextResponse.json(
+                {
+                    error: `Too many reset requests. Please try again in ${limit.retryAfterSeconds} seconds.`,
+                    retryAfterSeconds: limit.retryAfterSeconds,
+                },
+                { status: 429 }
+            );
+        }
+
         const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin;
         const callbackUrl = `${siteUrl}/auth/callback?next=${encodeURIComponent("/reset-password")}`;
 

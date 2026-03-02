@@ -12,6 +12,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { enforceAuthEmailRateLimit, getClientIpAddress } from '@/lib/security/authRateLimit'
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,6 +26,22 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient()
+    const ipAddress = getClientIpAddress(request.headers)
+    const limit = enforceAuthEmailRateLimit({
+      bucket: 'send-verification',
+      email,
+      ipAddress,
+    })
+
+    if (!limit.allowed) {
+      return NextResponse.json(
+        {
+          error: `Too many email attempts. Please try again in ${limit.retryAfterSeconds} seconds.`,
+          retryAfterSeconds: limit.retryAfterSeconds,
+        },
+        { status: 429 }
+      )
+    }
 
     if (isResend) {
       // Resend confirmation email for an existing unconfirmed account
@@ -103,7 +120,7 @@ export async function POST(request: NextRequest) {
     })
 
     return response
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to send verification code' },
       { status: 500 }

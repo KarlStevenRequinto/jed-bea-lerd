@@ -1,60 +1,15 @@
 import { useState } from "react";
 import { useSlidingTabs } from "@/hooks/useSlidingTabs";
-
-export interface Connection {
-    id: string;
-    name: string;
-    role: string;
-    avatar: string;
-    isFollowing: boolean;
-}
-
-const mockConnections: Connection[] = [
-    {
-        id: "1",
-        name: "Miguel Santos",
-        role: "Real Estate Agent",
-        avatar: "",
-        isFollowing: true,
-    },
-    {
-        id: "2",
-        name: "Andrea Reyes",
-        role: "Home Buyer",
-        avatar: "",
-        isFollowing: true,
-    },
-    {
-        id: "3",
-        name: "Carlo Mendoza",
-        role: "Property Investor",
-        avatar: "",
-        isFollowing: false,
-    },
-    {
-        id: "4",
-        name: "Jasmine Cruz",
-        role: "Car Buyer",
-        avatar: "",
-        isFollowing: true,
-    },
-    {
-        id: "5",
-        name: "Joshua Navarro",
-        role: "Car Sales Agent",
-        avatar: "",
-        isFollowing: true,
-    },
-];
+import { MOCK_FOLLOWER_CONNECTIONS, MOCK_FOLLOWING_CONNECTIONS } from "@/constants/connections";
+export type { Connection } from "@/constants/connections";
 
 export type TabType = "following" | "followers";
 
 export const useConnectionsViewModel = () => {
     const [activeTab, setActiveTab] = useState<TabType>("following");
-    const [connections] = useState(mockConnections);
-
-    const followingCount = 156;
-    const followersCount = 342;
+    const followingCount = MOCK_FOLLOWING_CONNECTIONS.length;
+    const followersCount = MOCK_FOLLOWER_CONNECTIONS.length;
+    const connections = activeTab === "following" ? MOCK_FOLLOWING_CONNECTIONS : MOCK_FOLLOWER_CONNECTIONS;
 
     // Sliding tab animation
     const { highlightTransform, transitionClasses, highlightWidth } = useSlidingTabs({
@@ -69,13 +24,7 @@ export const useConnectionsViewModel = () => {
     };
 
     const handleFollow = (connectionId: string) => {
-        // TODO: Implement follow/unfollow functionality
-        console.log("Follow clicked for:", connectionId);
-    };
-
-    const handleSeeMore = () => {
-        // TODO: Navigate to full connections page
-        console.log("See more clicked");
+        void connectionId;
     };
 
     return {
@@ -88,6 +37,5 @@ export const useConnectionsViewModel = () => {
         highlightWidth,
         handleTabChange,
         handleFollow,
-        handleSeeMore,
     };
 };

@@ -19,15 +19,12 @@ export const useResetPasswordFormViewModel = () => {
     useEffect(() => {
         const initializeRecoverySession = async () => {
             const code = searchParams.get("code");
-            console.log("[reset-password] Initializing recovery session", { hasCode: Boolean(code) });
 
             try {
                 if (code) {
-                    console.log("[reset-password] Exchanging code for session");
                     const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
 
                     if (exchangeError) {
-                        console.log("[reset-password] exchangeCodeForSession failed", exchangeError.message);
                         setError("This reset link is invalid or expired. Please request a new one.");
                         setInitializing(false);
                         return;
@@ -35,10 +32,6 @@ export const useResetPasswordFormViewModel = () => {
                 }
 
                 const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-                console.log("[reset-password] Session check after init", {
-                    hasSession: Boolean(sessionData.session),
-                    sessionError: sessionError?.message,
-                });
 
                 if (sessionError || !sessionData.session) {
                     setError("Reset session is missing or expired. Please request a new reset link.");
@@ -46,10 +39,8 @@ export const useResetPasswordFormViewModel = () => {
                     return;
                 }
 
-                console.log("[reset-password] Recovery session established");
                 setError(null);
-            } catch (sessionError) {
-                console.log("[reset-password] Session initialization error", sessionError);
+            } catch {
                 setError("Failed to initialize reset session. Please try again.");
             } finally {
                 setInitializing(false);
@@ -86,10 +77,6 @@ export const useResetPasswordFormViewModel = () => {
             setError(null);
 
             const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-            console.log("[reset-password] Current session status", {
-                hasSession: Boolean(sessionData.session),
-                sessionError: sessionError?.message,
-            });
 
             if (sessionError || !sessionData.session) {
                 throw new Error("Your reset session has expired. Please request a new reset link.");

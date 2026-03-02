@@ -1,9 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
 import { useConnectionsViewModel, Connection } from "./useViewModel";
+import { useSmoothContainerScroll } from "@/hooks/useSmoothContainerScroll";
 
 const Connections = () => {
+    const connectionsScrollRef = useRef<HTMLDivElement>(null);
+    useSmoothContainerScroll(connectionsScrollRef, { lerp: 0.14, wheelMultiplier: 1 });
+
     const {
         activeTab,
         connections,
@@ -14,7 +19,6 @@ const Connections = () => {
         highlightWidth,
         handleTabChange,
         handleFollow,
-        handleSeeMore,
     } = useConnectionsViewModel();
 
     return (
@@ -45,8 +49,12 @@ const Connections = () => {
             </div>
 
             {/* Connection List */}
-            <div className="space-y-3">
-                {connections.slice(0, 5).map((connection) => (
+            <div
+                ref={connectionsScrollRef}
+                data-lenis-prevent
+                className="connections-scroll max-h-[312px] overflow-y-auto overscroll-contain pr-1 space-y-3"
+            >
+                {connections.map((connection) => (
                     <ConnectionItem
                         key={connection.id}
                         connection={connection}
@@ -54,14 +62,6 @@ const Connections = () => {
                     />
                 ))}
             </div>
-
-            {/* See More */}
-            <button
-                onClick={handleSeeMore}
-                className="w-full text-center text-sm text-[var(--color-gray-600)] hover:text-[var(--color-brand)] mt-4 py-2 hover:underline"
-            >
-                See more
-            </button>
         </div>
     );
 };
@@ -100,7 +100,7 @@ const ConnectionItem = ({ connection, onFollow }: ConnectionItemProps) => {
         .slice(0, 2);
 
     return (
-        <div className="flex items-center justify-between">
+        <div className="group flex items-center justify-between rounded-lg px-2 py-1.5 cursor-pointer transition-colors duration-200 hover:bg-[var(--color-gray-100)]">
             <div className="flex items-center gap-3">
                 {/* Avatar */}
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-[var(--color-gray-200)] flex items-center justify-center">
@@ -132,7 +132,7 @@ const ConnectionItem = ({ connection, onFollow }: ConnectionItemProps) => {
             {/* Follow Button */}
             <button
                 onClick={() => onFollow(connection.id)}
-                className="p-2 hover:bg-[var(--color-gray-100)] rounded-full transition-colors"
+                className="p-2 hover:bg-[var(--color-gray-200)] rounded-full transition-colors cursor-pointer"
             >
                 {connection.isFollowing ? (
                     <svg
