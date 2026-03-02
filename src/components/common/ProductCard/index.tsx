@@ -5,6 +5,7 @@ import { useProductCardViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
 import Badge from "@/components/common/Badge";
 import { LockIconSvg } from "@/components/svg-icons";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
 /**
  * Product Card Component (List View)
@@ -26,6 +27,7 @@ interface ProductCardProps {
     image: string | StaticImageData;
     onContactClick?: () => void;
     onViewDetailsClick?: () => void;
+    isLoading?: boolean;
 }
 
 const ProductCard = ({
@@ -42,8 +44,13 @@ const ProductCard = ({
     image,
     onContactClick,
     onViewDetailsClick,
+    isLoading = false,
 }: ProductCardProps) => {
     useProductCardViewModel();
+
+    if (isLoading) {
+        return <ProductCardSkeleton />;
+    }
 
     return (
         <div

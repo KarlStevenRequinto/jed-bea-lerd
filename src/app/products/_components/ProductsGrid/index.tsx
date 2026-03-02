@@ -5,8 +5,10 @@ import GridProductCard from "@/components/common/GridProductCard";
 import ListingDetailsModal, { ListingDetailsModalData } from "@/components/common/ListingDetailsModal";
 import Pagination from "@/components/common/Pagination";
 import { MockListing, ListingTypeFilter } from "../ProductsMarketplace/useViewModel";
+import ProductsGridSkeleton from "./ProductsGridSkeleton";
 
 interface ProductsGridProps {
+    isLoading?: boolean;
     listings: MockListing[];
     totalCount: number;
     currentPage: number;
@@ -158,6 +160,7 @@ const EmptyState = () => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const ProductsGrid = ({
+    isLoading = false,
     listings,
     totalCount,
     currentPage,
@@ -171,6 +174,10 @@ const ProductsGrid = ({
         if (!selectedListingId) return null;
         return listings.find((listing) => listing.id === selectedListingId) ?? null;
     }, [listings, selectedListingId]);
+
+    if (isLoading) {
+        return <ProductsGridSkeleton />;
+    }
 
     return (
         <section id="products-results">

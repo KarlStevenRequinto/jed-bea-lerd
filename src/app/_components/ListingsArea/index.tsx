@@ -5,6 +5,7 @@ import { useListingsAreaViewModel } from "./useViewModel";
 import ProductCard from "@/components/common/ProductCard";
 import GridProductCard from "@/components/common/GridProductCard";
 import ListingDetailsModal, { ListingDetailsModalData } from "@/components/common/ListingDetailsModal";
+import ListingsAreaSkeleton from "./ListingsAreaSkeleton";
 import BaseButton from "@/components/common/BaseButton";
 import BulletedListIconSvg from "@/components/svg-icons/bulleted-list";
 import GridIconSvg from "@/components/svg-icons/grid";
@@ -12,9 +13,10 @@ import { FormattedListing } from "@/lib/types/listing";
 
 interface ListingsAreaProps {
     initialListings: FormattedListing[];
+    isLoadingInitial?: boolean;
 }
 
-const ListingsArea = ({ initialListings }: ListingsAreaProps) => {
+const ListingsArea = ({ initialListings, isLoadingInitial = false }: ListingsAreaProps) => {
     const { listings, viewMode, handleViewModeChange } = useListingsAreaViewModel(initialListings);
     const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
 
@@ -22,6 +24,10 @@ const ListingsArea = ({ initialListings }: ListingsAreaProps) => {
         if (!selectedListingId) return null;
         return listings.find((listing) => listing.id === selectedListingId) ?? null;
     }, [listings, selectedListingId]);
+
+    if (isLoadingInitial) {
+        return <ListingsAreaSkeleton />;
+    }
 
     return (
         <div className="flex-1 flex flex-col gap-4">

@@ -8,10 +8,12 @@ import {
     FUEL_TYPES,
     PROPERTY_TYPES,
 } from "../ProductsMarketplace/useViewModel";
+import ProductsFilterSidebarSkeleton from "./ProductsFilterSidebarSkeleton";
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 interface ProductsFilterSidebarProps {
+    isLoading?: boolean;
     filters: ProductFilters;
     totalCount: number;
     activePriceMax: number;
@@ -159,6 +161,7 @@ const listingTypeOptions: { label: string; value: ListingTypeFilter }[] = [
 ];
 
 const ProductsFilterSidebar = ({
+    isLoading = false,
     filters,
     totalCount,
     activePriceMax,
@@ -172,6 +175,10 @@ const ProductsFilterSidebar = ({
     onClearFilters,
     onShowResults,
 }: ProductsFilterSidebarProps) => {
+    if (isLoading) {
+        return <ProductsFilterSidebarSkeleton />;
+    }
+
     const [minVal, maxVal] = filters.priceRange;
 
     const showVehicleFilters = filters.listingType !== "properties";

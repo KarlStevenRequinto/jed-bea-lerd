@@ -6,6 +6,7 @@ import ProductsFilterSidebar from "../ProductsFilterSidebar";
 import ProductsGrid from "../ProductsGrid";
 import PopularBrands from "../PopularBrands";
 import SponsoredAd from "@/app/profile/_components/SponsoredAd";
+import ProductsMarketplaceSkeleton from "./ProductsMarketplaceSkeleton";
 
 const FilterIcon = () => (
     <svg
@@ -41,7 +42,11 @@ const CloseIcon = () => (
     </svg>
 );
 
-const ProductsMarketplace = () => {
+interface ProductsMarketplaceProps {
+    isLoadingInitial?: boolean;
+}
+
+const ProductsMarketplace = ({ isLoadingInitial = false }: ProductsMarketplaceProps) => {
     const {
         filters,
         paginatedListings,
@@ -67,6 +72,10 @@ const ProductsMarketplace = () => {
     } = useProductsMarketplaceViewModel();
 
     const resultsRef = useRef<HTMLDivElement>(null);
+
+    if (isLoadingInitial) {
+        return <ProductsMarketplaceSkeleton />;
+    }
 
     const scrollToResults = () => {
         resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });

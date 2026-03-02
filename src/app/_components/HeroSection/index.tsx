@@ -5,9 +5,18 @@ import BaseButton from "@/components/common/BaseButton";
 import CategoryCard from "@/components/common/CategoryCard";
 import FeatureIconItem from "@/components/common/FeatureIconItem";
 import { RealEstateSvgIcon, CarSvgIcon, PriceTagSvgIcon, SearchSvgIcon, SpeechBubbleSvgIcon, HeartSvgIcon } from "@/components/svg-icons";
+import HeroSectionSkeleton from "./HeroSectionSkeleton";
 
-const HeroSection = () => {
+interface HeroSectionProps {
+    isLoading?: boolean;
+}
+
+const HeroSection = ({ isLoading = false }: HeroSectionProps) => {
     useHeroSectionViewModel();
+
+    if (isLoading) {
+        return <HeroSectionSkeleton />;
+    }
 
     return (
         <div className="relative w-full bg-gradient-to-br from-[var(--color-blue-primary)] via-[var(--color-blue-light)] to-[var(--color-green-primary)] overflow-hidden lg:h-[520px]">

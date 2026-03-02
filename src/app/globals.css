@@ -298,3 +298,30 @@ select.custom-select option:hover {
 .connections-scroll::-webkit-scrollbar-thumb:hover {
     background-color: var(--color-gray-400);
 }
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeleton-base {
+    border-radius: 0.5rem;
+    background: linear-gradient(
+        90deg,
+        var(--color-gray-150) 25%,
+        var(--color-gray-100) 37%,
+        var(--color-gray-150) 63%
+    );
+    background-size: 400% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton-base {
+        animation: none;
+    }
+}

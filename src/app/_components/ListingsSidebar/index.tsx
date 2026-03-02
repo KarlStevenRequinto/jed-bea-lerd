@@ -2,9 +2,18 @@
 
 import { useListingsSidebarViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
+import ListingsSidebarSkeleton from "./ListingsSidebarSkeleton";
 
-const ListingsSidebar = () => {
+interface ListingsSidebarProps {
+    isLoading?: boolean;
+}
+
+const ListingsSidebar = ({ isLoading = false }: ListingsSidebarProps) => {
     const { activeFilter, setActiveFilter } = useListingsSidebarViewModel();
+
+    if (isLoading) {
+        return <ListingsSidebarSkeleton />;
+    }
 
     return (
         <div className="w-full lg:w-80 flex flex-col gap-6">

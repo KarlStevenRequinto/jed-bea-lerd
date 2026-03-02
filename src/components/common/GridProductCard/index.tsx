@@ -5,6 +5,7 @@ import { useGridProductCardViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
 import Badge from "@/components/common/Badge";
 import { LockIconSvg } from "@/components/svg-icons";
+import GridProductCardSkeleton from "./GridProductCardSkeleton";
 
 /**
  * Grid Product Card Component (Grid View)
@@ -27,6 +28,7 @@ interface GridProductCardProps {
     description: string;
     image: string | StaticImageData;
     onViewDetailsClick?: () => void;
+    isLoading?: boolean;
 }
 
 const SpecBadge = ({ value }: { value: string }) => {
@@ -51,8 +53,13 @@ const GridProductCard = ({
     description,
     image,
     onViewDetailsClick,
+    isLoading = false,
 }: GridProductCardProps) => {
     useGridProductCardViewModel();
+
+    if (isLoading) {
+        return <GridProductCardSkeleton />;
+    }
 
     const isProperty = category === "PROPERTY";
 

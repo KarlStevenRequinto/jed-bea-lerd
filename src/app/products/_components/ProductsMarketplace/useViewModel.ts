@@ -612,7 +612,7 @@ const MOCK_LISTINGS: MockListing[] = [
 
 // ─── ViewModel ────────────────────────────────────────────────────────────────
 
-const makeInitialFilters = (type: ListingTypeFilter = "all"): ProductFilters => ({
+export const makeEmptyProductFilters = (type: ListingTypeFilter = "all"): ProductFilters => ({
     listingType: type,
     priceRange: [PRICE_MIN, priceMaxForType(type)],
     location: "",
@@ -622,7 +622,7 @@ const makeInitialFilters = (type: ListingTypeFilter = "all"): ProductFilters => 
 });
 
 export const useProductsMarketplaceViewModel = () => {
-    const [filters, setFilters] = useState<ProductFilters>(makeInitialFilters());
+    const [filters, setFilters] = useState<ProductFilters>(makeEmptyProductFilters());
     const [currentPage, setCurrentPage] = useState(1);
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
@@ -776,7 +776,7 @@ export const useProductsMarketplaceViewModel = () => {
     }, []);
 
     const clearAllFilters = useCallback(() => {
-        setFilters((prev) => makeInitialFilters(prev.listingType));
+        setFilters((prev) => makeEmptyProductFilters(prev.listingType));
         setCurrentPage(1);
     }, []);
 
