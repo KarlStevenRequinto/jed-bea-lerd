@@ -1,8 +1,10 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { useListingsAreaViewModel } from "./useViewModel";
 import ProductCard from "@/components/common/ProductCard";
 import GridProductCard from "@/components/common/GridProductCard";
+import ListingDetailsModal, { ListingDetailsModalData } from "@/components/common/ListingDetailsModal";
 import BaseButton from "@/components/common/BaseButton";
 import BulletedListIconSvg from "@/components/svg-icons/bulleted-list";
 import GridIconSvg from "@/components/svg-icons/grid";
@@ -14,6 +16,12 @@ interface ListingsAreaProps {
 
 const ListingsArea = ({ initialListings }: ListingsAreaProps) => {
     const { listings, viewMode, handleViewModeChange } = useListingsAreaViewModel(initialListings);
+    const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
+
+    const selectedListing = useMemo<ListingDetailsModalData | null>(() => {
+        if (!selectedListingId) return null;
+        return listings.find((listing) => listing.id === selectedListingId) ?? null;
+    }, [listings, selectedListingId]);
 
     return (
         <div className="flex-1 flex flex-col gap-4">
@@ -109,7 +117,7 @@ const ListingsArea = ({ initialListings }: ListingsAreaProps) => {
                             description={listing.description}
                             image={listing.image}
                             onContactClick={() => console.log("Contact clicked:", listing.id)}
-                            onViewDetailsClick={() => console.log("View details clicked:", listing.id)}
+                            onViewDetailsClick={() => setSelectedListingId(listing.id)}
                         />
                     ))}
                 </div>
@@ -129,12 +137,13 @@ const ListingsArea = ({ initialListings }: ListingsAreaProps) => {
                             bodyType={listing.bodyType}
                             description={listing.description}
                             image={listing.image}
-                            onContactClick={() => console.log("Contact clicked:", listing.id)}
-                            onViewDetailsClick={() => console.log("View details clicked:", listing.id)}
+                            onViewDetailsClick={() => setSelectedListingId(listing.id)}
                         />
                     ))}
                 </div>
             )}
+
+            <ListingDetailsModal isOpen={Boolean(selectedListing)} listing={selectedListing} onClose={() => setSelectedListingId(null)} />
         </div>
     );
 };

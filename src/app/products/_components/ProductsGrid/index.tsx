@@ -1,6 +1,8 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import GridProductCard from "@/components/common/GridProductCard";
+import ListingDetailsModal, { ListingDetailsModalData } from "@/components/common/ListingDetailsModal";
 import Pagination from "@/components/common/Pagination";
 import { MockListing, ListingTypeFilter } from "../ProductsMarketplace/useViewModel";
 
@@ -163,7 +165,12 @@ const ProductsGrid = ({
     listingType,
     onPageChange,
 }: ProductsGridProps) => {
+    const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
     const { icon, title, countLabel } = HEADER_CONFIG[listingType];
+    const selectedListing = useMemo<ListingDetailsModalData | null>(() => {
+        if (!selectedListingId) return null;
+        return listings.find((listing) => listing.id === selectedListingId) ?? null;
+    }, [listings, selectedListingId]);
 
     return (
         <section id="products-results">
@@ -195,6 +202,7 @@ const ProductsGrid = ({
                             bodyType={listing.bodyType}
                             description={listing.description}
                             image={listing.image}
+                            onViewDetailsClick={() => setSelectedListingId(listing.id)}
                         />
                     ))
                 )}
@@ -206,6 +214,8 @@ const ProductsGrid = ({
                 totalPages={totalPages}
                 onPageChange={onPageChange}
             />
+
+            <ListingDetailsModal isOpen={Boolean(selectedListing)} listing={selectedListing} onClose={() => setSelectedListingId(null)} />
         </section>
     );
 };

@@ -26,7 +26,6 @@ interface GridProductCardProps {
     bodyType: string;
     description: string;
     image: string | StaticImageData;
-    onContactClick?: () => void;
     onViewDetailsClick?: () => void;
 }
 
@@ -51,7 +50,6 @@ const GridProductCard = ({
     bodyType,
     description,
     image,
-    onContactClick,
     onViewDetailsClick,
 }: GridProductCardProps) => {
     useGridProductCardViewModel();
@@ -112,19 +110,12 @@ const GridProductCard = ({
                     {description}
                 </p>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2">
-                    <BaseButton
-                        onClick={onContactClick}
-                        rightIcon={<LockIconSvg />}
-                        className="flex-1 bg-white text-foreground border border-gray-300 px-3 py-2 text-xs font-medium rounded-lg hover:bg-gray-50"
-                    >
-                        CONTACT
-                    </BaseButton>
+                {/* Action Button */}
+                <div>
                     <BaseButton
                         onClick={onViewDetailsClick}
                         rightIcon={<LockIconSvg />}
-                        className="flex-1 text-white border border-transparent px-3 py-2 text-xs font-semibold rounded-lg"
+                        className="w-full text-white border border-transparent px-3 py-2 text-xs font-semibold rounded-lg"
                         style={viewDetailsStyle}
                     >
                         VIEW DETAILS
