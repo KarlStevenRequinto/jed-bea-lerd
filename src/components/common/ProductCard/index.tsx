@@ -46,7 +46,7 @@ const ProductCard = ({
     onViewDetailsClick,
     isLoading = false,
 }: ProductCardProps) => {
-    useProductCardViewModel();
+    const { isLoggedIn } = useProductCardViewModel();
 
     if (isLoading) {
         return <ProductCardSkeleton />;
@@ -103,7 +103,7 @@ const ProductCard = ({
                     </BaseButton>
                     <BaseButton
                         onClick={onViewDetailsClick}
-                        rightIcon={<LockIconSvg />}
+                        rightIcon={isLoggedIn ? undefined : <LockIconSvg />}
                         className="flex-1 text-white border border-transparent px-4 py-2.5 text-sm font-semibold rounded-lg"
                         style={{
                             background: "linear-gradient(to right, var(--color-blue-primary), var(--color-green-primary))",
@@ -114,14 +114,16 @@ const ProductCard = ({
                 </div>
 
                 {/* Sign In Prompt */}
-                <div className="mt-4 text-center">
-                    <span className="text-xs">
-                        <a href="/login" className="font-bold" style={{ color: "var(--color-brand-darker)" }}>
-                            Sign In
-                        </a>{" "}
-                        to see more details
-                    </span>
-                </div>
+                {!isLoggedIn && (
+                    <div className="mt-4 text-center">
+                        <span className="text-xs">
+                            <a href="/login" className="font-bold" style={{ color: "var(--color-brand-darker)" }}>
+                                Sign In
+                            </a>{" "}
+                            to see more details
+                        </span>
+                    </div>
+                )}
             </div>
         </div>
     );

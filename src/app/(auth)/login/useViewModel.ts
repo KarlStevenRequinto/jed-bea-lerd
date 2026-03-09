@@ -1,13 +1,22 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useSlidingTabs } from "@/hooks/useSlidingTabs";
 
 export type AuthTab = "login" | "register";
 
 export const useLoginViewModel = () => {
-    const [tab, setTab] = useState<AuthTab>("login");
+    const searchParams = useSearchParams();
+    const queryTab = searchParams.get("tab");
+    const initialTab: AuthTab = queryTab === "register" ? "register" : "login";
+
+    const [tab, setTab] = useState<AuthTab>(initialTab);
     const [animationKey] = useState(() => Date.now());
+
+    useEffect(() => {
+        setTab(initialTab);
+    }, [initialTab]);
 
     const { highlightTransform, highlightWidth } = useSlidingTabs({
         tabCount: 2,

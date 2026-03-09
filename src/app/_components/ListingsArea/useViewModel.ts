@@ -7,10 +7,12 @@
 
 import { useState, useMemo } from "react";
 import { FormattedListing } from "@/lib/types/listing";
+import { useAppSelector } from "@/store";
 
 type ViewMode = "grid" | "list";
 
 export const useListingsAreaViewModel = (initialListings: FormattedListing[]) => {
+    const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
     const [viewMode, setViewMode] = useState<ViewMode>("grid");
     const [filters, setFilters] = useState<{
         category?: string;
@@ -49,6 +51,7 @@ export const useListingsAreaViewModel = (initialListings: FormattedListing[]) =>
 
     return {
         listings: filteredListings,
+        isLoggedIn,
         viewMode,
         handleViewModeChange,
         handleFilterChange,
