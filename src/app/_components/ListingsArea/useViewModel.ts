@@ -5,13 +5,14 @@
  * Accepts server-fetched listings as initial data.
  */
 
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedListing } from "@/lib/types/listing";
 import { useAppSelector } from "@/store";
 
 type ViewMode = "grid" | "list";
 
 export const useListingsAreaViewModel = (initialListings: FormattedListing[]) => {
+    const [mounted, setMounted] = useState(false);
     const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
     const [viewMode, setViewMode] = useState<ViewMode>("grid");
     const [filters, setFilters] = useState<{
@@ -49,8 +50,13 @@ export const useListingsAreaViewModel = (initialListings: FormattedListing[]) =>
         setFilters((prev) => ({ ...prev, ...newFilters }));
     };
 
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return {
         listings: filteredListings,
+        mounted,
         isLoggedIn,
         viewMode,
         handleViewModeChange,

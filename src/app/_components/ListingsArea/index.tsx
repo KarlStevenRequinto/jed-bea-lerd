@@ -19,7 +19,7 @@ interface ListingsAreaProps {
 
 const ListingsArea = ({ initialListings, isLoadingInitial = false }: ListingsAreaProps) => {
   const router = useRouter();
-  const { listings, isLoggedIn, viewMode, handleViewModeChange } = useListingsAreaViewModel(initialListings);
+  const { listings, mounted, isLoggedIn, viewMode, handleViewModeChange } = useListingsAreaViewModel(initialListings);
   const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
 
   const selectedListing = useMemo<ListingDetailsModalData | null>(() => {
@@ -34,7 +34,7 @@ const ListingsArea = ({ initialListings, isLoadingInitial = false }: ListingsAre
   return (
     <div className="flex-1 flex flex-col gap-4">
       <div className="hidden lg:flex items-center gap-3">
-        {!isLoggedIn && (
+        {mounted && !isLoggedIn && (
           <div className="flex-1 bg-blue-50 rounded-lg px-4 h-[43px] flex items-center justify-between border border-[var(--color-blue-border)]">
             <div className="flex items-center gap-3">
               <span className="text-blue-600 text-xl">ℹ️</span>
@@ -96,7 +96,7 @@ const ListingsArea = ({ initialListings, isLoadingInitial = false }: ListingsAre
           </button>
         </div>
 
-        {!isLoggedIn && (
+        {mounted && !isLoggedIn && (
           <div className="flex bg-blue-50 rounded-lg px-3 h-[43px] items-center justify-between border border-[var(--color-blue-border)] gap-2 flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <span className="text-blue-600 text-base flex-shrink-0">&#9432;</span>

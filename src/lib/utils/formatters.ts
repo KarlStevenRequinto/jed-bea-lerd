@@ -54,7 +54,7 @@ export function formatListing(listing: Listing): FormattedListing {
     mileage: listing.specs.mileage || 'N/A',
     fuelType: listing.specs.fuelType || 'N/A',
     bodyType: listing.specs.bodyType || 'N/A',
-    description: listing.description || '',
+    description: listing.description?.trim() || '',
     image: listing.image_url || '/images/placeholder.jpg',
     status: listing.status,
     createdAt: listing.created_at,

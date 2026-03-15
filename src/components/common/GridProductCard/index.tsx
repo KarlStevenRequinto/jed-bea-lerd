@@ -55,7 +55,7 @@ const GridProductCard = ({
     onViewDetailsClick,
     isLoading = false,
 }: GridProductCardProps) => {
-    const { isLoggedIn } = useGridProductCardViewModel();
+    const { mounted, isLoggedIn } = useGridProductCardViewModel();
 
     if (isLoading) {
         return <GridProductCardSkeleton />;
@@ -121,7 +121,7 @@ const GridProductCard = ({
                 <div>
                     <BaseButton
                         onClick={onViewDetailsClick}
-                        rightIcon={isLoggedIn ? undefined : <LockIconSvg />}
+                        rightIcon={mounted && !isLoggedIn ? <LockIconSvg /> : undefined}
                         className="w-full text-white border border-transparent px-3 py-2 text-xs font-semibold rounded-lg"
                         style={viewDetailsStyle}
                     >
@@ -130,7 +130,7 @@ const GridProductCard = ({
                 </div>
 
                 {/* Sign In Prompt */}
-                {!isLoggedIn && (
+                {mounted && !isLoggedIn && (
                     <div className="mt-2 text-center">
                         <span className="text-[10px]">
                             <a
