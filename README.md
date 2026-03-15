@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Auto Real Estate Ecommerce
 
-## Getting Started
+Next.js 16 + TypeScript + Tailwind + Supabase app for automotive and property listings.
 
-First, run the development server:
+## Local Development
 
+1. Install dependencies:
+```bash
+npm install
+```
+2. Create local env file:
+```bash
+copy .env.example .env.local
+```
+3. Fill values in `.env.local`.
+4. Run the app:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Required Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `NEXT_PUBLIC_SITE_URL`
+  - Local: `http://localhost:3000`
+  - Production: your deployed HTTPS domain
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (server-only, never expose to client code)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment (Vercel + Supabase)
 
-## Learn More
+1. Push repo to GitHub/GitLab/Bitbucket.
+2. In Vercel, import the project.
+3. Set build settings:
+   - Framework preset: `Next.js`
+   - Build command: `npm run build`
+   - Output: default
+4. Add environment variables (Production and Preview as needed):
+   - `NEXT_PUBLIC_SITE_URL=https://<your-domain>`
+   - `NEXT_PUBLIC_SUPABASE_URL=...`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY=...`
+   - `SUPABASE_SERVICE_ROLE_KEY=...`
+5. In Supabase Auth settings:
+   - Add Site URL: `https://<your-domain>`
+   - Add redirect URL: `https://<your-domain>/auth/callback`
+6. Run SQL migrations in order from `supabase/migrations/` in your target Supabase project.
+7. Trigger deployment.
 
-To learn more about Next.js, take a look at the following resources:
+## Production Verification Checklist
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Home and products pages load listings.
+- Login/register flows work.
+- Email verification redirect returns to `/auth/callback` successfully.
+- Forgot password reset flow works end-to-end.
+- No client-exposed server secrets.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- This project uses `next build --webpack` due to custom webpack SVG handling.
+- If local build fails to fetch Google Fonts in restricted networks, deployment on Vercel should still succeed with normal internet egress.

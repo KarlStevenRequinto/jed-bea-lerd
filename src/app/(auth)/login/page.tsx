@@ -1,12 +1,13 @@
 "use client";
 
+import { Suspense } from "react";
 import { useLoginViewModel } from "./useViewModel";
 import BaseButton from "@/components/common/BaseButton";
 import LoginForm from "../_components/LoginForm";
 import RegisterForm from "../_components/RegisterForm";
 import AuthBrandPanel from "../_components/AuthBrandPanel";
 
-const LoginPage = () => {
+const LoginPageContent = () => {
     const { tab, setTab, animationKey, highlightTransform, highlightWidth, loginPanelClass, registerPanelClass } = useLoginViewModel();
 
     return (
@@ -88,6 +89,14 @@ const LoginPage = () => {
                 </div>
             </section>
         </div>
+    );
+};
+
+const LoginPage = () => {
+    return (
+        <Suspense fallback={<div className="min-h-screen w-full bg-primary-foreground" />}>
+            <LoginPageContent />
+        </Suspense>
     );
 };
 
