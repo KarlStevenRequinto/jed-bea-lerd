@@ -44,3 +44,6 @@ next-env.d.ts
 CONVERSATION_LOG.md
 AI_GUIDELINES.md
 ARCHITECTURE.md
+
+# supabase local temp artifacts
+supabase/.temp/
