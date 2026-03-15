@@ -1,9 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
 import AuthBrandPanel from "../_components/AuthBrandPanel";
 import ResetPasswordForm from "../_components/ResetPasswordForm";
 
-const ResetPasswordPage = () => {
+const ResetPasswordPageContent = () => {
     return (
         <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2" role="main">
             <AuthBrandPanel />
@@ -14,6 +15,14 @@ const ResetPasswordPage = () => {
                 </div>
             </section>
         </div>
+    );
+};
+
+const ResetPasswordPage = () => {
+    return (
+        <Suspense fallback={<div className="min-h-screen w-full bg-primary-foreground" />}>
+            <ResetPasswordPageContent />
+        </Suspense>
     );
 };
 
