@@ -30,6 +30,7 @@ export interface MockListing {
     description: string;
     image: string;
     brand: string;
+    createdAt: string; // ISO date string — used for newest-first sort
 }
 
 export interface PopularItem {
@@ -93,6 +94,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Brand new Nissan Almera VL with complete features and manufacturer warranty.",
         image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=640&h=400&fit=crop&auto=format",
         brand: "Nissan",
+        createdAt: "2026-03-19T10:00:00Z",
     },
     {
         id: "v2",
@@ -109,6 +111,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Well-maintained Toyota Fortuner 4x2 G with complete service records.",
         image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=640&h=400&fit=crop&auto=format",
         brand: "Toyota",
+        createdAt: "2026-03-17T09:30:00Z",
     },
     {
         id: "v3",
@@ -125,6 +128,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Sporty Toyota Vios XLE in excellent condition, all-original and well-kept.",
         image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=640&h=400&fit=crop&auto=format",
         brand: "Toyota",
+        createdAt: "2026-03-15T14:00:00Z",
     },
     {
         id: "v4",
@@ -141,6 +145,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Honda Civic RS Turbo with sporty exterior and premium leather interior.",
         image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=640&h=400&fit=crop&auto=format",
         brand: "Honda",
+        createdAt: "2026-03-14T11:00:00Z",
     },
     {
         id: "v5",
@@ -157,6 +162,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Almost new Mitsubishi Mirage G4 GLS with CVT and all standard features.",
         image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=640&h=400&fit=crop&auto=format",
         brand: "Mitsubishi",
+        createdAt: "2026-03-12T08:45:00Z",
     },
     {
         id: "v6",
@@ -173,6 +179,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Toyota Veloz Q variant with all features included. Pristine condition.",
         image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=640&h=400&fit=crop&auto=format",
         brand: "Toyota",
+        createdAt: "2026-03-10T16:20:00Z",
     },
     {
         id: "v7",
@@ -189,6 +196,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Iconic Suzuki Jimny GLX in rare Kinetic Yellow. Perfect for off-road adventures.",
         image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=640&h=400&fit=crop&auto=format",
         brand: "Suzuki",
+        createdAt: "2026-03-08T13:10:00Z",
     },
     {
         id: "v8",
@@ -205,6 +213,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Ford Territory Titanium+ with SYNC 3 technology and panoramic sunroof.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=640&h=400&fit=crop&auto=format",
         brand: "Ford",
+        createdAt: "2026-03-05T09:00:00Z",
     },
     {
         id: "v9",
@@ -221,6 +230,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Brand new 2025 Nissan Almera VL in exclusive Bronze. Top-of-the-line specs.",
         image: "https://images.unsplash.com/photo-1462045504115-6c1d931f07d1?w=640&h=400&fit=crop&auto=format",
         brand: "Nissan",
+        createdAt: "2026-03-01T07:30:00Z",
     },
     {
         id: "v10",
@@ -237,6 +247,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Toyota Hilux V 4x4 in excellent condition. Barely driven, full casa records.",
         image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=640&h=400&fit=crop&auto=format",
         brand: "Toyota",
+        createdAt: "2026-02-25T10:15:00Z",
     },
     {
         id: "v11",
@@ -253,6 +264,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Toyota RAV4 Hybrid with fuel-efficient engine. Well maintained, complete records.",
         image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=640&h=400&fit=crop&auto=format",
         brand: "Toyota",
+        createdAt: "2026-02-20T12:00:00Z",
     },
     {
         id: "v12",
@@ -269,6 +281,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "BYD Atto 3 fully electric SUV with up to 480km range. Fast charging capable.",
         image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=640&h=400&fit=crop&auto=format",
         brand: "BYD",
+        createdAt: "2026-02-15T15:45:00Z",
     },
 
     // ── Properties ────────────────────────────────────────────────────────────
@@ -287,6 +300,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Grand estate property in the prestigious Ayala North Point community. 600 sqm lot, 4 bedrooms.",
         image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-03-18T08:00:00Z",
     },
     {
         id: "p2",
@@ -303,6 +317,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Modern tropical home with lush garden in a secure subdivision. 3 bedrooms, 2 baths.",
         image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-03-16T10:30:00Z",
     },
     {
         id: "p3",
@@ -310,6 +325,7 @@ const MOCK_LISTINGS: MockListing[] = [
         priceValue: 120_000_000,
         price: "₱120,000,000",
         title: "SOLSTICE MANOR",
+        createdAt: "2026-03-13T09:00:00Z",
         location: "Lahug Heights, Cebu City, CEB",
         year: "",
         color: "",
@@ -335,6 +351,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Newly built 4-bedroom house with sea-view balcony in Marivista Subdivision.",
         image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-03-11T14:00:00Z",
     },
     {
         id: "p5",
@@ -351,6 +368,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Corner lot house in a tranquil summit community. 3 bedrooms, covered garage.",
         image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-03-09T11:30:00Z",
     },
     {
         id: "p6",
@@ -367,6 +385,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Well-maintained property in Horizon Park. Open-concept kitchen, 3 bedrooms.",
         image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-03-07T08:00:00Z",
     },
     {
         id: "p7",
@@ -383,6 +402,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Sprawling family estate with mahogany garden. 5 bedrooms, entertainment room, swimming pool.",
         image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-03-04T10:00:00Z",
     },
     {
         id: "p8",
@@ -399,6 +419,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Contemporary 4-bedroom house in Capitolville. Corner lot, covered car park for 2.",
         image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-02-28T09:00:00Z",
     },
     {
         id: "p9",
@@ -415,6 +436,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "3-bedroom family home in a quiet street. Recently renovated, ready for occupancy.",
         image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-02-23T13:00:00Z",
     },
     {
         id: "p10",
@@ -431,6 +453,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Fully furnished 2BR condo unit in the heart of BGC. Floor-to-ceiling windows, city views.",
         image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=640&h=400&fit=crop&auto=format",
         brand: "Condominium",
+        createdAt: "2026-02-18T10:00:00Z",
     },
     {
         id: "p11",
@@ -447,6 +470,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "High-rise condo unit with city skyline view. 1BR, fully fitted kitchen, resort amenities.",
         image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=640&h=400&fit=crop&auto=format",
         brand: "Condominium",
+        createdAt: "2026-02-12T09:30:00Z",
     },
     {
         id: "p12",
@@ -463,6 +487,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Premium 2BR unit in iconic One Shangri-La Place. Hotel-style amenities, 24/7 security.",
         image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=640&h=400&fit=crop&auto=format",
         brand: "Condominium",
+        createdAt: "2026-02-08T14:00:00Z",
     },
     {
         id: "p13",
@@ -479,6 +504,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "3-storey commercial building near SM North. Ground floor retail, upper floors office space.",
         image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=640&h=400&fit=crop&auto=format",
         brand: "Commercial Building",
+        createdAt: "2026-02-05T08:00:00Z",
     },
     {
         id: "p14",
@@ -495,6 +521,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Brand new end-unit townhouse. 3 floors, 3 bedrooms, 2 baths. Near expressway.",
         image: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=640&h=400&fit=crop&auto=format",
         brand: "Townhouse",
+        createdAt: "2026-01-30T11:00:00Z",
     },
     {
         id: "p15",
@@ -511,6 +538,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "DMCI inner unit townhouse with balcony. 2 storeys, 3 bedrooms, gated community.",
         image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=640&h=400&fit=crop&auto=format",
         brand: "Townhouse",
+        createdAt: "2026-01-25T09:00:00Z",
     },
     {
         id: "p16",
@@ -527,6 +555,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Spanish-inspired villa with 500 sqm lot in exclusive Guadalupe community.",
         image: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-01-20T08:30:00Z",
     },
     {
         id: "p17",
@@ -543,6 +572,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Sprawling mountain estate in Busay. 5 bedrooms, infinity pool, lush landscaping.",
         image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=640&h=400&fit=crop&auto=format",
         brand: "House and Lot",
+        createdAt: "2026-01-15T10:00:00Z",
     },
     {
         id: "p18",
@@ -559,6 +589,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "2-bedroom apartment unit in a secured complex. Near malls and business centers.",
         image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=640&h=400&fit=crop&auto=format",
         brand: "Apartment",
+        createdAt: "2026-01-10T09:00:00Z",
     },
     {
         id: "p19",
@@ -575,6 +606,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Prime commercial building along main road. High foot traffic, 4 floors, ideal for retail.",
         image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=640&h=400&fit=crop&auto=format",
         brand: "Commercial Building",
+        createdAt: "2026-01-05T11:00:00Z",
     },
     {
         id: "p20",
@@ -591,6 +623,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "Clean titled residential lot in a quiet subdivision. Ready for construction.",
         image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=640&h=400&fit=crop&auto=format",
         brand: "Residential Lot",
+        createdAt: "2025-12-28T08:00:00Z",
     },
     {
         id: "p21",
@@ -607,6 +640,7 @@ const MOCK_LISTINGS: MockListing[] = [
         description: "3-storey corner townhouse with mountain view terrace. 3 bedrooms, 2 parking slots.",
         image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=640&h=400&fit=crop&auto=format",
         brand: "Townhouse",
+        createdAt: "2025-12-20T10:30:00Z",
     },
 ];
 
@@ -674,7 +708,7 @@ export const useProductsMarketplaceViewModel = () => {
             }
 
             return true;
-        });
+        }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }, [filters]);
 
     // ── Derived: pagination ────────────────────────────────────────────────────

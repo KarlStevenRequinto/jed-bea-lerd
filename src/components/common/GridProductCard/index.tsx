@@ -65,7 +65,7 @@ const GridProductCard = ({
 
     const viewDetailsStyle = isProperty
         ? { background: "var(--color-green-primary)" }
-        : { background: "linear-gradient(to right, var(--color-blue-primary), var(--color-green-primary))" };
+        : { background: "var(--color-brand)" };
 
     const hasFirstRow = year || color || mileage;
     const hasSecondRow = fuelType || bodyType;

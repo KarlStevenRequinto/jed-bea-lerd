@@ -9,7 +9,7 @@ interface ListingsSidebarProps {
 }
 
 const ListingsSidebar = ({ isLoading = false }: ListingsSidebarProps) => {
-    const { activeFilter, setActiveFilter } = useListingsSidebarViewModel();
+    const { activeFilter, setActiveFilter, handleAllListingClick } = useListingsSidebarViewModel();
 
     if (isLoading) {
         return <ListingsSidebarSkeleton />;
@@ -20,7 +20,7 @@ const ListingsSidebar = ({ isLoading = false }: ListingsSidebarProps) => {
             {/* Filter Buttons */}
             <div className="flex flex-col gap-3">
                 <BaseButton
-                    onClick={() => setActiveFilter("all")}
+                    onClick={handleAllListingClick}
                     className={`w-full justify-start px-6 py-4 text-base font-medium rounded-lg ${
                         activeFilter === "all"
                             ? "bg-[var(--color-blue-light)] text-white border-transparent"
