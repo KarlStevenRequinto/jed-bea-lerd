@@ -1,63 +1,41 @@
-import { useState } from "react";
+import { ProfileReview } from '@/lib/types/profile'
+import { formatTimeAgo } from '@/lib/utils/formatters'
 
 export interface Review {
-    id: string;
-    reviewerName: string;
-    reviewerAvatar: string;
-    rating: number;
-    timeAgo: string;
-    comment: string;
-    helpfulCount: number;
+    id: string
+    reviewerName: string
+    reviewerAvatar: string
+    rating: number
+    timeAgo: string
+    comment: string
+    helpfulCount: number
 }
 
-const mockReviews: Review[] = [
-    {
-        id: "1",
-        reviewerName: "Adrian Ramos",
-        reviewerAvatar: "",
-        rating: 5,
-        timeAgo: "2 weeks ago",
-        comment:
-            "Jamie was extremely helpful and professional throughout the entire buying process. Highly recommend!",
-        helpfulCount: 12,
-    },
-    {
-        id: "2",
-        reviewerName: "Nicole Aquino",
-        reviewerAvatar: "",
-        rating: 5,
-        timeAgo: "1 month ago",
-        comment:
-            "Great communication and very responsive. Made the whole experience smooth and stress-free.",
-        helpfulCount: 8,
-    },
-    {
-        id: "3",
-        reviewerName: "Vincent Morales",
-        reviewerAvatar: "",
-        rating: 4,
-        timeAgo: "2 months ago",
-        comment:
-            "Very knowledgeable about the market. Helped me find exactly what I was looking for.",
-        helpfulCount: 5,
-    },
-];
+export const useReviewsAndRatingsViewModel = (initialReviews: ProfileReview[]) => {
+    const reviews: Review[] = initialReviews.map((r) => ({
+        id: r.id,
+        reviewerName: r.reviewerName,
+        reviewerAvatar: r.reviewerAvatarUrl ?? '',
+        rating: r.rating,
+        timeAgo: formatTimeAgo(r.createdAt),
+        comment: r.comment ?? '',
+        helpfulCount: r.helpfulCount,
+    }))
 
-export const useReviewsAndRatingsViewModel = () => {
-    const [reviews] = useState(mockReviews);
+    const averageRating =
+        reviews.length > 0
+            ? Math.round((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length) * 10) / 10
+            : 0
 
-    const averageRating = 4.7;
-    const totalReviews = 5;
+    const totalReviews = reviews.length
 
-    const handleHelpful = (reviewId: string) => {
-        // TODO: Implement helpful functionality
-        console.log("Helpful clicked for review:", reviewId);
-    };
+    const handleHelpful = (_reviewId: string) => {
+        // TODO: Implement helpful vote via API
+    }
 
     const handleSeeMore = () => {
         // TODO: Navigate to full reviews page
-        console.log("See more reviews clicked");
-    };
+    }
 
     return {
         reviews,
@@ -65,5 +43,5 @@ export const useReviewsAndRatingsViewModel = () => {
         totalReviews,
         handleHelpful,
         handleSeeMore,
-    };
-};
+    }
+}

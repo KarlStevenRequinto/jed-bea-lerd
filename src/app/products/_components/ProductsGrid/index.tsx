@@ -4,12 +4,13 @@ import { useMemo, useState } from "react";
 import GridProductCard from "@/components/common/GridProductCard";
 import ListingDetailsModal, { ListingDetailsModalData } from "@/components/common/ListingDetailsModal";
 import Pagination from "@/components/common/Pagination";
-import { MockListing, ListingTypeFilter } from "../ProductsMarketplace/useViewModel";
+import { FormattedListing } from "@/lib/types/listing";
+import { ListingTypeFilter } from "../ProductsMarketplace/useViewModel";
 import ProductsGridSkeleton from "./ProductsGridSkeleton";
 
 interface ProductsGridProps {
     isLoading?: boolean;
-    listings: MockListing[];
+    listings: FormattedListing[];
     totalCount: number;
     currentPage: number;
     totalPages: number;

@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useSlidingTabs } from "@/hooks/useSlidingTabs";
-import { MOCK_FOLLOWER_CONNECTIONS, MOCK_FOLLOWING_CONNECTIONS } from "@/constants/connections";
-export type { Connection } from "@/constants/connections";
+import { ProfileConnection } from "@/lib/types/profile";
 
+export type { ProfileConnection as Connection };
 export type TabType = "following" | "followers";
 
-export const useConnectionsViewModel = () => {
+export const useConnectionsViewModel = (
+    following: ProfileConnection[],
+    followers: ProfileConnection[]
+) => {
     const [activeTab, setActiveTab] = useState<TabType>("following");
-    const followingCount = MOCK_FOLLOWING_CONNECTIONS.length;
-    const followersCount = MOCK_FOLLOWER_CONNECTIONS.length;
-    const connections = activeTab === "following" ? MOCK_FOLLOWING_CONNECTIONS : MOCK_FOLLOWER_CONNECTIONS;
 
-    // Sliding tab animation
+    const followingCount = following.length;
+    const followersCount = followers.length;
+    const connections = activeTab === "following" ? following : followers;
+
     const { highlightTransform, transitionClasses, highlightWidth } = useSlidingTabs({
         tabCount: 2,
         activeIndex: activeTab === "following" ? 0 : 1,
@@ -19,12 +22,10 @@ export const useConnectionsViewModel = () => {
         gap: 0,
     });
 
-    const handleTabChange = (tab: TabType) => {
-        setActiveTab(tab);
-    };
+    const handleTabChange = (tab: TabType) => setActiveTab(tab);
 
-    const handleFollow = (connectionId: string) => {
-        void connectionId;
+    const handleFollow = (_connectionId: string) => {
+        // TODO: Implement follow/unfollow
     };
 
     return {

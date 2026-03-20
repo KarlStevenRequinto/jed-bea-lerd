@@ -1,9 +1,14 @@
 "use client";
 
 import { useVerificationStatusViewModel } from "./useViewModel";
+import { ProfileData } from "@/lib/types/profile";
 
-const VerificationStatus = () => {
-    const { verificationData } = useVerificationStatusViewModel();
+interface VerificationStatusProps {
+    profile: ProfileData | null;
+}
+
+const VerificationStatus = ({ profile }: VerificationStatusProps) => {
+    const { verificationData } = useVerificationStatusViewModel(profile);
 
     return (
         <div className="bg-white rounded-lg border border-[var(--color-gray-200)] p-5">
@@ -67,41 +72,15 @@ const VerificationStatus = () => {
                     {verificationData.verificationItems.map((item) => (
                         <div key={item.id} className="flex items-center gap-2">
                             {item.isVerified ? (
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M20 6L9 17L4 12"
-                                        stroke="var(--color-gray-600)"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 6L9 17L4 12" stroke="var(--color-gray-600)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             ) : (
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="10"
-                                        stroke="var(--color-gray-400)"
-                                        strokeWidth="2"
-                                    />
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="var(--color-gray-400)" strokeWidth="2" />
                                 </svg>
                             )}
-                            <span className="text-sm text-[var(--color-gray-700)]">
-                                {item.label}
-                            </span>
+                            <span className="text-sm text-[var(--color-gray-700)]">{item.label}</span>
                         </div>
                     ))}
                 </div>

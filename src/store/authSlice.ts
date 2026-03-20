@@ -42,8 +42,13 @@ const authSlice = createSlice({
             state.user = null;
             state.error = null;
         },
+        setProfilePhoto(state, action: PayloadAction<string>) {
+            if (state.user) {
+                state.user.profilePhotoUrl = action.payload;
+            }
+        },
     },
 });
 
-export const { setLoggedIn, setUser, setLoading, setError, login, logout } = authSlice.actions;
+export const { setLoggedIn, setUser, setLoading, setError, login, logout, setProfilePhoto } = authSlice.actions;
 export default authSlice.reducer;

@@ -5,6 +5,7 @@ import StoreProvider from "@/providers/StoreProvider";
 import { SmoothScrollProvider } from "@/providers/SmoothScrollProvider";
 import NavbarGate from "@/components/navigation/navbar-gate";
 import FooterGate from "@/components/navigation/footer-gate";
+import AuthInitializer from "@/components/AuthInitializer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -28,6 +29,7 @@ const RootLayout = ({
             <body className={`${inter.variable} antialiased`} suppressHydrationWarning>
                 <SmoothScrollProvider>
                     <StoreProvider>
+                        <AuthInitializer />
                         <NavbarGate />
                         <main className="flex min-h-[calc(100vh-5rem)] w-full flex-col gap-0">{children}</main>
                         <FooterGate />

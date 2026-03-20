@@ -32,16 +32,9 @@ export async function loginUser(
       throw new Error(data.error || "Login failed");
     }
 
-    // Update Redux state with user data
-    const user: UserProfile = {
-      id: data.user.id,
-      email: data.user.email,
-      emailVerified: data.user.emailVerified,
-      createdAt: data.user.createdAt,
-    };
-
-    dispatch(loginAction(user));
-    return { success: true, user };
+    // Fetch full profile data (login API only returns auth fields)
+    await getCurrentUser(dispatch);
+    return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Login failed";
     dispatch(setError(errorMessage));
@@ -198,6 +191,22 @@ export async function getCurrentUser(dispatch: AppDispatch) {
       email: data.user.email,
       emailVerified: data.user.emailVerified,
       createdAt: data.user.createdAt,
+      firstName: data.user.firstName,
+      lastName: data.user.lastName,
+      dateOfBirth: data.user.dateOfBirth,
+      phoneNumber: data.user.phoneNumber,
+      profilePhotoUrl: data.user.profilePhotoUrl,
+      streetAddress: data.user.streetAddress,
+      city: data.user.city,
+      province: data.user.province,
+      zipCode: data.user.zipCode,
+      country: data.user.country,
+      idType: data.user.idType,
+      idNumber: data.user.idNumber,
+      documentUrl: data.user.documentUrl,
+      verified: data.user.verified,
+      interests: data.user.interests,
+      bio: data.user.bio,
     };
 
     dispatch(loginAction(user));

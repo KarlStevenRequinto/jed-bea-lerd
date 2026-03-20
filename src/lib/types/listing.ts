@@ -29,6 +29,7 @@ export interface ListingSpecs {
   mileage?: string
   fuelType?: string
   bodyType?: string
+  brand?: string
   // Add more fields as needed for future expansion
   [key: string]: string | undefined
 }
@@ -147,6 +148,7 @@ export interface FormattedListing {
   id: string
   category: string
   price: string // Formatted with currency symbol
+  priceValue: number // Raw numeric price for filtering
   title: string
   location: string
   year: string
@@ -154,6 +156,7 @@ export interface FormattedListing {
   mileage: string
   fuelType: string
   bodyType: string
+  brand: string
   description: string
   image: string
   status: ListingStatus

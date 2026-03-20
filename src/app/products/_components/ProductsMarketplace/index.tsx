@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { FormattedListing } from "@/lib/types/listing";
 import { useProductsMarketplaceViewModel } from "./useViewModel";
 import ProductsFilterSidebar from "../ProductsFilterSidebar";
 import ProductsGrid from "../ProductsGrid";
@@ -43,10 +44,11 @@ const CloseIcon = () => (
 );
 
 interface ProductsMarketplaceProps {
+    initialListings?: FormattedListing[];
     isLoadingInitial?: boolean;
 }
 
-const ProductsMarketplace = ({ isLoadingInitial = false }: ProductsMarketplaceProps) => {
+const ProductsMarketplace = ({ initialListings = [], isLoadingInitial = false }: ProductsMarketplaceProps) => {
     const {
         filters,
         paginatedListings,
@@ -69,7 +71,7 @@ const ProductsMarketplace = ({ isLoadingInitial = false }: ProductsMarketplacePr
         goToPage,
         toggleMobileFilter,
         closeMobileFilter,
-    } = useProductsMarketplaceViewModel();
+    } = useProductsMarketplaceViewModel(initialListings);
 
     const resultsRef = useRef<HTMLDivElement>(null);
 
