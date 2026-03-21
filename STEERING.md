@@ -140,6 +140,7 @@ Component guidance:
 - Keep components focused and reasonably sized.
 - Prefer composition and variants over flag-heavy APIs.
 - Use existing helpers (for example `cn()`) when available.
+- All clickable elements (`<button>`, `<a>`, custom interactive divs/spans) must have `cursor-pointer` applied. Never rely on browser defaults for pointer behavior.
 
 ---
 

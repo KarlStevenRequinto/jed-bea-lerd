@@ -37,8 +37,14 @@ export const useIdentityVerificationViewModel = ({ onContinue }: UseIdentityVeri
         { value: "national-id", label: "National ID" },
     ];
 
+    const hasAnyInput =
+        formData.idDocumentType !== "" ||
+        formData.idNumber.trim() !== "" ||
+        formData.idDocument !== null;
+
     return {
         formData,
+        hasAnyInput,
         handleInputChange,
         handleFileChange,
         handleSubmit,
