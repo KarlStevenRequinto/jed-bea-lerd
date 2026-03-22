@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useFeedComposerViewModel, MediaPreview } from "./useViewModel";
 import CreatePostModal from "../CreatePostModal";
+import CreateListingModal from "../CreateListingModal";
 
 interface FeedComposerProps {
     onPost: (caption: string, media: MediaPreview[]) => void;
@@ -16,10 +17,13 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
         isModalOpen,
         modalInitialMedia,
         modalKey,
+        isListingModalOpen,
         photoInputRef,
         videoInputRef,
         openModal,
         closeModal,
+        openListingModal,
+        closeListingModal,
         handlePhotoClick,
         handleVideoClick,
         handleFilesSelected,
@@ -107,7 +111,7 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
 
                         <button
                             type="button"
-                            onClick={() => openModal([])}
+                            onClick={openListingModal}
                             className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
                         >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-brand)]">
@@ -136,6 +140,11 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                     onPost={onPost}
                     initialMedia={modalInitialMedia}
                 />
+            )}
+
+            {/* Create Listing Modal */}
+            {isListingModalOpen && (
+                <CreateListingModal onClose={closeListingModal} />
             )}
         </>
     );

@@ -17,6 +17,7 @@ export const useFeedComposerViewModel = ({ onPost }: UseFeedComposerViewModelPro
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalInitialMedia, setModalInitialMedia] = useState<MediaPreview[]>([]);
     const [modalKey, setModalKey] = useState(0);
+    const [isListingModalOpen, setIsListingModalOpen] = useState(false);
 
     const photoInputRef = useRef<HTMLInputElement>(null);
     const videoInputRef = useRef<HTMLInputElement>(null);
@@ -55,6 +56,9 @@ export const useFeedComposerViewModel = ({ onPost }: UseFeedComposerViewModelPro
         openModal(previews);
     };
 
+    const openListingModal = () => setIsListingModalOpen(true);
+    const closeListingModal = () => setIsListingModalOpen(false);
+
     return {
         user,
         userInitials,
@@ -62,11 +66,14 @@ export const useFeedComposerViewModel = ({ onPost }: UseFeedComposerViewModelPro
         isModalOpen,
         modalInitialMedia,
         modalKey,
+        isListingModalOpen,
         photoInputRef,
         videoInputRef,
         onPost,
         openModal,
         closeModal,
+        openListingModal,
+        closeListingModal,
         handlePhotoClick,
         handleVideoClick,
         handleFilesSelected,
