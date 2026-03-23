@@ -11,6 +11,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import {
   Listing,
   ListingFilters,
@@ -36,7 +37,7 @@ export async function getListings(
   queryParams?: ListingQueryParams
 ): Promise<ListingsResponse> {
   try {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
 
     // Start building the query
     let query = supabase
@@ -124,7 +125,7 @@ export async function getListings(
  */
 export async function getListingById(id: string): Promise<Listing | null> {
   try {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
 
     const { data, error } = await supabase
       .from('listings')
@@ -152,7 +153,7 @@ export async function getListingById(id: string): Promise<Listing | null> {
  */
 export async function getListingsByUserId(userId: string): Promise<Listing[]> {
   try {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
 
     const { data, error } = await supabase
       .from('listings')
@@ -317,7 +318,7 @@ export async function getListingsCount(): Promise<{
   properties: number
 }> {
   try {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
 
     const [totalResult, vehiclesResult, propertiesResult] = await Promise.all([
       supabase.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'active'),
