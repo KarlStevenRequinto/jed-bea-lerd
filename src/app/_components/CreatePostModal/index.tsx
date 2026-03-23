@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { useCreatePostModalViewModel } from "./useViewModel";
 import { MediaPreview } from "../FeedComposer/useViewModel";
+import type { FeedPost } from "@/lib/types/feed";
 
 interface CreatePostModalProps {
     onClose: () => void;
-    onPost: (caption: string, media: MediaPreview[]) => void;
+    onPost: (post: FeedPost) => void;
     initialMedia: MediaPreview[];
 }
 
@@ -14,7 +15,6 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
     const {
         media,
         caption,
-        setCaption,
         textareaRef,
         handleCaptionChange,
         addMoreRef,
@@ -22,6 +22,8 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
         videoInputRef,
         mediaLabel,
         canPost,
+        isPosting,
+        errorMessage,
         handleAddMore,
         handlePhotoClick,
         handleVideoClick,
@@ -260,18 +262,21 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                             </button>
                             <button
                                 type="button"
-                                onClick={handlePost}
-                                disabled={!canPost}
+                            onClick={handlePost}
+                                disabled={!canPost || isPosting}
                                 className={`rounded-full px-5 py-2 text-sm font-semibold text-white transition-colors ${
-                                    canPost
+                                    canPost && !isPosting
                                         ? "cursor-pointer bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)]"
                                         : "cursor-not-allowed bg-gray-200 text-gray-400"
                                 }`}
                             >
-                                Post to Feed
+                                {isPosting ? "Posting..." : "Post to Feed"}
                             </button>
                         </div>
                     </div>
+                    {errorMessage && (
+                        <p className="mt-3 text-sm text-red-500">{errorMessage}</p>
+                    )}
                 </div>
             </div>
         </div>

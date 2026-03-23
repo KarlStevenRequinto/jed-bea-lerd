@@ -1,14 +1,7 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store";
 import { FormattedListing } from "@/lib/types/listing";
-import { MediaPreview } from "../FeedComposer/useViewModel";
-
-export interface FeedPostUser {
-    name: string;
-    initials: string;
-    role: string;
-    avatarUrl?: string;
-}
+import type { FeedPost, FeedPostMedia, FeedPostUser } from "@/lib/types/feed";
 
 export interface FeedPostVehicleData {
     title: string;
@@ -32,30 +25,28 @@ export interface FeedPostPropertyData {
     sqft?: string;
 }
 
-export type FeedPostType = "social" | "vehicle" | "property";
-
-export interface FeedPost {
-    id: string;
-    postType: FeedPostType;
-    user: FeedPostUser;
-    content?: string;
-    timeAgo: string;
-    images?: string[];
+export interface HomePageFeedPost extends FeedPost {
+    postType: "social" | "vehicle" | "property";
     vehicleData?: FeedPostVehicleData;
     propertyData?: FeedPostPropertyData;
-    likes: number;
-    comments: number;
-    liked: boolean;
 }
 
-const MOCK_POSTS: FeedPost[] = [
+const MOCK_POSTS: HomePageFeedPost[] = [
     {
         id: "post-1",
         postType: "social",
         user: { name: "Jasmine Reyes", initials: "JR", role: "Real Estate Agent · Cebu City" },
         content:
-            "Took a quick break from showings to catch the sunset in Bantayan. Moments like these remind me why I love working in Cebu. Great place, great people. 🌅",
+            "Took a quick break from showings to catch the sunset in Bantayan. Moments like these remind me why I love working in Cebu. Great place, great people.",
+        createdAt: "2026-03-20T06:00:00.000Z",
         timeAgo: "2h ago",
+        media: [
+            {
+                id: "post-1-image-1",
+                type: "image",
+                url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+            },
+        ],
         images: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"],
         likes: 245,
         comments: 12,
@@ -70,11 +61,15 @@ const MOCK_POSTS: FeedPost[] = [
             role: "Vehicle Dealer · Quezon City",
             avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80",
         },
-        content: "Just got this beauty in stock. Practically brand new — grab it before it's gone!",
+        content: "Just got this beauty in stock. Practically brand new - grab it before it's gone!",
+        createdAt: "2026-03-20T05:00:00.000Z",
         timeAgo: "3h ago",
+        likes: 98,
+        comments: 27,
+        liked: true,
         vehicleData: {
             title: "2023 Toyota Fortuner LTD 4x4",
-            price: "₱2,190,000",
+            price: "P2,190,000",
             location: "Quezon City, Metro Manila",
             imageUrl: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
             badge: "For Sale",
@@ -82,18 +77,19 @@ const MOCK_POSTS: FeedPost[] = [
             fuel: "Diesel",
             transmission: "Automatic",
         },
-        likes: 98,
-        comments: 27,
-        liked: true,
     },
     {
         id: "post-3",
         postType: "property",
         user: { name: "Maria Santos", initials: "MS", role: "Property Seller · BGC, Taguig" },
+        createdAt: "2026-03-20T03:00:00.000Z",
         timeAgo: "5h ago",
+        likes: 134,
+        comments: 19,
+        liked: false,
         propertyData: {
             title: "The Horizon Residences",
-            price: "₱38,000/mo",
+            price: "P38,000/mo",
             location: "Bonifacio Global City, Taguig",
             imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
             badge: "New Listing",
@@ -101,16 +97,14 @@ const MOCK_POSTS: FeedPost[] = [
             baths: "2",
             sqft: "78 sqm",
         },
-        likes: 134,
-        comments: 19,
-        liked: false,
     },
     {
         id: "post-4",
         postType: "social",
         user: { name: "Carlo Mendoza", initials: "CM", role: "Verified Buyer · Bacolod City" },
         content:
-            "Just listed my first collection on HomeNDrive Marketplace. The community vibe here is incredible! If you're looking for pre-owned vehicles in Bacolod, check it out and let me know what you think. 🚀",
+            "Just listed my first collection on HomeNDrive Marketplace. The community vibe here is incredible! If you're looking for pre-owned vehicles in Bacolod, check it out and let me know what you think.",
+        createdAt: "2026-03-20T02:30:00.000Z",
         timeAgo: "5h ago",
         likes: 63,
         comments: 18,
@@ -120,11 +114,15 @@ const MOCK_POSTS: FeedPost[] = [
         id: "post-5",
         postType: "vehicle",
         user: { name: "Paolo Reyes", initials: "PR", role: "Vehicle Seller · Cebu City" },
-        content: "Selling my personal car — well maintained, complete documents, no issues.",
+        content: "Selling my personal car - well maintained, complete documents, no issues.",
+        createdAt: "2026-03-20T00:00:00.000Z",
         timeAgo: "8h ago",
+        likes: 77,
+        comments: 14,
+        liked: false,
         vehicleData: {
             title: "2021 Honda CR-V S Turbo AWD",
-            price: "₱1,350,000",
+            price: "P1,350,000",
             location: "Cebu City",
             imageUrl: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
             badge: "For Sale",
@@ -132,9 +130,6 @@ const MOCK_POSTS: FeedPost[] = [
             fuel: "Gasoline",
             transmission: "CVT",
         },
-        likes: 77,
-        comments: 14,
-        liked: false,
     },
     {
         id: "post-6",
@@ -144,11 +139,15 @@ const MOCK_POSTS: FeedPost[] = [
             initials: "LV",
             role: "Property Investor · Bacolod City",
         },
-        content: "Great investment opportunity — Bacolod prices are still very affordable!",
+        content: "Great investment opportunity - Bacolod prices are still very affordable!",
+        createdAt: "2026-03-19T22:00:00.000Z",
         timeAgo: "10h ago",
+        likes: 41,
+        comments: 9,
+        liked: false,
         propertyData: {
             title: "Spacious House & Lot in Bacolod",
-            price: "₱4,200,000",
+            price: "P4,200,000",
             location: "Bacolod City, Negros Occidental",
             imageUrl: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80",
             badge: "For Sale",
@@ -156,21 +155,39 @@ const MOCK_POSTS: FeedPost[] = [
             baths: "3",
             sqft: "210 sqm",
         },
-        likes: 41,
-        comments: 9,
-        liked: false,
     },
 ];
 
-export const useHomePageContentViewModel = (initialListings: FormattedListing[]) => {
+const mergeFeedPosts = (backendPosts: FeedPost[], mockPosts: HomePageFeedPost[]): HomePageFeedPost[] =>
+    [...backendPosts, ...mockPosts]
+        .map((post) => ({
+            ...post,
+            images:
+                post.images ??
+                post.media?.filter((item) => item.type === "image").map((item) => item.url) ??
+                [],
+        }))
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+export const useHomePageContentViewModel = (
+    initialListings: FormattedListing[],
+    initialFeedPosts: FeedPost[]
+) => {
     const loggedIn = useAppSelector((s) => s.auth.loggedIn);
     const user = useAppSelector((s) => s.auth.user);
     const [mounted, setMounted] = useState(false);
-    const [posts, setPosts] = useState<FeedPost[]>(MOCK_POSTS);
+    const [posts, setPosts] = useState<HomePageFeedPost[]>(() => mergeFeedPosts(initialFeedPosts, MOCK_POSTS));
 
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    useEffect(() => {
+        setPosts((prev) => {
+            const localOnlyPosts = prev.filter((post) => post.id.startsWith("local-post-"));
+            return mergeFeedPosts(initialFeedPosts, [...localOnlyPosts, ...MOCK_POSTS]);
+        });
+    }, [initialFeedPosts]);
 
     const handleLike = (postId: string) => {
         setPosts((prev) =>
@@ -182,29 +199,34 @@ export const useHomePageContentViewModel = (initialListings: FormattedListing[])
         );
     };
 
-    const addPost = (caption: string, media: MediaPreview[]) => {
+    const addPost = (post: FeedPost) => {
         const initials =
             user?.firstName && user?.lastName
                 ? `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
                 : (user?.email?.[0]?.toUpperCase() ?? "U");
 
-        const newPost: FeedPost = {
-            id: `post-${Date.now()}`,
-            postType: "social",
-            user: {
-                name: user?.firstName && user?.lastName
+        const fallbackUser: FeedPostUser = {
+            name:
+                user?.firstName && user?.lastName
                     ? `${user.firstName} ${user.lastName}`
                     : (user?.email ?? "You"),
-                initials,
-                role: "Member",
-                avatarUrl: user?.profilePhotoUrl ?? undefined,
-            },
-            content: caption || undefined,
-            timeAgo: "Just now",
-            images: media.filter((m) => m.type === "image").map((m) => m.url),
-            likes: 0,
-            comments: 0,
-            liked: false,
+            initials,
+            role: "Member",
+            avatarUrl: user?.profilePhotoUrl ?? undefined,
+        };
+
+        const normalizedMedia: FeedPostMedia[] = post.media ?? [];
+
+        const newPost: HomePageFeedPost = {
+            ...post,
+            id: post.id || `local-post-${Date.now()}`,
+            postType: "social",
+            user: post.user?.name ? post.user : fallbackUser,
+            media: normalizedMedia,
+            images:
+                post.images ??
+                normalizedMedia.filter((item) => item.type === "image").map((item) => item.url) ??
+                [],
         };
 
         setPosts((prev) => [newPost, ...prev]);

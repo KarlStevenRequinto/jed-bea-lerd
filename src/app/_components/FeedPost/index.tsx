@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FeedPost as FeedPostType } from "../HomePageContent/useViewModel";
+import { HomePageFeedPost as FeedPostType } from "../HomePageContent/useViewModel";
 
 interface FeedPostProps {
     post: FeedPostType;
@@ -260,12 +260,22 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
                 <p className="px-4 pb-3 text-sm text-gray-700 leading-relaxed">{post.content}</p>
             )}
 
-            {/* Images */}
-            {post.images && post.images.length > 0 && (
-                <div className={post.images.length === 1 ? "" : "grid grid-cols-2 gap-0.5"}>
-                    {post.images.map((src, i) => (
-                        <div key={i} className="relative aspect-video overflow-hidden">
-                            <Image src={src} alt="Post image" fill className="object-cover" />
+            {/* Media */}
+            {post.media && post.media.length > 0 && (
+                <div className={post.media.length === 1 ? "" : "grid grid-cols-2 gap-0.5"}>
+                    {post.media.map((mediaItem) => (
+                        <div key={mediaItem.id} className="relative aspect-video overflow-hidden bg-black">
+                            {mediaItem.type === "video" ? (
+                                <video
+                                    src={mediaItem.url}
+                                    controls
+                                    playsInline
+                                    preload="metadata"
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                <Image src={mediaItem.url} alt="Post image" fill className="object-cover" />
+                            )}
                         </div>
                     ))}
                 </div>

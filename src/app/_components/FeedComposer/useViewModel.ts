@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useAppSelector } from "@/store";
+import type { FeedPost } from "@/lib/types/feed";
 
 export interface MediaPreview {
     id: string;
@@ -9,7 +10,7 @@ export interface MediaPreview {
 }
 
 interface UseFeedComposerViewModelProps {
-    onPost: (caption: string, media: MediaPreview[]) => void;
+    onPost: (post: FeedPost) => void;
 }
 
 export const useFeedComposerViewModel = ({ onPost }: UseFeedComposerViewModelProps) => {

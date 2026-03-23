@@ -38,7 +38,7 @@ const HomeRightSidebar = ({ initialListings }: HomeRightSidebarProps) => {
                         ))}
                     </div>
                     <Link
-                        href="/products"
+                        href="/products?listingType=all"
                         className="mt-4 block text-center text-xs font-semibold text-[var(--color-brand)] hover:underline"
                     >
                         View all listings
@@ -91,12 +91,12 @@ const HomeRightSidebar = ({ initialListings }: HomeRightSidebarProps) => {
                     </div>
                 </div>
 
-                <button
-                    type="button"
-                    className="mt-5 w-full cursor-pointer rounded-full border border-[var(--color-gray-300)] bg-white/70 px-4 py-2.5 text-sm font-semibold text-[var(--color-brand)] transition-colors hover:bg-white"
+                <Link
+                    href="/trends"
+                    className="mt-5 block w-full cursor-pointer rounded-full border border-[var(--color-gray-300)] bg-white/70 px-4 py-2.5 text-center text-sm font-semibold text-[var(--color-brand)] transition-colors hover:bg-white"
                 >
                     See All Trends
-                </button>
+                </Link>
             </div>
         </div>
     );

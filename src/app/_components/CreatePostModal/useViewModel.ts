@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { MediaPreview } from "../FeedComposer/useViewModel";
+import type { FeedPost } from "@/lib/types/feed";
 
 interface UseCreatePostModalViewModelProps {
     initialMedia: MediaPreview[];
     onClose: () => void;
-    onPost: (caption: string, media: MediaPreview[]) => void;
+    onPost: (post: FeedPost) => void;
 }
 
 export const useCreatePostModalViewModel = ({
@@ -18,8 +19,11 @@ export const useCreatePostModalViewModel = ({
     const photoInputRef = useRef<HTMLInputElement>(null);
     const videoInputRef = useRef<HTMLInputElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [isPosting, setIsPosting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleCaptionChange = (value: string) => {
+        setErrorMessage("");
         setCaption(value);
         const el = textareaRef.current;
         if (el) {
@@ -42,6 +46,7 @@ export const useCreatePostModalViewModel = ({
 
     const handleMediaFiles = (files: FileList | null, type: "image" | "video") => {
         if (!files || files.length === 0) return;
+        setErrorMessage("");
         const newPreviews: MediaPreview[] = Array.from(files).map((file) => ({
             id: `${Date.now()}-${Math.random()}`,
             file,
@@ -55,6 +60,7 @@ export const useCreatePostModalViewModel = ({
 
     const handleAddMoreFiles = (files: FileList | null) => {
         if (!files || files.length === 0) return;
+        setErrorMessage("");
         const newPreviews: MediaPreview[] = Array.from(files).map((file) => ({
             id: `${Date.now()}-${Math.random()}`,
             file,
@@ -79,13 +85,39 @@ export const useCreatePostModalViewModel = ({
         setCaption("");
     };
 
-    const handlePost = () => {
-        // Call onPost before clearing so object URLs remain valid in the feed
-        onPost(caption, media);
-        // Clear state without revoking URLs (feed post still references them)
-        setMedia([]);
-        setCaption("");
-        onClose();
+    const handlePost = async () => {
+        if (isPosting) return;
+
+        try {
+            setIsPosting(true);
+            setErrorMessage("");
+
+            const formData = new FormData();
+            formData.append("content", caption.trim());
+            media.forEach((preview) => {
+                formData.append("mediaFiles", preview.file);
+            });
+
+            const response = await fetch("/api/feed/posts", {
+                method: "POST",
+                body: formData,
+            });
+
+            const payload = await response.json().catch(() => null);
+            if (!response.ok || !payload?.post) {
+                throw new Error(payload?.error || "Failed to publish post.");
+            }
+
+            media.forEach((preview) => URL.revokeObjectURL(preview.url));
+            onPost(payload.post as FeedPost);
+            setMedia([]);
+            setCaption("");
+            onClose();
+        } catch (error) {
+            setErrorMessage(error instanceof Error ? error.message : "Failed to publish post.");
+        } finally {
+            setIsPosting(false);
+        }
     };
 
     const handleSaveDraft = () => {
@@ -121,6 +153,8 @@ export const useCreatePostModalViewModel = ({
         videoInputRef,
         mediaLabel,
         canPost,
+        isPosting,
+        errorMessage,
         handleAddMore,
         handlePhotoClick,
         handleVideoClick,

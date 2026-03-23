@@ -9,14 +9,16 @@ import FeedPost from "../FeedPost";
 import HomeLeftSidebar from "../HomeLeftSidebar";
 import HomeRightSidebar from "../HomeRightSidebar";
 import { FormattedListing } from "@/lib/types/listing";
+import { FeedPost as FeedPostType } from "@/lib/types/feed";
 
 interface HomePageContentProps {
     initialListings: FormattedListing[];
+    initialFeedPosts: FeedPostType[];
 }
 
-const HomePageContent = ({ initialListings }: HomePageContentProps) => {
+const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentProps) => {
     const { mounted, loggedIn, posts, handleLike, addPost, initialListings: listings } =
-        useHomePageContentViewModel(initialListings);
+        useHomePageContentViewModel(initialListings, initialFeedPosts);
 
     // Pre-hydration or logged-out: show classic hero + listings layout
     if (!mounted || !loggedIn) {

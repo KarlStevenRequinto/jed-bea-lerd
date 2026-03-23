@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useFeedComposerViewModel, MediaPreview } from "./useViewModel";
+import { useFeedComposerViewModel } from "./useViewModel";
 import CreatePostModal from "../CreatePostModal";
 import CreateListingModal from "../CreateListingModal";
+import type { FeedPost } from "@/lib/types/feed";
 
 interface FeedComposerProps {
-    onPost: (caption: string, media: MediaPreview[]) => void;
+    onPost: (post: FeedPost) => void;
 }
 
 const FeedComposer = ({ onPost }: FeedComposerProps) => {
