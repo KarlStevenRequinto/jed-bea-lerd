@@ -25,11 +25,11 @@ export interface FeedPostPropertyData {
     sqft?: string;
 }
 
-export interface HomePageFeedPost extends FeedPost {
+export type HomePageFeedPost = Omit<FeedPost, "postType"> & {
     postType: "social" | "vehicle" | "property";
     vehicleData?: FeedPostVehicleData;
     propertyData?: FeedPostPropertyData;
-}
+};
 
 const MOCK_POSTS: HomePageFeedPost[] = [
     {
