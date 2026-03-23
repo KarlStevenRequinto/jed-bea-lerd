@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -13,26 +13,9 @@ const HomeRightSidebar = ({ initialListings }: HomeRightSidebarProps) => {
 
     return (
         <div className="flex flex-col gap-4">
-            {/* Sponsored ad */}
-            <div className="bg-gradient-to-br from-[var(--color-brand)] to-[var(--color-blue-light)] rounded-xl p-5 text-white shadow-sm">
-                <p className="text-[10px] font-semibold uppercase tracking-widest opacity-60 mb-3">Sponsored</p>
-                <div className="text-3xl mb-2">📢</div>
-                <p className="text-base font-bold leading-tight mb-1">Pioneer Insurance</p>
-                <p className="text-xs opacity-80 leading-relaxed">
-                    Secure your home and vehicle — Pioneer Insurance keeps your biggest investments protected.
-                </p>
-                <button
-                    type="button"
-                    className="cursor-pointer mt-4 w-full rounded-lg bg-white py-1.5 text-xs font-semibold text-[var(--color-brand)] hover:bg-gray-50 transition-colors"
-                >
-                    Learn More
-                </button>
-            </div>
-
-            {/* Active listings preview */}
             {previewListings.length > 0 && (
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-                    <p className="text-sm font-semibold text-gray-800 mb-3">Active Listings</p>
+                <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
+                    <p className="mb-3 text-sm font-semibold text-gray-800">Active Listings</p>
                     <div className="flex flex-col gap-3">
                         {previewListings.map((listing) => (
                             <div key={listing.id} className="flex items-center gap-3">
@@ -46,10 +29,10 @@ const HomeRightSidebar = ({ initialListings }: HomeRightSidebarProps) => {
                                         />
                                     </div>
                                 )}
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-xs font-semibold text-gray-800 truncate">{listing.title}</p>
+                                <div className="min-w-0 flex-1">
+                                    <p className="truncate text-xs font-semibold text-gray-800">{listing.title}</p>
                                     <p className="text-xs font-bold text-[var(--color-brand)]">{listing.price}</p>
-                                    <p className="text-[10px] text-gray-400 truncate">{listing.location}</p>
+                                    <p className="truncate text-[10px] text-gray-400">{listing.location}</p>
                                 </div>
                             </div>
                         ))}
@@ -58,10 +41,63 @@ const HomeRightSidebar = ({ initialListings }: HomeRightSidebarProps) => {
                         href="/products"
                         className="mt-4 block text-center text-xs font-semibold text-[var(--color-brand)] hover:underline"
                     >
-                        View all listings →
+                        View all listings
                     </Link>
                 </div>
             )}
+
+            <div className="rounded-xl border border-[var(--color-gray-200)] bg-[color-mix(in_srgb,var(--color-brand-muted)_40%,white)] p-4 shadow-sm">
+                <div className="mb-4 flex items-center gap-2.5 text-[var(--color-brand-darker)]">
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M4 16l6-6 4 4 6-8" />
+                        <path d="M16 6h4v4" />
+                    </svg>
+                    <h3 className="text-sm font-semibold leading-none">Trending Now</h3>
+                </div>
+
+                <div className="space-y-5 text-[var(--color-brand-darker)]">
+                    <div>
+                        <p className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--color-gray-500)]">
+                            Marketplace - Hot
+                        </p>
+                        <p className="text-xl font-bold leading-tight tracking-[-0.02em]">Vintage Leica Cameras</p>
+                        <p className="mt-1 text-sm text-[var(--color-gray-500)]">1,240 listings today</p>
+                    </div>
+
+                    <div>
+                        <p className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--color-gray-500)]">
+                            Real Estate - Rising
+                        </p>
+                        <p className="text-xl font-bold leading-tight tracking-[-0.02em]">Sustainable Micro-Lofts</p>
+                        <p className="mt-1 text-sm text-[var(--color-gray-500)]">42 new in your area</p>
+                    </div>
+
+                    <div>
+                        <p className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--color-gray-500)]">
+                            Community
+                        </p>
+                        <p className="text-xl font-bold leading-tight tracking-[-0.02em]">#MinimalistDesign</p>
+                        <p className="mt-1 text-sm text-[var(--color-gray-500)]">12.5k people talking</p>
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    className="mt-5 w-full cursor-pointer rounded-full border border-[var(--color-gray-300)] bg-white/70 px-4 py-2.5 text-sm font-semibold text-[var(--color-brand)] transition-colors hover:bg-white"
+                >
+                    See All Trends
+                </button>
+            </div>
         </div>
     );
 };

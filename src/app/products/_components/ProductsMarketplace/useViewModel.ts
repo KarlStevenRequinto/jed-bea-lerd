@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { FormattedListing } from "@/lib/types/listing";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -70,9 +71,33 @@ export const makeEmptyProductFilters = (type: ListingTypeFilter = "all"): Produc
 });
 
 export const useProductsMarketplaceViewModel = (initialListings: FormattedListing[] = []) => {
-    const [filters, setFilters] = useState<ProductFilters>(makeEmptyProductFilters());
+    const searchParams = useSearchParams();
+    const initialListingTypeParam = searchParams.get("listingType");
+    const initialListingType: ListingTypeFilter =
+        initialListingTypeParam === "properties" || initialListingTypeParam === "vehicles"
+            ? initialListingTypeParam
+            : "all";
+
+    const [filters, setFilters] = useState<ProductFilters>(() => makeEmptyProductFilters(initialListingType));
     const [currentPage, setCurrentPage] = useState(1);
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+    useEffect(() => {
+        const listingTypeParam = searchParams.get("listingType");
+        const nextListingType: ListingTypeFilter =
+            listingTypeParam === "properties" || listingTypeParam === "vehicles"
+                ? listingTypeParam
+                : "all";
+
+        setFilters((prev) => {
+            if (prev.listingType === nextListingType) {
+                return prev;
+            }
+
+            return makeEmptyProductFilters(nextListingType);
+        });
+        setCurrentPage(1);
+    }, [searchParams]);
 
     // ── Derived: active price ceiling ─────────────────────────────────────────
     const activePriceMax = priceMaxForType(filters.listingType);

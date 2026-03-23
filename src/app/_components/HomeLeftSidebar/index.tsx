@@ -2,47 +2,54 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useHomeLeftSidebarViewModel } from "./useViewModel";
 
 const navItems = [
     {
-        label: "Home",
-        href: "/",
+        label: "Real Estate",
+        href: "/products?listingType=properties",
+        match: "properties",
         icon: (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 21h18" />
+                <path d="M5 21V7l7-4 7 4v14" />
+                <path d="M9 21v-6h6v6" />
             </svg>
         ),
     },
     {
-        label: "Browse",
-        href: "/products",
+        label: "Vehicles",
+        href: "/products?listingType=vehicles",
+        match: "vehicles",
         icon: (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 16H9m10 0h2m-3.5-6h.5a2 2 0 0 1 2 2v4h-2" />
+                <path d="M2 16h2" />
+                <path d="M6 16H4V9a1 1 0 0 1 1-1h10l3 8" />
+                <circle cx="7.5" cy="16.5" r="2.5" />
+                <circle cx="17.5" cy="16.5" r="2.5" />
             </svg>
         ),
     },
     {
-        label: "Marketplace",
-        href: "/products",
+        label: "Messages",
+        href: "/messages",
         icon: (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                <path d="M8 9h8" />
+                <path d="M8 13h5" />
             </svg>
         ),
     },
     {
-        label: "Saved",
-        href: "/profile",
+        label: "Settings",
+        href: "/settings",
         icon: (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
             </svg>
         ),
     },
@@ -51,6 +58,8 @@ const navItems = [
 const HomeLeftSidebar = () => {
     const { user, userInitials, fullName, isActive } = useHomeLeftSidebarViewModel();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const activeListingType = searchParams.get("listingType");
 
     return (
         <div className="flex flex-col gap-4">
@@ -89,12 +98,12 @@ const HomeLeftSidebar = () => {
 
             {/* Navigation */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm py-2">
-                {navItems.map(({ label, href, icon }) => (
+                {navItems.map(({ label, href, icon, match }) => (
                     <Link
                         key={label}
                         href={href}
                         className={`flex items-center gap-3 mx-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                            isActive(href)
+                            (match && isActive("/products") && activeListingType === match) || (!match && isActive(href))
                                 ? "bg-[var(--color-brand)] text-white"
                                 : "text-gray-600 hover:bg-gray-50 hover:text-[var(--color-brand)]"
                         }`}
@@ -117,6 +126,21 @@ const HomeLeftSidebar = () => {
                         + Create Listing
                     </button>
                 </div>
+            </div>
+
+            <div className="rounded-xl bg-gradient-to-br from-[var(--color-brand)] to-[var(--color-blue-light)] p-5 text-white shadow-sm">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest opacity-60">Sponsored</p>
+                <div className="mb-2 text-3xl">📢</div>
+                <p className="mb-1 text-base font-bold leading-tight">Pioneer Insurance</p>
+                <p className="text-xs leading-relaxed opacity-80">
+                    Secure your home and vehicle. Pioneer Insurance keeps your biggest investments protected.
+                </p>
+                <button
+                    type="button"
+                    className="mt-4 w-full cursor-pointer rounded-lg bg-white py-1.5 text-xs font-semibold text-[var(--color-brand)] transition-colors hover:bg-gray-50"
+                >
+                    Learn More
+                </button>
             </div>
         </div>
     );
