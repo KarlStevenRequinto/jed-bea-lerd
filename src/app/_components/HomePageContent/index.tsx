@@ -37,9 +37,9 @@ const HomePageContent = ({ initialListings }: HomePageContentProps) => {
     return (
         <div className="w-full bg-gray-50 min-h-screen">
             <div className="container mx-auto px-4 py-6">
-                <div className="flex gap-5 justify-center">
+                <div className="flex items-start gap-5 justify-center">
                     {/* Left sidebar — lg+ only */}
-                    <div className="hidden lg:block w-60 shrink-0">
+                    <div className="sticky top-24 hidden w-60 shrink-0 self-start lg:block">
                         <HomeLeftSidebar />
                     </div>
 
@@ -52,7 +52,7 @@ const HomePageContent = ({ initialListings }: HomePageContentProps) => {
                     </div>
 
                     {/* Right sidebar — xl+ only */}
-                    <div className="hidden xl:block w-72 shrink-0">
+                    <div className="sticky top-24 hidden w-72 shrink-0 self-start xl:block">
                         <HomeRightSidebar initialListings={listings} />
                     </div>
                 </div>
