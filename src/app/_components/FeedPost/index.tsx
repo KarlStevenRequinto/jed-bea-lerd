@@ -111,7 +111,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
     if (post.postType === "vehicle" && post.vehicleData) {
         const v = post.vehicleData;
         return (
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="overflow-hidden rounded-xl border border-[var(--color-green-100)] bg-white shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
                 <UserHeader user={post.user} timeAgo={post.timeAgo} />
 
                 {post.content && (
@@ -181,7 +181,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
     if (post.postType === "property" && post.propertyData) {
         const p = post.propertyData;
         return (
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="overflow-hidden rounded-xl border border-[var(--color-green-100)] bg-white shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
                 <UserHeader user={post.user} timeAgo={post.timeAgo} />
 
                 {post.content && (
@@ -250,8 +250,8 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
         <div
             className={`bg-white rounded-xl shadow-sm overflow-hidden ${
                 isTextOnly
-                    ? "border border-gray-100 border-l-4 border-l-[var(--color-brand)]"
-                    : "border border-gray-100"
+                    ? "border border-[var(--color-green-100)] border-l-4 border-l-[var(--color-brand)]"
+                    : "border border-[var(--color-green-100)]"
             }`}
         >
             <UserHeader user={post.user} timeAgo={post.timeAgo} />

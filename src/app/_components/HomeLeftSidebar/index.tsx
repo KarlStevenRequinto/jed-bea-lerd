@@ -64,31 +64,31 @@ const HomeLeftSidebar = () => {
     return (
         <div className="flex flex-col gap-4">
             {/* Profile card */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex flex-col items-center text-center">
+            <div className="flex flex-col items-center rounded-xl border border-[var(--color-green-100)] bg-white p-5 text-center shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
                 {user?.profilePhotoUrl ? (
                     <Image
                         src={user.profilePhotoUrl}
                         alt="Profile"
                         width={64}
                         height={64}
-                        className="h-16 w-16 rounded-full object-cover ring-2 ring-[var(--color-brand)] ring-offset-2"
+                        className="h-16 w-16 rounded-full object-cover ring-2 ring-[var(--color-brand)] ring-offset-2 ring-offset-[var(--color-green-50)]"
                     />
                 ) : (
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-brand)] text-lg font-bold text-white ring-2 ring-[var(--color-brand)] ring-offset-2">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-brand)] text-lg font-bold text-white ring-2 ring-[var(--color-brand)] ring-offset-2 ring-offset-[var(--color-green-50)]">
                         {userInitials}
                     </div>
                 )}
 
                 <p className="mt-3 text-sm font-bold text-gray-800">{fullName}</p>
-                <p className="text-xs text-gray-400">Verified Member</p>
+                <p className="text-xs text-[var(--color-green-500)]">Verified Member</p>
 
                 {/* Stats */}
-                <div className="mt-4 flex w-full justify-around border-t border-gray-100 pt-4">
+                <div className="mt-4 flex w-full justify-around border-t border-[var(--color-green-100)] pt-4">
                     <div>
                         <p className="text-sm font-bold text-gray-800">0</p>
                         <p className="text-[10px] text-gray-400">Network</p>
                     </div>
-                    <div className="border-l border-gray-100" />
+                    <div className="border-l border-[var(--color-green-100)]" />
                     <div>
                         <p className="text-sm font-bold text-gray-800">0</p>
                         <p className="text-[10px] text-gray-400">Listings</p>
@@ -97,15 +97,15 @@ const HomeLeftSidebar = () => {
             </div>
 
             {/* Navigation */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm py-2">
+            <div className="rounded-xl border border-[var(--color-green-100)] bg-white py-2 shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
                 {navItems.map(({ label, href, icon, match }) => (
                     <Link
                         key={label}
                         href={href}
                         className={`flex items-center gap-3 mx-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                             (match && isActive("/products") && activeListingType === match) || (!match && isActive(href))
-                                ? "bg-[var(--color-brand)] text-white"
-                                : "text-gray-600 hover:bg-gray-50 hover:text-[var(--color-brand)]"
+                                ? "bg-[color-mix(in_srgb,var(--color-brand)_92%,black)] text-white shadow-[0_8px_20px_rgba(39,102,58,0.2)]"
+                                : "text-gray-600 hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand)]"
                         }`}
                     >
                         {icon}
@@ -114,30 +114,30 @@ const HomeLeftSidebar = () => {
                 ))}
 
                 {/* Divider */}
-                <div className="my-2 mx-4 border-t border-gray-100" />
+                <div className="my-2 mx-4 border-t border-[var(--color-green-100)]" />
 
                 {/* Create Listing CTA */}
                 <div className="px-3 pb-1">
                     <button
                         type="button"
                         onClick={() => router.push("/products")}
-                        className="w-full cursor-pointer rounded-lg bg-[var(--color-brand)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)]"
+                        className="w-full cursor-pointer rounded-lg bg-[var(--color-brand)] py-2.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(39,102,58,0.18)] transition-colors hover:bg-[var(--color-brand-dark)]"
                     >
                         + Create Listing
                     </button>
                 </div>
             </div>
 
-            <div className="rounded-xl bg-gradient-to-br from-[var(--color-brand)] to-[var(--color-blue-light)] p-5 text-white shadow-sm">
-                <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest opacity-60">Sponsored</p>
+            <div className="rounded-xl bg-[linear-gradient(160deg,#2d7c45_0%,#4ca968_48%,#a6d9b0_120%)] p-5 text-white shadow-[0_22px_55px_rgba(39,102,58,0.2)]">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-white/70">Sponsored</p>
                 <div className="mb-2 text-3xl">📢</div>
                 <p className="mb-1 text-base font-bold leading-tight">Pioneer Insurance</p>
-                <p className="text-xs leading-relaxed opacity-80">
+                <p className="text-xs leading-relaxed text-white/85">
                     Secure your home and vehicle. Pioneer Insurance keeps your biggest investments protected.
                 </p>
                 <button
                     type="button"
-                    className="mt-4 w-full cursor-pointer rounded-lg bg-white py-1.5 text-xs font-semibold text-[var(--color-brand)] transition-colors hover:bg-gray-50"
+                    className="mt-4 w-full cursor-pointer rounded-lg bg-white/95 py-1.5 text-xs font-semibold text-[var(--color-brand-dark)] transition-colors hover:bg-white"
                 >
                     Learn More
                 </button>

@@ -13,7 +13,7 @@ import GridProductCardSkeleton from "./GridProductCardSkeleton";
  * Displays a single listing in grid view format.
  * Compatible with both Vehicle and Property listing types.
  * - Empty spec values are automatically hidden.
- * - VIEW DETAILS button uses green theme for PROPERTY, blue gradient for VEHICLE.
+ * - VIEW DETAILS button uses green theme for PROPERTY, blue theme for VEHICLE.
  */
 interface GridProductCardProps {
     category: string;
@@ -65,13 +65,17 @@ const GridProductCard = ({
 
     const viewDetailsStyle = isProperty
         ? { background: "var(--color-green-primary)" }
-        : { background: "var(--color-brand)" };
+        : { background: "linear-gradient(135deg, var(--color-vehicle-primary) 0%, var(--color-vehicle-dark) 100%)" };
+
+    const cardAccentClasses = isProperty
+        ? "border-[var(--color-green-200)]"
+        : "border-[var(--color-vehicle-light)]";
 
     const hasFirstRow = year || color || mileage;
     const hasSecondRow = fuelType || bodyType;
 
     return (
-        <div className="w-full bg-white rounded-[10px] overflow-hidden border border-[var(--color-gray-500)] flex flex-col">
+        <div className={`w-full bg-white rounded-[10px] overflow-hidden border flex flex-col ${cardAccentClasses}`}>
             {/* Image Section */}
             <div className="relative w-full h-[250px]">
                 <Image
@@ -136,7 +140,7 @@ const GridProductCard = ({
                             <a
                                 href="/login"
                                 className="font-bold"
-                                style={{ color: "var(--color-brand-darker)" }}
+                                style={{ color: isProperty ? "var(--color-brand-darker)" : "var(--color-vehicle-darker)" }}
                             >
                                 Sign In
                             </a>{" "}

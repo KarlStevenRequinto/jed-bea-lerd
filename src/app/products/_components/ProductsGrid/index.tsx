@@ -29,18 +29,18 @@ const VehicleIcon = () => (
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
     >
-        <rect width="36" height="36" rx="8" fill="var(--color-brand-muted)" />
+        <rect width="36" height="36" rx="8" fill="var(--color-vehicle-muted)" />
         <path
             d="M8 21l2.5-7h15l2.5 7"
-            stroke="var(--color-brand)"
+            stroke="var(--color-vehicle-primary)"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
-        <rect x="6" y="21" width="24" height="6" rx="2" stroke="var(--color-brand)" strokeWidth="1.8" />
-        <circle cx="11" cy="27" r="1.8" fill="var(--color-brand)" />
-        <circle cx="25" cy="27" r="1.8" fill="var(--color-brand)" />
-        <path d="M11 18h14" stroke="var(--color-brand)" strokeWidth="1.4" strokeLinecap="round" />
+        <rect x="6" y="21" width="24" height="6" rx="2" stroke="var(--color-vehicle-primary)" strokeWidth="1.8" />
+        <circle cx="11" cy="27" r="1.8" fill="var(--color-vehicle-primary)" />
+        <circle cx="25" cy="27" r="1.8" fill="var(--color-vehicle-primary)" />
+        <path d="M11 18h14" stroke="var(--color-vehicle-primary)" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
 );
 
@@ -80,17 +80,17 @@ const AllListingsIcon = () => (
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
     >
-        <rect width="36" height="36" rx="8" fill="var(--color-brand-muted)" />
+        <rect width="36" height="36" rx="8" fill="var(--color-vehicle-muted)" />
         <path
             d="M7 20l2-5.5h8l2 5.5"
-            stroke="var(--color-brand)"
+            stroke="var(--color-vehicle-primary)"
             strokeWidth="1.6"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
-        <rect x="5" y="20" width="14" height="5" rx="1.5" stroke="var(--color-brand)" strokeWidth="1.6" />
-        <circle cx="9" cy="25" r="1.3" fill="var(--color-brand)" />
-        <circle cx="17" cy="25" r="1.3" fill="var(--color-brand)" />
+        <rect x="5" y="20" width="14" height="5" rx="1.5" stroke="var(--color-vehicle-primary)" strokeWidth="1.6" />
+        <circle cx="9" cy="25" r="1.3" fill="var(--color-vehicle-primary)" />
+        <circle cx="17" cy="25" r="1.3" fill="var(--color-vehicle-primary)" />
         <path
             d="M20 19l5-6 5 5"
             stroke="var(--color-green-primary)"

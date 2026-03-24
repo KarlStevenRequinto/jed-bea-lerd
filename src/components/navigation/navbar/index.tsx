@@ -22,7 +22,7 @@ export const Navbar = () => {
     } = useNavbarViewModel();
 
     return (
-        <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
+        <header className="sticky top-0 z-50 border-b border-[var(--color-green-100)] bg-[rgba(255,255,255,0.92)] shadow-[0_10px_30px_rgba(39,102,58,0.06)] backdrop-blur-md">
             <nav className="container mx-auto flex items-center gap-6 px-6 py-3">
                 {/* Logo + Brand */}
                 <Link href="/" className="flex shrink-0 items-center gap-2">
@@ -35,7 +35,7 @@ export const Navbar = () => {
                         {/* Search bar — expands to fill available space */}
                         <form
                             onSubmit={handleSearchSubmit}
-                            className="flex flex-1 items-center rounded-md border border-gray-300 bg-white px-3 py-2 focus-within:border-[var(--color-brand)] focus-within:ring-1 focus-within:ring-[var(--color-brand)] max-w-xl"
+                            className="flex max-w-xl flex-1 items-center rounded-md border border-[var(--color-green-200)] bg-[var(--color-green-50)] px-3 py-2 focus-within:border-[var(--color-brand)] focus-within:ring-1 focus-within:ring-[var(--color-brand)]"
                         >
                             <svg
                                 className="mr-2 shrink-0 text-gray-400"

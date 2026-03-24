@@ -4,14 +4,14 @@ import Skeleton from "@/components/common/Skeleton";
 
 const HeroSectionSkeleton = () => {
     return (
-        <div className="relative w-full bg-gradient-to-br from-[var(--color-blue-primary)] via-[var(--color-blue-light)] to-[var(--color-green-primary)] overflow-hidden lg:h-[520px]">
+        <div className="relative w-full overflow-hidden bg-gradient-to-br from-[var(--color-brand-dark)] via-[var(--color-brand)] to-[var(--color-green-300)] lg:h-[520px]">
             <div
                 className="absolute w-[400px] h-[400px] rounded-full opacity-30 blur-3xl top-20 right-40"
-                style={{ background: "var(--color-blue-medium)" }}
+                style={{ background: "color-mix(in srgb, var(--color-green-300) 75%, white)" }}
             />
             <div
                 className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl bottom-10 left-20"
-                style={{ background: "var(--color-blue-dark)" }}
+                style={{ background: "color-mix(in srgb, var(--color-brand-dark) 82%, black)" }}
             />
 
             <div className="relative container mx-auto px-6 py-16" aria-busy="true" aria-live="polite">

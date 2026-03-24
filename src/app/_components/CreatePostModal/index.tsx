@@ -38,12 +38,12 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
     return (
         /* Backdrop */
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(24,77,39,0.32)] p-4 backdrop-blur-sm"
             onClick={handleClose}
         >
             {/* Modal card */}
             <div
-                className="flex w-full max-w-2xl max-h-[85vh] flex-col rounded-2xl bg-white shadow-2xl"
+                className="flex max-h-[85vh] w-full max-w-2xl flex-col rounded-2xl border border-[var(--color-green-100)] bg-white shadow-[0_30px_90px_rgba(24,77,39,0.22)]"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Hidden inputs — inside stopPropagation div so file picker close doesn't bubble to backdrop */}
@@ -73,7 +73,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                 />
 
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-gray-100 px-6 pb-4 pt-5">
+                <div className="flex items-center justify-between border-b border-[var(--color-green-100)] px-6 pb-4 pt-5">
                     <h2 className="text-base font-bold text-gray-800">Create Post</h2>
                     <button
                         type="button"
@@ -107,7 +107,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                                 {media.map((preview) => (
                                     <div
                                         key={preview.id}
-                                        className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-gray-100"
+                                        className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-[var(--color-green-100)]"
                                     >
                                         {preview.type === "image" ? (
                                             <Image
@@ -117,7 +117,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                                                 className="object-cover"
                                             />
                                         ) : (
-                                            <div className="flex h-full w-full items-center justify-center bg-gray-100">
+                                            <div className="flex h-full w-full items-center justify-center bg-[var(--color-green-50)]">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400">
                                                     <polygon points="23 7 16 12 23 17 23 7" />
                                                     <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
@@ -143,7 +143,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                                 <button
                                     type="button"
                                     onClick={handleAddMore}
-                                    className="flex h-24 w-24 shrink-0 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-gray-200 text-gray-400 transition-colors hover:border-[var(--color-brand)] hover:text-[var(--color-brand)]"
+                                    className="flex h-24 w-24 shrink-0 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-[var(--color-green-200)] text-gray-400 transition-colors hover:border-[var(--color-brand)] hover:text-[var(--color-brand)]"
                                 >
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <line x1="12" y1="5" x2="12" y2="19" />
@@ -166,7 +166,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                             value={caption}
                             onChange={(e) => handleCaptionChange(e.target.value)}
                             rows={1}
-                            className="w-full resize-none overflow-hidden rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[var(--color-brand)] focus:outline-none focus:ring-1 focus:ring-[var(--color-brand)]"
+                            className="w-full resize-none overflow-hidden rounded-xl border border-[var(--color-green-100)] bg-[var(--color-green-50)] px-4 py-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[var(--color-brand)] focus:outline-none focus:ring-1 focus:ring-[var(--color-brand)]"
                             style={{ minHeight: media.length > 0 ? "7rem" : "10rem" }}
                         />
                     </div>
@@ -181,7 +181,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                             <button
                                 key={label}
                                 type="button"
-                                className="flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-200"
+                                className="flex cursor-pointer items-center gap-1.5 rounded-full bg-[var(--color-green-50)] px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-[var(--color-green-100)]"
                             >
                                 <span>{icon}</span>
                                 {label}
@@ -191,13 +191,13 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                 </div>
 
                 {/* Footer */}
-                <div className="border-t border-gray-100 px-6 py-4">
+                <div className="border-t border-[var(--color-green-100)] px-6 py-4">
                     {/* Media action buttons row */}
                     <div className="mb-3 flex items-center gap-1">
                         <button
                             type="button"
                             onClick={handlePhotoClick}
-                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand-dark)]"
                         >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -210,7 +210,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                         <button
                             type="button"
                             onClick={handleVideoClick}
-                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand-dark)]"
                         >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400">
                                 <polygon points="23 7 16 12 23 17 23 7" />

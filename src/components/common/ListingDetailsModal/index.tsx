@@ -90,6 +90,21 @@ const ListingDetailsModal = ({ isOpen, listing, onClose }: ListingDetailsModalPr
     const features = parseFeatures(listing);
     const descriptionParagraphs = parseDescription(listing.description);
     const isProperty = listing.category === "PROPERTY";
+    const accent = isProperty
+        ? {
+            surface: "bg-[var(--color-brand-muted)]",
+            border: "border-[var(--color-green-200)]",
+            softBorder: "border-[var(--color-green-100)]",
+            text: "text-[var(--color-brand-dark)]",
+            button: "bg-[var(--color-success)]",
+        }
+        : {
+            surface: "bg-[var(--color-vehicle-muted)]",
+            border: "border-[var(--color-vehicle-light)]",
+            softBorder: "border-[var(--color-vehicle-light)]",
+            text: "text-[var(--color-vehicle-dark)]",
+            button: "bg-[var(--color-vehicle-primary)]",
+        };
     const specBadges = [listing.year, listing.color, listing.mileage, listing.fuelType, listing.bodyType].filter(Boolean);
 
     return (
@@ -97,7 +112,7 @@ const ListingDetailsModal = ({ isOpen, listing, onClose }: ListingDetailsModalPr
             <div
                 ref={modalScrollRef}
                 data-lenis-prevent
-                className="mx-auto w-full max-w-[1020px] max-h-[95vh] overflow-y-auto rounded-[10px] bg-[var(--color-gray-100)] border border-[var(--color-gray-300)] p-5 md:p-6"
+                className={`mx-auto max-h-[95vh] w-full max-w-[1020px] overflow-y-auto rounded-[10px] border p-5 md:p-6 ${accent.border} ${accent.surface}`}
                 onClick={(event) => event.stopPropagation()}
             >
                 <div className="flex items-center justify-between gap-3 mb-4">
@@ -128,21 +143,21 @@ const ListingDetailsModal = ({ isOpen, listing, onClose }: ListingDetailsModalPr
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                     <div className="lg:col-span-8 min-w-0">
-                        <div className="relative h-[230px] sm:h-[320px] md:h-[380px] rounded-[7px] overflow-hidden border border-[var(--color-gray-300)]">
+                        <div className={`relative h-[230px] overflow-hidden rounded-[7px] border sm:h-[320px] md:h-[380px] ${accent.border}`}>
                             <Image src={images[activeImageIndex]} alt={listing.title} fill className="object-cover" />
 
                             {images.length > 1 && (
                                 <>
                                     <button
                                         onClick={() => setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length)}
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 h-8 w-8 rounded-md bg-white/95 border border-[var(--color-gray-300)] text-[20px] leading-none"
+                                    className={`absolute left-3 top-1/2 h-8 w-8 -translate-y-1/2 rounded-md border bg-white/95 text-[20px] leading-none ${accent.softBorder}`}
                                         aria-label="Previous image"
                                     >
                                         &#8249;
                                     </button>
                                     <button
                                         onClick={() => setActiveImageIndex((prev) => (prev + 1) % images.length)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 rounded-md bg-white/95 border border-[var(--color-gray-300)] text-[20px] leading-none"
+                                    className={`absolute right-3 top-1/2 h-8 w-8 -translate-y-1/2 rounded-md border bg-white/95 text-[20px] leading-none ${accent.softBorder}`}
                                         aria-label="Next image"
                                     >
                                         &#8250;
@@ -156,7 +171,13 @@ const ListingDetailsModal = ({ isOpen, listing, onClose }: ListingDetailsModalPr
                                 <button
                                     key={`${listing.id}-dot-${index}`}
                                     onClick={() => setActiveImageIndex(index)}
-                                    className={`h-2.5 w-2.5 rounded-full ${index === activeImageIndex ? "bg-[var(--color-gray-700)]" : "bg-[var(--color-gray-300)]"}`}
+                                    className={`h-2.5 w-2.5 rounded-full ${
+                                        index === activeImageIndex
+                                            ? isProperty
+                                                ? "bg-[var(--color-brand-dark)]"
+                                                : "bg-[var(--color-vehicle-primary)]"
+                                            : "bg-[var(--color-gray-300)]"
+                                    }`}
                                     aria-label={`View image ${index + 1}`}
                                 />
                             ))}
@@ -166,7 +187,7 @@ const ListingDetailsModal = ({ isOpen, listing, onClose }: ListingDetailsModalPr
 
                         <div className="flex flex-wrap gap-2 mb-5">
                             {specBadges.map((spec) => (
-                                <span key={`${listing.id}-${spec}`} className="rounded-md border border-[var(--color-gray-400)] bg-white px-3 py-1 text-sm leading-tight">
+                                <span key={`${listing.id}-${spec}`} className={`rounded-md border bg-white px-3 py-1 text-sm leading-tight ${accent.softBorder}`}>
                                     {spec}
                                 </span>
                             ))}
@@ -188,16 +209,16 @@ const ListingDetailsModal = ({ isOpen, listing, onClose }: ListingDetailsModalPr
                         <h3 className="text-base font-semibold mb-2">Features</h3>
                         <div className="flex flex-wrap gap-3">
                             {features.map((feature) => (
-                                <span key={`${listing.id}-${feature}`} className="rounded-lg border border-[var(--color-gray-400)] bg-white px-4 py-2 text-sm leading-tight">
+                                <span key={`${listing.id}-${feature}`} className={`rounded-lg border bg-white px-4 py-2 text-sm leading-tight ${accent.softBorder}`}>
                                     {feature}
                                 </span>
                             ))}
                         </div>
                     </div>
 
-                    <aside className="lg:col-span-4 rounded-[7px] border border-[var(--color-gray-300)] bg-white p-5 h-fit">
+                    <aside className={`h-fit rounded-[7px] border bg-white p-5 lg:col-span-4 ${accent.border}`}>
                         <div className="text-center mb-5">
-                            <p className="text-[38px] font-bold leading-tight">{listing.price}</p>
+                            <p className={`text-[38px] font-bold leading-tight ${accent.text}`}>{listing.price}</p>
                             <p className="text-sm text-[var(--color-gray-500)]">{isProperty ? "Property Price" : "Vehicle Price"}</p>
                         </div>
 
@@ -215,7 +236,7 @@ const ListingDetailsModal = ({ isOpen, listing, onClose }: ListingDetailsModalPr
                             </div>
                             <p className="font-semibold text-lg leading-tight text-[var(--color-gray-900)]">Miguel Santos</p>
                             <p className="text-xs text-[var(--color-gray-500)] mb-5">{isProperty ? "Real Estate Agent" : "Car Sales Agent"}</p>
-                            <BaseButton className="w-full bg-[var(--color-success)] text-white text-sm rounded-md h-[48px]">
+                            <BaseButton className={`h-[48px] w-full rounded-md text-sm text-white ${accent.button}`}>
                                 Send A Message
                             </BaseButton>
                         </div>

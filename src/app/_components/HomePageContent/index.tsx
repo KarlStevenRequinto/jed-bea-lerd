@@ -37,7 +37,7 @@ const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentP
 
     // Logged-in: social feed layout
     return (
-        <div className="w-full bg-gray-50 min-h-screen">
+        <div className="min-h-screen w-full bg-[linear-gradient(180deg,var(--color-green-50)_0%,#fbfdfb_22%,#ffffff_100%)]">
             <div className="container mx-auto px-4 py-6">
                 <div className="flex items-start gap-5 justify-center">
                     {/* Left sidebar — lg+ only */}

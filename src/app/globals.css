@@ -27,16 +27,16 @@
     --color-slate-900: #111827;
 
     /* Brand palette */
-    --color-brand: #155dfd;
-    --color-brand-dark: #003ab0;
-    --color-brand-darker: #023aad;
-    --color-brand-medium: #0a4cd0;
-    --color-brand-muted: #ebf2ff;
-    --color-brand-light: #b5e1ff;
-    --color-link: #135ff9;
+    --color-brand: #2f8f46;
+    --color-brand-dark: #226735;
+    --color-brand-darker: #184d27;
+    --color-brand-medium: #39a357;
+    --color-brand-muted: #edf8ef;
+    --color-brand-light: #ccefd2;
+    --color-link: #2b8550;
     /* Info/Tip palette */
-    --color-tip-bg: #eff6ff; /* light blue background */
-    --color-tip-border: #c6ddf9; /* subtle blue border */
+    --color-tip-bg: #eff9f1;
+    --color-tip-border: #cbe8d2;
 
     /* Success palette */
     --color-success: #03a444;
@@ -46,13 +46,27 @@
     --color-success-light: #79c796;
 
     /* Homepage/Category colors */
-    --color-category-card-bg: #BDD0FF;
-    --color-blue-primary: #4169E1;
-    --color-blue-light: #6B9EFF;
-    --color-blue-medium: #5B8FFF;
-    --color-blue-dark: #3D7EE8;
-    --color-blue-border: #6195FF;
+    --color-category-card-bg: #d8efda;
+    --color-blue-primary: #78b882;
+    --color-blue-light: #9bd3a4;
+    --color-blue-medium: #8bc996;
+    --color-blue-dark: #4e8f59;
+    --color-blue-border: #82c28d;
     --color-green-primary: #4CAF50;
+    --color-vehicle-primary: #2f6fed;
+    --color-vehicle-dark: #1f4fb8;
+    --color-vehicle-darker: #173b86;
+    --color-vehicle-muted: #ebf2ff;
+    --color-vehicle-light: #bfd4ff;
+    --color-green-50: #f4fbf5;
+    --color-green-100: #e4f4e7;
+    --color-green-200: #c6e7cd;
+    --color-green-300: #94d4a2;
+    --color-green-500: #4f9f62;
+    --color-green-700: #27663a;
+    --color-attention: #d6a33f;
+    --color-attention-light: #f4e4bd;
+    --color-attention-deep: #8a6115;
 
     /* Surface */
     --color-surface-muted: #ecebf0;
@@ -114,6 +128,15 @@
     --color-success-deep: var(--color-success-deep);
     --color-success-muted: var(--color-success-muted);
     --color-success-light: var(--color-success-light);
+    --color-green-50: var(--color-green-50);
+    --color-green-100: var(--color-green-100);
+    --color-green-200: var(--color-green-200);
+    --color-green-300: var(--color-green-300);
+    --color-green-500: var(--color-green-500);
+    --color-green-700: var(--color-green-700);
+    --color-attention: var(--color-attention);
+    --color-attention-light: var(--color-attention-light);
+    --color-attention-deep: var(--color-attention-deep);
     --color-surface-muted: var(--color-surface-muted);
     --color-link: var(--color-link);
     --color-tip-bg: var(--color-tip-bg);
@@ -125,6 +148,11 @@
     --color-blue-dark: var(--color-blue-dark);
     --color-blue-border: var(--color-blue-border);
     --color-green-primary: var(--color-green-primary);
+    --color-vehicle-primary: var(--color-vehicle-primary);
+    --color-vehicle-dark: var(--color-vehicle-dark);
+    --color-vehicle-darker: var(--color-vehicle-darker);
+    --color-vehicle-muted: var(--color-vehicle-muted);
+    --color-vehicle-light: var(--color-vehicle-light);
 }
 
 /* Dark theme is applied by toggling .theme-dark on <html> */

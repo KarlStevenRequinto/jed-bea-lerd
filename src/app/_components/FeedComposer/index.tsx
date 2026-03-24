@@ -32,7 +32,7 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
 
     return (
         <>
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <div className="rounded-xl border border-[var(--color-green-100)] bg-white p-4 shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
                 {/* Hidden file inputs */}
                 <input
                     ref={photoInputRef}
@@ -73,14 +73,14 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                     <button
                         type="button"
                         onClick={() => openModal([])}
-                        className="flex-1 cursor-pointer rounded-full border border-gray-200 bg-gray-50 px-4 py-2.5 text-left text-sm text-gray-400 transition-colors hover:bg-gray-100"
+                        className="flex-1 cursor-pointer rounded-full border border-[var(--color-green-100)] bg-[var(--color-green-50)] px-4 py-2.5 text-left text-sm text-gray-400 transition-colors hover:bg-[var(--color-green-100)]/60"
                     >
                         {`What's on your mind, ${firstName}?`}
                     </button>
                 </div>
 
                 {/* Divider */}
-                <div className="mt-3 border-t border-gray-100" />
+                <div className="mt-3 border-t border-[var(--color-green-100)]" />
 
                 {/* Action row */}
                 <div className="mt-2 flex items-center justify-between">
@@ -88,7 +88,7 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                         <button
                             type="button"
                             onClick={handlePhotoClick}
-                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand-dark)]"
                         >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -101,7 +101,7 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                         <button
                             type="button"
                             onClick={handleVideoClick}
-                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand-dark)]"
                         >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400">
                                 <polygon points="23 7 16 12 23 17 23 7" />
@@ -113,7 +113,7 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                         <button
                             type="button"
                             onClick={openListingModal}
-                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand-dark)]"
                         >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-brand)]">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -126,7 +126,7 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                     <button
                         type="button"
                         onClick={() => openModal([])}
-                        className="cursor-pointer rounded-full bg-gray-100 px-5 py-1.5 text-sm font-semibold text-gray-400"
+                        className="cursor-pointer rounded-full bg-[var(--color-green-100)] px-5 py-1.5 text-sm font-semibold text-[var(--color-brand-dark)]"
                     >
                         Post
                     </button>
