@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useCreateListingModalViewModel, ListingCategory } from "./useViewModel";
+import type { FeedPost } from "@/lib/types/feed";
 
 interface CreateListingModalProps {
     onClose: () => void;
+    onPublished?: (post: FeedPost) => void;
 }
 
 // ── Theme config per category ────────────────────────────────────────
@@ -20,6 +22,7 @@ const THEMES: Record<
         inputFocus: string;
         addMoreHover: string;
         publishBtn: string;
+        backdrop: string;
     }
 > = {
     "real-estate": {
@@ -32,6 +35,7 @@ const THEMES: Record<
         inputFocus: "focus-within:border-[var(--color-success)] focus-within:ring-1 focus-within:ring-[var(--color-success)]",
         addMoreHover: "hover:border-[var(--color-success)] hover:text-[var(--color-success)]",
         publishBtn: "bg-[var(--color-success)] hover:bg-[var(--color-success-dark)]",
+        backdrop: "bg-[rgba(24,77,39,0.22)]",
     },
     vehicle: {
         sidebar: "bg-[var(--color-vehicle-primary)]",
@@ -43,10 +47,11 @@ const THEMES: Record<
         inputFocus: "focus-within:border-[var(--color-vehicle-primary)] focus-within:ring-1 focus-within:ring-[var(--color-vehicle-primary)]",
         addMoreHover: "hover:border-[var(--color-vehicle-primary)] hover:text-[var(--color-vehicle-primary)]",
         publishBtn: "bg-[var(--color-vehicle-primary)] hover:bg-[var(--color-vehicle-dark)]",
+        backdrop: "bg-[rgba(23,59,134,0.18)]",
     },
 };
 
-const CreateListingModal = ({ onClose }: CreateListingModalProps) => {
+const CreateListingModal = ({ onClose, onPublished }: CreateListingModalProps) => {
     const {
         category,
         price,
@@ -82,13 +87,15 @@ const CreateListingModal = ({ onClose }: CreateListingModalProps) => {
         handleDiscardDraft,
         handleSaveProgress,
         handlePublish,
-    } = useCreateListingModalViewModel({ onClose });
+        isPublishing,
+        errorMessage,
+    } = useCreateListingModalViewModel({ onClose, onPublished });
 
     const t = THEMES[category];
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+            className={`fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-colors duration-300 ${t.backdrop}`}
             onClick={handleClose}
         >
             <div
@@ -416,17 +423,20 @@ const CreateListingModal = ({ onClose }: CreateListingModalProps) => {
                             <button
                                 type="button"
                                 onClick={handlePublish}
-                                disabled={!canPublish}
+                                disabled={!canPublish || isPublishing}
                                 className={`rounded-full px-5 py-2 text-sm font-semibold text-white transition-colors ${
-                                    canPublish
+                                    canPublish && !isPublishing
                                         ? `cursor-pointer ${t.publishBtn}`
                                         : "cursor-not-allowed bg-gray-200 text-gray-400"
                                 }`}
                             >
-                                Publish Listing
+                                {isPublishing ? "Publishing..." : "Publish Listing"}
                             </button>
                         </div>
                     </div>
+                    {errorMessage && (
+                        <p className="px-6 pb-4 text-sm text-red-500">{errorMessage}</p>
+                    )}
                 </div>
             </div>
         </div>

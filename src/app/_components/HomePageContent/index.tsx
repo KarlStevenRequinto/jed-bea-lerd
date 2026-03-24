@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useHomePageContentViewModel } from "./useViewModel";
 import HeroSection from "../HeroSection";
 import ListingsSidebar from "../ListingsSidebar";
@@ -8,6 +9,7 @@ import FeedComposer from "../FeedComposer";
 import FeedPost from "../FeedPost";
 import HomeLeftSidebar from "../HomeLeftSidebar";
 import HomeRightSidebar from "../HomeRightSidebar";
+import CreateListingModal from "../CreateListingModal";
 import { FormattedListing } from "@/lib/types/listing";
 import { FeedPost as FeedPostType } from "@/lib/types/feed";
 
@@ -17,6 +19,7 @@ interface HomePageContentProps {
 }
 
 const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentProps) => {
+    const [isListingModalOpen, setIsListingModalOpen] = useState(false);
     const { mounted, loggedIn, posts, handleLike, addPost, initialListings: listings } =
         useHomePageContentViewModel(initialListings, initialFeedPosts);
 
@@ -42,7 +45,7 @@ const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentP
                 <div className="flex items-start gap-5 justify-center">
                     {/* Left sidebar — lg+ only */}
                     <div className="sticky top-24 hidden w-60 shrink-0 self-start lg:block">
-                        <HomeLeftSidebar />
+                        <HomeLeftSidebar onCreateListing={() => setIsListingModalOpen(true)} />
                     </div>
 
                     {/* Center feed */}
@@ -59,6 +62,13 @@ const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentP
                     </div>
                 </div>
             </div>
+
+            {isListingModalOpen && (
+                <CreateListingModal
+                    onClose={() => setIsListingModalOpen(false)}
+                    onPublished={addPost}
+                />
+            )}
         </div>
     );
 };

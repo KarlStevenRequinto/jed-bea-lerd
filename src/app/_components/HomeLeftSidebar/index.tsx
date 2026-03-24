@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useHomeLeftSidebarViewModel } from "./useViewModel";
+
+interface HomeLeftSidebarProps {
+    onCreateListing: () => void;
+}
 
 const navItems = [
     {
@@ -55,9 +59,8 @@ const navItems = [
     },
 ];
 
-const HomeLeftSidebar = () => {
+const HomeLeftSidebar = ({ onCreateListing }: HomeLeftSidebarProps) => {
     const { user, userInitials, fullName, isActive } = useHomeLeftSidebarViewModel();
-    const router = useRouter();
     const searchParams = useSearchParams();
     const activeListingType = searchParams.get("listingType");
 
@@ -120,7 +123,7 @@ const HomeLeftSidebar = () => {
                 <div className="px-3 pb-1">
                     <button
                         type="button"
-                        onClick={() => router.push("/products")}
+                        onClick={onCreateListing}
                         className="w-full cursor-pointer rounded-lg bg-[var(--color-brand)] py-2.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(39,102,58,0.18)] transition-colors hover:bg-[var(--color-brand-dark)]"
                     >
                         + Create Listing

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useFeedComposerViewModel } from "./useViewModel";
 import CreatePostModal from "../CreatePostModal";
-import CreateListingModal from "../CreateListingModal";
 import type { FeedPost } from "@/lib/types/feed";
 
 interface FeedComposerProps {
@@ -18,13 +17,10 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
         isModalOpen,
         modalInitialMedia,
         modalKey,
-        isListingModalOpen,
         photoInputRef,
         videoInputRef,
         openModal,
         closeModal,
-        openListingModal,
-        closeListingModal,
         handlePhotoClick,
         handleVideoClick,
         handleFilesSelected,
@@ -109,18 +105,6 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                             </svg>
                             Video
                         </button>
-
-                        <button
-                            type="button"
-                            onClick={openListingModal}
-                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-gray-500 transition-colors hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand-dark)]"
-                        >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-brand)]">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                <polyline points="9 22 9 12 15 12 15 22" />
-                            </svg>
-                            Listing
-                        </button>
                     </div>
 
                     <button
@@ -141,11 +125,6 @@ const FeedComposer = ({ onPost }: FeedComposerProps) => {
                     onPost={onPost}
                     initialMedia={modalInitialMedia}
                 />
-            )}
-
-            {/* Create Listing Modal */}
-            {isListingModalOpen && (
-                <CreateListingModal onClose={closeListingModal} />
             )}
         </>
     );

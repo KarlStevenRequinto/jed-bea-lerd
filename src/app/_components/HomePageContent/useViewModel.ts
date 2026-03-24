@@ -3,33 +3,7 @@ import { useAppSelector } from "@/store";
 import { FormattedListing } from "@/lib/types/listing";
 import type { FeedPost, FeedPostMedia, FeedPostUser } from "@/lib/types/feed";
 
-export interface FeedPostVehicleData {
-    title: string;
-    price: string;
-    location: string;
-    imageUrl: string;
-    badge: string;
-    mileage?: string;
-    fuel?: string;
-    transmission?: string;
-}
-
-export interface FeedPostPropertyData {
-    title: string;
-    price: string;
-    location: string;
-    imageUrl: string;
-    badge: string;
-    beds?: string;
-    baths?: string;
-    sqft?: string;
-}
-
-export type HomePageFeedPost = Omit<FeedPost, "postType"> & {
-    postType: "social" | "vehicle" | "property";
-    vehicleData?: FeedPostVehicleData;
-    propertyData?: FeedPostPropertyData;
-};
+export type HomePageFeedPost = FeedPost;
 
 const MOCK_POSTS: HomePageFeedPost[] = [
     {
@@ -220,7 +194,6 @@ export const useHomePageContentViewModel = (
         const newPost: HomePageFeedPost = {
             ...post,
             id: post.id || `local-post-${Date.now()}`,
-            postType: "social",
             user: post.user?.name ? post.user : fallbackUser,
             media: normalizedMedia,
             images:

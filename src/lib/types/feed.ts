@@ -1,4 +1,4 @@
-export type FeedPostType = "social";
+export type FeedPostType = "social" | "vehicle" | "property";
 
 export type FeedMediaType = "image" | "video";
 
@@ -29,6 +29,26 @@ export interface FeedPost {
     likes: number;
     comments: number;
     liked: boolean;
+    vehicleData?: {
+        title: string;
+        price: string;
+        location: string;
+        imageUrl: string;
+        badge: string;
+        mileage?: string;
+        fuel?: string;
+        transmission?: string;
+    };
+    propertyData?: {
+        title: string;
+        price: string;
+        location: string;
+        imageUrl: string;
+        badge: string;
+        beds?: string;
+        baths?: string;
+        sqft?: string;
+    };
 }
 
 export interface FeedPostMediaRow {
@@ -42,6 +62,7 @@ export interface FeedPostMediaRow {
 export interface FeedPostRow {
     id: string;
     user_id: string;
+    listing_id: string | null;
     content: string | null;
     post_type: FeedPostType;
     likes_count: number;
@@ -56,6 +77,24 @@ export interface FeedPostRow {
         profile_photo_url: string | null;
     } | null;
     feed_post_media: FeedPostMediaRow[] | null;
+    listing?: {
+        id: string;
+        category: "VEHICLE" | "PROPERTY";
+        title: string;
+        price: number;
+        location: string;
+        image_url: string | null;
+        specs: {
+            year?: string;
+            color?: string;
+            mileage?: string;
+            fuelType?: string;
+            bodyType?: string;
+            bedrooms?: string;
+            bathrooms?: string;
+            sqft?: string;
+        };
+    } | null;
 }
 
 export interface CreateFeedPostResult {

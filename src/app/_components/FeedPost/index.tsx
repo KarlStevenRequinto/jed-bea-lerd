@@ -28,14 +28,14 @@ const UserHeader = ({ user, timeAgo }: { user: FeedPostType["user"]; timeAgo: st
             </div>
             <div>
                 <p className="text-sm font-semibold text-gray-800 leading-tight">{user.name}</p>
-                <p className="text-xs text-gray-400 mt-0.5">
+                <p className="text-xs text-gray-500 mt-0.5">
                     {user.role} · {timeAgo}
                 </p>
             </div>
         </div>
         <button
             type="button"
-            className="cursor-pointer rounded-full p-1.5 text-gray-400 hover:bg-gray-100 transition-colors"
+            className="cursor-pointer rounded-full p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
         >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="5" cy="12" r="2" />
@@ -62,8 +62,10 @@ const ActionBar = ({
             <button
                 type="button"
                 onClick={onLike}
-                className={`flex cursor-pointer items-center gap-1.5 text-sm font-medium transition-colors ${
-                    liked ? "text-[var(--color-brand)]" : "text-gray-400 hover:text-[var(--color-brand)]"
+                className={`flex cursor-pointer items-center gap-1.5 rounded-full px-1.5 py-1 text-sm font-medium transition-colors ${
+                    liked
+                        ? "text-[var(--color-brand)]"
+                        : "text-gray-500 hover:bg-[var(--color-green-50)] hover:text-[var(--color-brand)]"
                 }`}
             >
                 <svg
@@ -83,7 +85,7 @@ const ActionBar = ({
 
             <button
                 type="button"
-                className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors"
+                className="flex cursor-pointer items-center gap-1.5 rounded-full px-1.5 py-1 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
             >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -94,7 +96,7 @@ const ActionBar = ({
 
         <button
             type="button"
-            className="cursor-pointer text-gray-400 hover:text-gray-600 transition-colors"
+            className="cursor-pointer rounded-full p-1 text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
         >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13" />
@@ -121,7 +123,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
                 {/* Full-width image + badge */}
                 <div className="relative aspect-video overflow-hidden">
                     <Image src={v.imageUrl} alt={v.title} fill className="object-cover" />
-                    <span className="absolute top-3 right-3 rounded-full bg-[var(--color-brand)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                    <span className="absolute top-3 right-3 rounded-full bg-[var(--color-vehicle-primary)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow">
                         {v.badge}
                     </span>
                 </div>
@@ -132,7 +134,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
                         <p className="text-base font-bold text-gray-900 leading-tight">{v.title}</p>
                         <p className="mt-0.5 text-xs text-gray-400">{v.location}</p>
                     </div>
-                    <p className="shrink-0 text-lg font-bold text-[var(--color-brand)]">{v.price}</p>
+                    <p className="shrink-0 text-lg font-bold text-[var(--color-vehicle-dark)]">{v.price}</p>
                 </div>
 
                 {/* Specs row */}
@@ -147,7 +149,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
                                 value && (
                                     <div key={label} className="rounded-lg bg-gray-50 py-2 text-center">
                                         <p className="text-[9px] font-semibold uppercase tracking-wider text-gray-400">{label}</p>
-                                        <p className="mt-0.5 text-xs font-semibold text-gray-700">{value}</p>
+                                        <p className="mt-0.5 text-xs font-semibold text-[var(--color-vehicle-darker)]">{value}</p>
                                     </div>
                                 )
                         )}
@@ -158,7 +160,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
                 <div className="flex items-center gap-2.5 px-4 py-4">
                     <button
                         type="button"
-                        className="flex-1 cursor-pointer rounded-full bg-[var(--color-brand)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-dark)]"
+                        className="flex-1 cursor-pointer rounded-full bg-[var(--color-vehicle-primary)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-vehicle-dark)]"
                     >
                         View Details
                     </button>

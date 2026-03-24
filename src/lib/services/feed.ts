@@ -1,5 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/admin";
-import { formatTimeAgo } from "@/lib/utils/formatters";
+import { formatPrice, formatTimeAgo } from "@/lib/utils/formatters";
 import type { FeedPost, FeedPostRow } from "@/lib/types/feed";
 
 const SOCIAL_ROLE_FALLBACK = "Member";
@@ -18,14 +18,71 @@ const buildUserInitials = (profile: FeedPostRow["profiles"]): string => {
     return initials || "U";
 };
 
-const buildUserRole = (profile: FeedPostRow["profiles"]): string => {
+const buildUserRole = (profile: FeedPostRow["profiles"], postType: FeedPostRow["post_type"]): string => {
     if (!profile) return SOCIAL_ROLE_FALLBACK;
 
+    const baseRole =
+        postType === "vehicle"
+            ? "Vehicle Seller"
+            : postType === "property"
+              ? "Property Seller"
+              : SOCIAL_ROLE_FALLBACK;
     const location = [profile.city, profile.province].filter(Boolean).join(", ").trim();
-    return location ? `${SOCIAL_ROLE_FALLBACK} · ${location}` : SOCIAL_ROLE_FALLBACK;
+
+    return location ? `${baseRole} - ${location}` : baseRole;
 };
 
 export const mapFeedPostRowToFeedPost = (row: FeedPostRow): FeedPost => {
+    const basePost = {
+        id: row.id,
+        postType: row.post_type,
+        user: {
+            id: row.profiles?.id,
+            name: buildUserName(row.profiles),
+            initials: buildUserInitials(row.profiles),
+            role: buildUserRole(row.profiles, row.post_type),
+            avatarUrl: row.profiles?.profile_photo_url ?? undefined,
+        },
+        content: row.content ?? undefined,
+        createdAt: row.created_at,
+        timeAgo: formatTimeAgo(row.created_at),
+        likes: row.likes_count ?? 0,
+        comments: row.comments_count ?? 0,
+        liked: false,
+    };
+
+    if (row.post_type === "vehicle" && row.listing) {
+        return {
+            ...basePost,
+            vehicleData: {
+                title: row.listing.title,
+                price: formatPrice(row.listing.price),
+                location: row.listing.location,
+                imageUrl: row.listing.image_url ?? "/images/placeholder.jpg",
+                badge: "For Sale",
+                mileage: row.listing.specs.mileage,
+                fuel: row.listing.specs.fuelType,
+                transmission: row.listing.specs.transmission,
+            },
+        };
+    }
+
+    if (row.post_type === "property" && row.listing) {
+        return {
+            ...basePost,
+            propertyData: {
+                title: row.listing.title,
+                price: formatPrice(row.listing.price),
+                location: row.listing.location,
+                imageUrl: row.listing.image_url ?? "/images/placeholder.jpg",
+                badge: "New Listing",
+                beds: row.listing.specs.bedrooms,
+                baths: row.listing.specs.bathrooms,
+                sqft: row.listing.specs.sqft,
+            },
+        };
+    }
+
     const media = (row.feed_post_media ?? [])
         .slice()
         .sort((a, b) => a.sort_order - b.sort_order)
@@ -37,23 +94,9 @@ export const mapFeedPostRowToFeedPost = (row: FeedPostRow): FeedPost => {
         }));
 
     return {
-        id: row.id,
-        postType: "social",
-        user: {
-            id: row.profiles?.id,
-            name: buildUserName(row.profiles),
-            initials: buildUserInitials(row.profiles),
-            role: buildUserRole(row.profiles),
-            avatarUrl: row.profiles?.profile_photo_url ?? undefined,
-        },
-        content: row.content ?? undefined,
-        createdAt: row.created_at,
-        timeAgo: formatTimeAgo(row.created_at),
+        ...basePost,
         media,
         images: media.filter((item) => item.type === "image").map((item) => item.url),
-        likes: row.likes_count ?? 0,
-        comments: row.comments_count ?? 0,
-        liked: false,
     };
 };
 
@@ -121,12 +164,45 @@ const getMediaByPostIds = async (postIds: string[]) => {
     return mediaMap;
 };
 
+const getListingsByIds = async (listingIds: string[]) => {
+    if (listingIds.length === 0) {
+        return new Map<string, FeedPostRow["listing"]>();
+    }
+
+    const admin = createAdminClient();
+    const { data, error } = await admin
+        .from("listings")
+        .select("id, category, title, price, location, image_url, specs")
+        .in("id", listingIds);
+
+    if (error || !data) {
+        console.error("[feed] Failed to fetch listings:", error);
+        return new Map<string, FeedPostRow["listing"]>();
+    }
+
+    return new Map(
+        data.map((listing) => [
+            listing.id,
+            {
+                id: listing.id,
+                category: listing.category,
+                title: listing.title,
+                price: listing.price,
+                location: listing.location,
+                image_url: listing.image_url,
+                specs: listing.specs ?? {},
+            },
+        ])
+    );
+};
+
 const hydrateFeedPosts = async (
     rows: Array<{
         id: string;
         user_id: string;
+        listing_id: string | null;
         content: string | null;
-        post_type: "social";
+        post_type: FeedPostRow["post_type"];
         likes_count: number;
         comments_count: number;
         created_at: string;
@@ -134,9 +210,11 @@ const hydrateFeedPosts = async (
 ): Promise<FeedPost[]> => {
     const userIds = Array.from(new Set(rows.map((row) => row.user_id)));
     const postIds = rows.map((row) => row.id);
-    const [profilesMap, mediaMap] = await Promise.all([
+    const listingIds = Array.from(new Set(rows.map((row) => row.listing_id).filter(Boolean))) as string[];
+    const [profilesMap, mediaMap, listingsMap] = await Promise.all([
         getProfilesByUserIds(userIds),
         getMediaByPostIds(postIds),
+        getListingsByIds(listingIds),
     ]);
 
     return rows.map((row) =>
@@ -144,6 +222,7 @@ const hydrateFeedPosts = async (
             ...row,
             profiles: profilesMap.get(row.user_id) ?? null,
             feed_post_media: mediaMap.get(row.id) ?? [],
+            listing: row.listing_id ? listingsMap.get(row.listing_id) ?? null : null,
         })
     );
 };
@@ -153,7 +232,7 @@ export async function getFeedPostById(postId: string): Promise<FeedPost | null> 
 
     const { data, error } = await admin
         .from("feed_posts")
-        .select("id, user_id, content, post_type, likes_count, comments_count, created_at")
+        .select("id, user_id, listing_id, content, post_type, likes_count, comments_count, created_at")
         .eq("id", postId)
         .eq("status", "published")
         .single();
@@ -172,7 +251,7 @@ export async function getFeedPosts(): Promise<FeedPost[]> {
 
     const { data, error } = await admin
         .from("feed_posts")
-        .select("id, user_id, content, post_type, likes_count, comments_count, created_at")
+        .select("id, user_id, listing_id, content, post_type, likes_count, comments_count, created_at")
         .eq("status", "published")
         .order("created_at", { ascending: false });
 

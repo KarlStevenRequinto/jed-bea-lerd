@@ -30,6 +30,10 @@ export interface ListingSpecs {
   fuelType?: string
   bodyType?: string
   brand?: string
+  transmission?: string
+  bedrooms?: string
+  bathrooms?: string
+  sqft?: string
   // Add more fields as needed for future expansion
   [key: string]: string | undefined
 }
