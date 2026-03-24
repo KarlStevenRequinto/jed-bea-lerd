@@ -1,3 +1,5 @@
+import type { ListingCategory, ListingSpecs } from "@/lib/types/listing";
+
 export type FeedPostType = "social" | "vehicle" | "property";
 
 export type FeedMediaType = "image" | "video";
@@ -79,21 +81,12 @@ export interface FeedPostRow {
     feed_post_media: FeedPostMediaRow[] | null;
     listing?: {
         id: string;
-        category: "VEHICLE" | "PROPERTY";
+        category: ListingCategory;
         title: string;
         price: number;
         location: string;
         image_url: string | null;
-        specs: {
-            year?: string;
-            color?: string;
-            mileage?: string;
-            fuelType?: string;
-            bodyType?: string;
-            bedrooms?: string;
-            bathrooms?: string;
-            sqft?: string;
-        };
+        specs: ListingSpecs;
     } | null;
 }
 
