@@ -54,6 +54,10 @@ const THEMES: Record<
 const CreateListingModal = ({ onClose, onPublished }: CreateListingModalProps) => {
     const {
         category,
+        title,
+        setTitle,
+        caption,
+        setCaption,
         price,
         setPrice,
         location,
@@ -228,6 +232,38 @@ const CreateListingModal = ({ onClose, onPublished }: CreateListingModalProps) =
                                     </p>
                                     <p className="mt-0.5 text-xs text-gray-400">Cars, SUVs, or Trucks</p>
                                 </button>
+                            </div>
+                        </div>
+
+                        {/* Title */}
+                        <div>
+                            <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                                Listing Title <span className="text-red-400">*</span>
+                            </label>
+                            <div className={`flex items-center rounded-xl border border-gray-200 bg-gray-50 px-3 ${t.inputFocus}`}>
+                                <input
+                                    type="text"
+                                    placeholder={category === "real-estate" ? "e.g. 3-BR House in BF Homes, Parañaque" : "e.g. 2022 Toyota Vios E Manual"}
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    className="flex-1 bg-transparent py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Caption */}
+                        <div>
+                            <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                                Caption <span className="text-gray-300">(optional)</span>
+                            </label>
+                            <div className={`flex rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 ${t.inputFocus}`}>
+                                <textarea
+                                    placeholder="Say something about this listing..."
+                                    value={caption}
+                                    onChange={(e) => setCaption(e.target.value)}
+                                    rows={2}
+                                    className="w-full resize-none bg-transparent text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none"
+                                />
                             </div>
                         </div>
 

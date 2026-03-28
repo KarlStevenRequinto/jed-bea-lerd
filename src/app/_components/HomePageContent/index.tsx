@@ -51,9 +51,21 @@ const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentP
                     {/* Center feed */}
                     <div className="flex-1 max-w-2xl min-w-0 flex flex-col gap-4">
                         <FeedComposer onPost={addPost} />
-                        {posts.map((post) => (
-                            <FeedPost key={post.id} post={post} onLike={() => handleLike(post.id)} />
-                        ))}
+                        {posts.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-gray-200 bg-white py-16 text-center">
+                                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-green-50)]">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    </svg>
+                                </div>
+                                <p className="text-sm font-semibold text-gray-700">No posts yet</p>
+                                <p className="mt-1 text-xs text-gray-400">Be the first to share something with the community.</p>
+                            </div>
+                        ) : (
+                            posts.map((post) => (
+                                <FeedPost key={post.id} post={post} onLike={() => handleLike(post.id)} />
+                            ))
+                        )}
                     </div>
 
                     {/* Right sidebar — xl+ only */}

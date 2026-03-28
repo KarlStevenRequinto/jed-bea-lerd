@@ -24,6 +24,8 @@ interface UseCreateListingModalViewModelProps {
 export const useCreateListingModalViewModel = ({ onClose, onPublished }: UseCreateListingModalViewModelProps) => {
     const router = useRouter();
     const [category, setCategory] = useState<ListingCategory>("real-estate");
+    const [title, setTitle] = useState("");
+    const [caption, setCaption] = useState("");
     const [price, setPrice] = useState("");
     const [location, setLocation] = useState("");
     const [bedrooms, setBedrooms] = useState("");
@@ -50,6 +52,8 @@ export const useCreateListingModalViewModel = ({ onClose, onPublished }: UseCrea
 
     const handleCategoryChange = (cat: ListingCategory) => {
         setCategory(cat);
+        setTitle("");
+        setCaption("");
         setBedrooms("");
         setBathrooms("");
         setSqft("");
@@ -134,6 +138,8 @@ export const useCreateListingModalViewModel = ({ onClose, onPublished }: UseCrea
         try {
             const formData = new FormData();
             formData.append("category", category);
+            formData.append("title", title.trim());
+            formData.append("caption", caption.trim());
             formData.append("price", price.trim());
             formData.append("location", location.trim());
             formData.append("featuredImage", featuredImage.file);
@@ -191,10 +197,15 @@ export const useCreateListingModalViewModel = ({ onClose, onPublished }: UseCrea
         }
     };
 
-    const canPublish = price.trim() !== "" && location.trim() !== "" && featuredImage !== null;
+    const canPublish =
+        title.trim() !== "" && price.trim() !== "" && location.trim() !== "" && featuredImage !== null;
 
     return {
         category,
+        title,
+        setTitle,
+        caption,
+        setCaption,
         price,
         setPrice,
         location,

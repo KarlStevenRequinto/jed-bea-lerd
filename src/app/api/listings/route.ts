@@ -72,6 +72,8 @@ export async function POST(request: NextRequest) {
     }
 
     const category = String(formData.get("category") ?? "") as ListingCategoryInput;
+    const titleInput = String(formData.get("title") ?? "").trim();
+    const captionInput = String(formData.get("caption") ?? "").trim();
     const priceInput = String(formData.get("price") ?? "").trim();
     const location = String(formData.get("location") ?? "").trim();
     const featuredImage = formData.get("featuredImage");
@@ -149,7 +151,7 @@ export async function POST(request: NextRequest) {
                 ...Object.fromEntries(customFeatures.map((feature) => [feature.label, feature.value])),
             };
 
-    const title = buildTitle(category, location, specs);
+    const title = titleInput || buildTitle(category, location, specs);
     const description = buildDescription(category, location, specs, customFeatures);
 
     const admin = createAdminClient();
@@ -241,7 +243,7 @@ export async function POST(request: NextRequest) {
             .insert({
                 user_id: user.id,
                 listing_id: insertedListing.id,
-                content: null,
+                content: captionInput || null,
                 post_type: category === "vehicle" ? "vehicle" : "property",
                 status: "published",
             })

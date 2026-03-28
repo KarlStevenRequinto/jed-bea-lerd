@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { MediaPreview } from "../FeedComposer/useViewModel";
 import type { FeedPost } from "@/lib/types/feed";
 
@@ -13,6 +14,7 @@ export const useCreatePostModalViewModel = ({
     onClose,
     onPost,
 }: UseCreatePostModalViewModelProps) => {
+    const router = useRouter();
     const [media, setMedia] = useState<MediaPreview[]>(initialMedia);
     const [caption, setCaption] = useState("");
     const addMoreRef = useRef<HTMLInputElement>(null);
@@ -113,6 +115,7 @@ export const useCreatePostModalViewModel = ({
             setMedia([]);
             setCaption("");
             onClose();
+            router.refresh();
         } catch (error) {
             setErrorMessage(error instanceof Error ? error.message : "Failed to publish post.");
         } finally {

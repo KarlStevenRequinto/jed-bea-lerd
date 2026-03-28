@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { HomePageFeedPost as FeedPostType } from "../HomePageContent/useViewModel";
 
 interface FeedPostProps {
@@ -8,17 +9,21 @@ interface FeedPostProps {
     onLike: () => void;
 }
 
-const UserHeader = ({ user, timeAgo }: { user: FeedPostType["user"]; timeAgo: string }) => (
+const UserHeader = ({ user, timeAgo }: { user: FeedPostType["user"]; timeAgo: string }) => {
+    const [avatarError, setAvatarError] = useState(false);
+
+    return (
     <div className="flex items-center justify-between px-4 pt-4 pb-3">
         <div className="flex items-center gap-3">
             <div className="shrink-0">
-                {user.avatarUrl ? (
+                {user.avatarUrl && !avatarError ? (
                     <Image
                         src={user.avatarUrl}
                         alt={user.name}
                         width={42}
                         height={42}
                         className="h-[42px] w-[42px] rounded-full object-cover"
+                        onError={() => setAvatarError(true)}
                     />
                 ) : (
                     <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[var(--color-brand)] text-sm font-semibold text-white">
@@ -44,7 +49,8 @@ const UserHeader = ({ user, timeAgo }: { user: FeedPostType["user"]; timeAgo: st
             </svg>
         </button>
     </div>
-);
+    );
+};
 
 const ActionBar = ({
     likes,

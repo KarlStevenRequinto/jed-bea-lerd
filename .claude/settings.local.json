@@ -8,7 +8,8 @@
       "Bash(dir:*)",
       "Bash(npm install:*)",
       "Bash(npx eslint:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(find /d/CODING/START-UPS/auto-real-estate-ecommerce/src/app/api -type f -name *.ts)"
     ],
     "deny": [],
     "ask": []
