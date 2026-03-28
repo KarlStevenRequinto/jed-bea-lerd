@@ -119,7 +119,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
     if (post.postType === "vehicle" && post.vehicleData) {
         const v = post.vehicleData;
         return (
-            <div className="overflow-hidden rounded-xl border border-[var(--color-green-100)] bg-white shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
+            <div className="overflow-hidden rounded-xl border border-[var(--color-green-100)] bg-white shadow-[0_18px_45px_rgba(39,102,58,0.14)]">
                 <UserHeader user={post.user} timeAgo={post.timeAgo} />
 
                 {post.content && (
@@ -189,7 +189,7 @@ const FeedPost = ({ post, onLike }: FeedPostProps) => {
     if (post.postType === "property" && post.propertyData) {
         const p = post.propertyData;
         return (
-            <div className="overflow-hidden rounded-xl border border-[var(--color-green-100)] bg-white shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
+            <div className="overflow-hidden rounded-xl border border-[var(--color-green-100)] bg-white shadow-[0_18px_45px_rgba(39,102,58,0.14)]">
                 <UserHeader user={post.user} timeAgo={post.timeAgo} />
 
                 {post.content && (

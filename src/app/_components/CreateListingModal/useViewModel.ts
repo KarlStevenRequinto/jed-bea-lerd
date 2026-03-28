@@ -44,9 +44,15 @@ export const useCreateListingModalViewModel = ({ onClose, onPublished }: UseCrea
     const additionalImagesRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
+        const previousOverflow = document.body.style.overflow;
+        const hadLenisStopped = document.documentElement.classList.contains("lenis-stopped");
         document.body.style.overflow = "hidden";
+        document.documentElement.classList.add("lenis-stopped");
         return () => {
-            document.body.style.overflow = "";
+            document.body.style.overflow = previousOverflow;
+            if (!hadLenisStopped) {
+                document.documentElement.classList.remove("lenis-stopped");
+            }
         };
     }, []);
 

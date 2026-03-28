@@ -105,7 +105,7 @@ const ProductsMarketplace = ({
     };
 
     return (
-        <div className="min-h-screen bg-[var(--color-gray-50)]">
+        <div className="min-h-screen">
             {/* ── Mobile: Filter toggle bar ─────────────────────────────────── */}
             <div className="lg:hidden sticky top-16 z-30 bg-white border-b border-[var(--color-gray-200)] px-4 py-3 flex items-center justify-between">
                 <button

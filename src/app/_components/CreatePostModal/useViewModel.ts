@@ -34,11 +34,17 @@ export const useCreatePostModalViewModel = ({
         }
     };
 
-    // Lock body scroll while modal is open
+    // Lock body scroll while modal is open — also stop Lenis (JS-level scroll handler)
     useEffect(() => {
+        const previousOverflow = document.body.style.overflow;
+        const hadLenisStopped = document.documentElement.classList.contains("lenis-stopped");
         document.body.style.overflow = "hidden";
+        document.documentElement.classList.add("lenis-stopped");
         return () => {
-            document.body.style.overflow = "";
+            document.body.style.overflow = previousOverflow;
+            if (!hadLenisStopped) {
+                document.documentElement.classList.remove("lenis-stopped");
+            }
         };
     }, []);
 

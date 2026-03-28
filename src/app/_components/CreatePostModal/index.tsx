@@ -87,7 +87,7 @@ const CreatePostModal = ({ onClose, onPost, initialMedia }: CreatePostModalProps
                     </button>
                 </div>
 
-                <div className="flex-1 space-y-4 overflow-y-auto px-6 py-5">
+                <div data-lenis-prevent className="flex-1 space-y-4 overflow-y-auto px-6 py-5">
                     {/* Media section */}
                     {media.length > 0 && (
                         <div>

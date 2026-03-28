@@ -38,7 +38,7 @@ export default async function ProfilePage() {
         ])
 
     return (
-        <div className="min-h-screen bg-[var(--color-gray-50)]">
+        <div className="min-h-screen">
             <div className="container mx-auto px-6 py-8">
                 {/* Page Header */}
                 <div className="mb-6">

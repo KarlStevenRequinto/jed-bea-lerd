@@ -71,6 +71,9 @@
     /* Surface */
     --color-surface-muted: #ecebf0;
 
+    /* Page background — site-wide light green tint */
+    --color-page-bg: #e8f5eb;
+
     /* Semantic tokens (light theme) */
     --color-bg: var(--color-white);
     --color-fg: var(--color-gray-900);
@@ -157,6 +160,7 @@
 
 /* Dark theme is applied by toggling .theme-dark on <html> */
 html.theme-dark {
+    --color-page-bg: var(--color-black);
     --color-bg: var(--color-black);
     --color-fg: #ededed;
     --color-border: var(--color-gray-800);
@@ -202,7 +206,7 @@ html.lenis {
 }
 
 body {
-    background: var(--color-bg);
+    background: var(--color-page-bg);
     color: var(--color-fg);
     font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }

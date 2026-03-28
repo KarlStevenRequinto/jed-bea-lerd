@@ -179,7 +179,7 @@ const CreateListingModal = ({ onClose, onPublished }: CreateListingModalProps) =
                     </div>
 
                     {/* Scrollable form */}
-                    <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+                    <div data-lenis-prevent className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
 
                         {/* Category */}
                         <div>
