@@ -7,6 +7,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { formatPrice } from '@/lib/utils/formatters'
+import { buildProfileSlug } from '@/lib/utils/profile'
 import type {
     ProfileData,
     ProfileStats,
@@ -14,6 +15,7 @@ import type {
     ProfileReview,
     ProfileListing,
     ProfileRecentlyViewed,
+    PublicProfileRelationship,
 } from '@/lib/types/profile'
 
 export async function getProfileData(userId: string): Promise<ProfileData | null> {
@@ -211,4 +213,64 @@ export async function getRecentlyViewed(userId: string): Promise<ProfileRecently
                 category: listing.category === 'VEHICLE' ? 'vehicle' : 'property' as 'vehicle' | 'property',
             }
         })
+}
+
+export async function getPublicProfileRelationship(
+    targetUserId: string,
+    viewerUserId?: string | null
+): Promise<PublicProfileRelationship> {
+    if (!viewerUserId) {
+        return {
+            viewerId: null,
+            isOwnProfile: false,
+            isFollowing: false,
+        }
+    }
+
+    if (viewerUserId === targetUserId) {
+        return {
+            viewerId: viewerUserId,
+            isOwnProfile: true,
+            isFollowing: false,
+        }
+    }
+
+    const admin = createAdminClient()
+    const { data } = await admin
+        .from('user_follows')
+        .select('id')
+        .eq('follower_id', viewerUserId)
+        .eq('following_id', targetUserId)
+        .maybeSingle()
+
+    return {
+        viewerId: viewerUserId,
+        isOwnProfile: false,
+        isFollowing: !!data,
+    }
+}
+
+export async function resolveProfileIdFromIdentifier(
+    identifier: string
+): Promise<string | null> {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+    if (uuidRegex.test(identifier)) {
+        return identifier
+    }
+
+    const admin = createAdminClient()
+    const { data, error } = await admin
+        .from('profiles')
+        .select('id, first_name, last_name')
+
+    if (error || !data) {
+        return null
+    }
+
+    const match = data.find((profile) =>
+        buildProfileSlug(profile.first_name, profile.last_name) === identifier
+    )
+
+    return match?.id ?? null
 }

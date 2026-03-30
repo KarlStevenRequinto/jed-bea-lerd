@@ -64,3 +64,9 @@ export interface ProfileRecentlyViewed {
     image: string
     category: 'vehicle' | 'property'
 }
+
+export interface PublicProfileRelationship {
+    viewerId: string | null
+    isOwnProfile: boolean
+    isFollowing: boolean
+}
