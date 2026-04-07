@@ -1,12 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useListingsAreaViewModel } from "./useViewModel";
 import GridProductCard from "@/components/common/GridProductCard";
 import ListingDetailsModal, { ListingDetailsModalData } from "@/components/common/ListingDetailsModal";
+import AuthGateModal from "@/components/common/AuthGateModal";
 import ListingsAreaSkeleton from "./ListingsAreaSkeleton";
-import BaseButton from "@/components/common/BaseButton";
 import { FormattedListing } from "@/lib/types/listing";
 
 interface ListingsAreaProps {
@@ -14,79 +13,96 @@ interface ListingsAreaProps {
   isLoadingInitial?: boolean;
 }
 
+const TABS = [
+  { key: "all", label: "All" },
+  { key: "PROPERTY", label: "Real Estate" },
+  { key: "VEHICLE", label: "Vehicles" },
+] as const;
+
 const ListingsArea = ({ initialListings, isLoadingInitial = false }: ListingsAreaProps) => {
-  const router = useRouter();
-  const { listings, mounted, isLoggedIn } = useListingsAreaViewModel(initialListings);
+  const { listings, mounted, isLoggedIn, activeTab, setActiveTab } = useListingsAreaViewModel(initialListings);
   const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
+  const [authGateOpen, setAuthGateOpen] = useState(false);
 
   const selectedListing = useMemo<ListingDetailsModalData | null>(() => {
     if (!selectedListingId) return null;
     return listings.find((listing) => listing.id === selectedListingId) ?? null;
   }, [listings, selectedListingId]);
 
+  const handleViewDetails = (listingId: string) => {
+    if (mounted && !isLoggedIn) {
+      setAuthGateOpen(true);
+    } else {
+      setSelectedListingId(listingId);
+    }
+  };
+
   if (isLoadingInitial) {
     return <ListingsAreaSkeleton />;
   }
 
   return (
-    <div className="flex-1 flex flex-col gap-4">
-      {/* Register banner — logged-out users only */}
-      {mounted && !isLoggedIn && (
-        <>
-          {/* Desktop */}
-          <div className="hidden lg:flex items-center bg-blue-50 rounded-lg px-4 h-[43px] justify-between border border-[var(--color-blue-border)]">
-            <div className="flex items-center gap-3">
-              <span className="text-blue-600 text-xl">ℹ️</span>
-              <p className="text-sm text-[var(--color-blue-border)] lg:hidden xl:block">
-                Browse listings for free. Sign up to save favorites, contact sellers, and get personalized recommendations.
-              </p>
-              <p className="text-sm text-[var(--color-blue-border)] hidden lg:block xl:hidden">Browse listings for free...</p>
-            </div>
-            <BaseButton
-              onClick={() => router.push("/login?tab=register")}
-              className="h-[32px] text-white px-4 text-xs font-semibold rounded-md whitespace-nowrap bg-[var(--color-brand-dark)]"
+    <div className="flex flex-col gap-6">
+      {/* Section header + filter tabs */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+        <div>
+          <h2 className="text-2xl font-bold text-[var(--color-gray-900)]">Current Listings</h2>
+          <p className="text-sm text-[var(--color-gray-500)] mt-0.5">Hand-picked assets available for you.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          {TABS.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`cursor-pointer px-4 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                activeTab === tab.key
+                  ? "bg-[var(--color-brand-dark)] text-white border-[var(--color-brand-dark)]"
+                  : "bg-white text-[var(--color-gray-500)] border-[var(--color-gray-300)] hover:border-[var(--color-brand)] hover:text-[var(--color-brand)]"
+              }`}
             >
-              Register Here
-            </BaseButton>
-          </div>
-
-          {/* Mobile */}
-          <div className="flex lg:hidden items-center bg-blue-50 rounded-lg px-3 h-[43px] justify-between border border-[var(--color-blue-border)] gap-2">
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              <span className="text-blue-600 text-base flex-shrink-0">&#9432;</span>
-            </div>
-            <BaseButton
-              onClick={() => router.push("/login?tab=register")}
-              className="h-[32px] text-white px-3 text-xs font-semibold rounded-md whitespace-nowrap bg-[var(--color-brand-dark)] flex-shrink-0"
-            >
-              Register Here
-            </BaseButton>
-          </div>
-        </>
-      )}
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {listings.map((listing) => (
-          <GridProductCard
-            key={listing.id}
-            category={listing.category}
-            price={listing.price}
-            title={listing.title}
-            location={listing.location}
-            year={listing.year}
-            color={listing.color}
-            mileage={listing.mileage}
-            fuelType={listing.fuelType}
-            bodyType={listing.bodyType}
-            description={listing.description}
-            image={listing.image}
-            onViewDetailsClick={() => setSelectedListingId(listing.id)}
-          />
-        ))}
+              {tab.label.toUpperCase()}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <ListingDetailsModal isOpen={Boolean(selectedListing)} listing={selectedListing} onClose={() => setSelectedListingId(null)} />
+      {/* Card grid */}
+      {listings.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {listings.map((listing) => (
+            <GridProductCard
+              key={listing.id}
+              category={listing.category}
+              price={listing.price}
+              title={listing.title}
+              location={listing.location}
+              year={listing.year}
+              color={listing.color}
+              mileage={listing.mileage}
+              fuelType={listing.fuelType}
+              bodyType={listing.bodyType}
+              description={listing.description}
+              image={listing.image}
+              onViewDetailsClick={() => handleViewDetails(listing.id)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="py-16 text-center text-[var(--color-gray-500)]">
+          <p className="text-sm">No listings found.</p>
+        </div>
+      )}
+
+      <ListingDetailsModal
+        isOpen={Boolean(selectedListing)}
+        listing={selectedListing}
+        onClose={() => setSelectedListingId(null)}
+      />
+
+      <AuthGateModal
+        isOpen={authGateOpen}
+        onClose={() => setAuthGateOpen(false)}
+      />
     </div>
   );
 };

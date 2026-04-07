@@ -1,10 +1,8 @@
 "use client";
 
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useHeroSectionViewModel } from "./useViewModel";
-import BaseButton from "@/components/common/BaseButton";
-import CategoryCard from "@/components/common/CategoryCard";
-import FeatureIconItem from "@/components/common/FeatureIconItem";
-import { RealEstateSvgIcon, CarSvgIcon, PriceTagSvgIcon, SearchSvgIcon, SpeechBubbleSvgIcon, HeartSvgIcon } from "@/components/svg-icons";
 import HeroSectionSkeleton from "./HeroSectionSkeleton";
 
 interface HeroSectionProps {
@@ -12,82 +10,140 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ isLoading = false }: HeroSectionProps) => {
-    useHeroSectionViewModel();
+    const router = useRouter();
+    const { slides, currentIndex, goNext, goPrev, goTo } = useHeroSectionViewModel();
 
     if (isLoading) {
         return <HeroSectionSkeleton />;
     }
 
     return (
-        <div className="relative w-full overflow-hidden bg-gradient-to-br from-[var(--color-brand-dark)] via-[var(--color-brand)] to-[var(--color-green-300)] lg:h-[520px]">
-            {/* Decorative circles */}
+        <div className="relative w-full h-[500px] lg:h-[580px] overflow-hidden">
+            {/* Slide images — all mounted, opacity-toggled for crossfade */}
+            {slides.map((s, i) => (
+                <div
+                    key={i}
+                    className="absolute inset-0 transition-opacity duration-700"
+                    style={{ opacity: i === currentIndex ? 1 : 0 }}
+                >
+                    <Image
+                        src={s.image}
+                        alt={s.accentText}
+                        fill
+                        className="object-cover object-center"
+                        priority={i === 0}
+                        sizes="100vw"
+                    />
+                    {/* Per-slide dark overlay */}
+                    <div
+                        className="absolute inset-0"
+                        style={{
+                            background: `linear-gradient(to right, ${s.overlayFrom} 0%, ${s.overlayVia} 55%, rgba(0,0,0,0.15) 100%)`,
+                        }}
+                    />
+                </div>
+            ))}
+
+            {/* Subtle top-to-bottom green tint */}
             <div
-                className="absolute w-[400px] h-[400px] rounded-full opacity-30 blur-3xl top-20 right-40"
-                style={{ background: "color-mix(in srgb, var(--color-green-300) 75%, white)" }}
-            />
-            <div
-                className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl bottom-10 left-20"
-                style={{ background: "color-mix(in srgb, var(--color-brand-dark) 82%, black)" }}
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background:
+                        "linear-gradient(to bottom, rgba(34,103,53,0.15) 0%, transparent 60%)",
+                }}
             />
 
-            <div className="relative container mx-auto px-6 py-16">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-60 items-center">
-                    {/* Left Side - Content */}
-                    <div className="text-white">
-                        <h1 className="text-4xl font-bold mb-6 leading-tight">Find your dream home or vehicle</h1>
-                        <p className="text-lg mb-8 leading-relaxed opacity-95">
-                            Join thousands of users discovering amazing properties and vehicles. Sign up now to unlock exclusive features and
-                            personalized recommendations.
+            {/* Content — all slides rendered, fade + rise on active */}
+            <div className="relative h-full container mx-auto px-6 flex flex-col justify-center">
+                {slides.map((s, i) => (
+                    <div
+                        key={i}
+                        className="absolute max-w-2xl transition-all duration-700"
+                        style={{
+                            opacity: i === currentIndex ? 1 : 0,
+                            transform: i === currentIndex ? "translateY(0)" : "translateY(18px)",
+                            pointerEvents: i === currentIndex ? "auto" : "none",
+                        }}
+                    >
+                        {/* Eyebrow tag */}
+                        <div className="inline-flex items-center gap-2 mb-5 px-3 py-1.5 rounded-full border border-[var(--color-green-300)]/50 bg-[var(--color-brand-dark)]/40 backdrop-blur-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-green-300)]" />
+                            <span className="text-[var(--color-green-300)] text-xs font-semibold tracking-widest uppercase">
+                                {s.eyebrow}
+                            </span>
+                        </div>
+
+                        <h1 className="text-5xl lg:text-[3.75rem] font-bold text-white leading-[1.08] tracking-tight mb-5">
+                            {s.headline}
+                            <br />
+                            <span style={{ color: "var(--color-green-300)" }}>
+                                {s.accentText}
+                            </span>
+                        </h1>
+
+                        <p className="text-white/75 text-lg mb-9 leading-relaxed max-w-lg">
+                            {s.subtext}
                         </p>
 
-                        {/* Action Buttons */}
-                        <div className="flex gap-x-8 mb-12">
-                            <BaseButton
-                                className="bg-white w-[159px] h-[38px] text-[15px] font-bold leading-[1] rounded-[7px]"
-                                style={{
-                                    color: "var(--color-brand-dark)",
-                                }}
+                        {/* Action buttons */}
+                        <div className="flex flex-wrap gap-4">
+                            <button
+                                onClick={() => router.push("/login?tab=register")}
+                                className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-[var(--color-brand-darker)] bg-[var(--color-green-300)] hover:bg-[var(--color-green-300)]/90 transition-colors text-sm"
                             >
                                 Get Started Free
-                            </BaseButton>
-                            <BaseButton
-                                className="bg-white w-[159px] h-[38px] text-[15px] font-bold leading-[1] rounded-[7px]"
-                                style={{
-                                    color: "var(--color-success-deep)",
-                                }}
+                                <span className="text-base">→</span>
+                            </button>
+                            <button
+                                onClick={() => router.push("/login")}
+                                className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white border border-white/40 bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors text-sm"
                             >
                                 Sign In
-                            </BaseButton>
-                        </div>
-
-                        {/* Feature Icons */}
-                        <div className="grid grid-cols-2 gap-y-4 max-w-sm">
-                            <FeatureIconItem icon={<SearchSvgIcon />} label="Advanced Search" />
-                            <FeatureIconItem icon={<HeartSvgIcon />} label="Save Favorites" />
-                            <FeatureIconItem icon={<SpeechBubbleSvgIcon />} label="Contact Sellers" />
-                            <FeatureIconItem icon={<PriceTagSvgIcon />} label="Price Alerts" />
+                            </button>
                         </div>
                     </div>
+                ))}
+            </div>
 
-                    {/* Right Side - Category Cards */}
-                    <div className="flex flex-col gap-6">
-                        <CategoryCard
-                            icon={
-                                <div style={{ filter: "brightness(0) saturate(100%) invert(100%)" }}>
-                                    <RealEstateSvgIcon width="70" height="70" fill="url(#pattern0_407_1725)" />
-                                </div>
-                            }
-                            title="Properties"
-                            description="Browse houses, apartments, and more"
-                            onClick={() => console.log("Properties clicked")}
+            {/* Bottom controls: dots + arrows */}
+            <div className="absolute bottom-7 left-0 right-0 px-6 container mx-auto flex items-center justify-between pointer-events-none">
+                {/* Dot indicators */}
+                <div className="flex items-center gap-2 pointer-events-auto">
+                    {slides.map((_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => goTo(i)}
+                            aria-label={`Go to slide ${i + 1}`}
+                            className="cursor-pointer transition-all duration-300"
+                            style={{
+                                width: i === currentIndex ? "24px" : "8px",
+                                height: "8px",
+                                borderRadius: "4px",
+                                background:
+                                    i === currentIndex
+                                        ? "var(--color-green-300)"
+                                        : "rgba(255,255,255,0.4)",
+                            }}
                         />
-                        <CategoryCard
-                            icon={<CarSvgIcon />}
-                            title="Vehicles"
-                            description="Explore SUVs, Sedans, trucks, and more"
-                            onClick={() => console.log("Vehicles clicked")}
-                        />
-                    </div>
+                    ))}
+                </div>
+
+                {/* Prev / Next arrows */}
+                <div className="flex gap-2 pointer-events-auto">
+                    <button
+                        onClick={goPrev}
+                        aria-label="Previous slide"
+                        className="cursor-pointer w-10 h-10 rounded-full flex items-center justify-center text-white border border-white/30 bg-white/10 hover:bg-white/25 backdrop-blur-sm transition-colors text-lg font-light"
+                    >
+                        ‹
+                    </button>
+                    <button
+                        onClick={goNext}
+                        aria-label="Next slide"
+                        className="cursor-pointer w-10 h-10 rounded-full flex items-center justify-center text-white border border-white/30 bg-white/10 hover:bg-white/25 backdrop-blur-sm transition-colors text-lg font-light"
+                    >
+                        ›
+                    </button>
                 </div>
             </div>
         </div>
