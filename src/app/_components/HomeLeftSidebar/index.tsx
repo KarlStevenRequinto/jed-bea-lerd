@@ -60,7 +60,7 @@ const navItems = [
 ];
 
 const HomeLeftSidebar = ({ onCreateListing }: HomeLeftSidebarProps) => {
-    const { user, userInitials, fullName, isActive } = useHomeLeftSidebarViewModel();
+    const { user, userInitials, fullName, isActive, listingsCount, networkCount } = useHomeLeftSidebarViewModel();
     const searchParams = useSearchParams();
     const activeListingType = searchParams.get("listingType");
 
@@ -88,13 +88,13 @@ const HomeLeftSidebar = ({ onCreateListing }: HomeLeftSidebarProps) => {
                 {/* Stats */}
                 <div className="mt-4 flex w-full justify-around border-t border-[var(--color-green-100)] pt-4">
                     <div>
-                        <p className="text-sm font-bold text-gray-800">0</p>
-                        <p className="text-[10px] text-gray-400">Network</p>
+                        <p className="text-sm font-bold text-gray-800">{networkCount}</p>
+                        <p className="text-[10px] text-gray-500">Network</p>
                     </div>
                     <div className="border-l border-[var(--color-green-100)]" />
                     <div>
-                        <p className="text-sm font-bold text-gray-800">0</p>
-                        <p className="text-[10px] text-gray-400">Listings</p>
+                        <p className="text-sm font-bold text-gray-800">{listingsCount}</p>
+                        <p className="text-[10px] text-gray-500">Listings</p>
                     </div>
                 </div>
             </div>

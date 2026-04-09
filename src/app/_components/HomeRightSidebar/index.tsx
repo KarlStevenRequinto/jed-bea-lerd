@@ -2,28 +2,47 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FormattedListing } from "@/lib/types/listing";
+import { useHomeRightSidebarViewModel } from "./useViewModel";
 
-interface HomeRightSidebarProps {
-    initialListings: FormattedListing[];
-}
+const ActiveListingsSkeleton = () => (
+    <div className="rounded-xl border border-[var(--color-green-100)] bg-white p-4 shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
+        <div className="mb-3 h-4 w-28 animate-pulse rounded bg-gray-200" />
+        <div className="flex flex-col gap-3">
+            {[0, 1, 2].map((i) => (
+                <div key={i} className="flex items-center gap-3 rounded-xl border border-[var(--color-green-100)] px-2.5 py-2">
+                    <div className="h-14 w-14 shrink-0 animate-pulse rounded-lg bg-gray-200" />
+                    <div className="flex-1 space-y-2">
+                        <div className="h-3 w-3/4 animate-pulse rounded bg-gray-200" />
+                        <div className="h-3 w-1/2 animate-pulse rounded bg-gray-200" />
+                        <div className="h-2.5 w-2/5 animate-pulse rounded bg-gray-100" />
+                    </div>
+                </div>
+            ))}
+        </div>
+        <div className="mt-4 h-3 w-24 animate-pulse rounded bg-gray-100 mx-auto" />
+    </div>
+);
 
-const HomeRightSidebar = ({ initialListings }: HomeRightSidebarProps) => {
-    const previewListings = initialListings.slice(0, 4);
+const HomeRightSidebar = () => {
+    const { listings: previewListings, loading } = useHomeRightSidebarViewModel();
 
     return (
         <div className="flex flex-col gap-4">
-            {previewListings.length > 0 && (
+            {loading ? (
+                <ActiveListingsSkeleton />
+            ) : previewListings.length > 0 && (
                 <div className="rounded-xl border border-[var(--color-green-100)] bg-white p-4 shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
                     <p className="mb-3 text-sm font-semibold text-gray-800">Active Listings</p>
                     <div className="flex flex-col gap-3">
                         {previewListings.map((listing) => {
                             const isVehicle = listing.category === "VEHICLE";
+                            const tab = isVehicle ? "vehicles" : "properties";
 
                             return (
-                            <div
+                            <Link
                                 key={listing.id}
-                                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-2.5 py-2 transition-all duration-200 hover:-translate-y-0.5 ${
+                                href={`/profile?tab=${tab}#my-listings`}
+                                className={`flex items-center gap-3 rounded-xl border px-2.5 py-2 transition-all duration-200 hover:-translate-y-0.5 ${
                                     isVehicle
                                         ? "border-[var(--color-vehicle-light)] bg-[var(--color-vehicle-muted)]/45 hover:border-[var(--color-vehicle-primary)] hover:bg-[var(--color-vehicle-muted)] hover:shadow-[0_12px_22px_rgba(47,111,237,0.12)]"
                                         : "border-[var(--color-green-100)] bg-[var(--color-brand-muted)]/40 hover:border-[var(--color-brand)] hover:bg-[var(--color-brand-muted)] hover:shadow-[0_12px_22px_rgba(39,102,58,0.10)]"
@@ -52,11 +71,11 @@ const HomeRightSidebar = ({ initialListings }: HomeRightSidebarProps) => {
                                     </p>
                                     <p className="truncate text-[10px] text-gray-400">{listing.location}</p>
                                 </div>
-                            </div>
+                            </Link>
                         )})}
                     </div>
                     <Link
-                        href="/products?listingType=all"
+                        href="/profile#my-listings"
                         className="mt-4 block text-center text-xs font-semibold text-[var(--color-brand)] hover:underline"
                     >
                         View all listings

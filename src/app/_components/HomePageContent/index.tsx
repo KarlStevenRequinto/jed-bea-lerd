@@ -178,7 +178,7 @@ const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentP
 
                     {/* Right sidebar — xl+ only */}
                     <div className="sticky top-24 hidden w-72 shrink-0 self-start xl:block">
-                        <HomeRightSidebar initialListings={listings} />
+                        <HomeRightSidebar />
                     </div>
                 </div>
             </div>

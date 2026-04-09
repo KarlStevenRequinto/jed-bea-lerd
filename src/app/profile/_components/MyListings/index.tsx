@@ -9,9 +9,10 @@ import EmptyState from "@/components/common/EmptyState";
 
 interface MyListingsProps {
     listings: ProfileListing[];
+    initialTab?: string;
 }
 
-const MyListings = ({ listings }: MyListingsProps) => {
+const MyListings = ({ listings, initialTab }: MyListingsProps) => {
     const {
         activeTab,
         listings: filteredListings,
@@ -23,7 +24,21 @@ const MyListings = ({ listings }: MyListingsProps) => {
         handleAddListing,
         handleViewDetails,
         handleSeeMoreListings,
-    } = useMyListingsViewModel(listings);
+    } = useMyListingsViewModel(listings, initialTab);
+
+    const tabBg =
+        activeTab === "properties"
+            ? "var(--color-green-500)"
+            : activeTab === "vehicles"
+              ? "var(--color-vehicle-primary)"
+              : "var(--color-gray-500)";
+
+    const activeTextColor =
+        activeTab === "properties"
+            ? "var(--color-green-500)"
+            : activeTab === "vehicles"
+              ? "var(--color-vehicle-primary)"
+              : "var(--color-gray-500)";
 
     return (
         <div className="bg-white rounded-lg border border-[var(--color-gray-200)] p-6">
@@ -62,15 +77,18 @@ const MyListings = ({ listings }: MyListingsProps) => {
             </div>
 
             {/* Tabs */}
-            <div className="relative flex bg-[var(--color-brand)] rounded-lg p-1 mb-6">
+            <div
+                className="relative flex rounded-lg p-1 mb-6 transition-colors duration-300"
+                style={{ backgroundColor: tabBg }}
+            >
                 <div
                     className={`absolute top-1/2 -translate-y-1/2 h-[calc(100%-8px)] rounded-md bg-white ${transitionClasses}`}
                     style={{ transform: highlightTransform, width: highlightWidth }}
                     aria-hidden="true"
                 />
-                <TabButton label={`All (${counts.all})`} isActive={activeTab === "all"} onClick={() => handleTabChange("all")} />
-                <TabButton label={`Properties (${counts.properties})`} isActive={activeTab === "properties"} onClick={() => handleTabChange("properties")} />
-                <TabButton label={`Vehicles (${counts.vehicles})`} isActive={activeTab === "vehicles"} onClick={() => handleTabChange("vehicles")} />
+                <TabButton label={`All (${counts.all})`} isActive={activeTab === "all"} onClick={() => handleTabChange("all")} activeTextColor={activeTextColor} />
+                <TabButton label={`Properties (${counts.properties})`} isActive={activeTab === "properties"} onClick={() => handleTabChange("properties")} activeTextColor={activeTextColor} />
+                <TabButton label={`Vehicles (${counts.vehicles})`} isActive={activeTab === "vehicles"} onClick={() => handleTabChange("vehicles")} activeTextColor={activeTextColor} />
             </div>
 
             {/* Listings Grid */}
@@ -105,13 +123,15 @@ interface TabButtonProps {
     label: string;
     isActive: boolean;
     onClick: () => void;
+    activeTextColor: string;
 }
 
-const TabButton = ({ label, isActive, onClick }: TabButtonProps) => (
+const TabButton = ({ label, isActive, onClick, activeTextColor }: TabButtonProps) => (
     <button
         onClick={onClick}
+        style={isActive ? { color: activeTextColor } : undefined}
         className={`relative z-10 flex-1 text-sm font-medium py-2.5 px-4 rounded-md transition-colors duration-300 cursor-pointer ${
-            isActive ? "text-[var(--color-brand)]" : "text-white hover:text-[var(--color-gray-100)]"
+            isActive ? "" : "text-white hover:text-[var(--color-gray-100)]"
         }`}
     >
         {label}

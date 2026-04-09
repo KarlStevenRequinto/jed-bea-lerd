@@ -5,8 +5,13 @@ import { ProfileListing } from "@/lib/types/profile";
 export type { ProfileListing as Listing };
 export type ListingTab = "all" | "properties" | "vehicles";
 
-export const useMyListingsViewModel = (initialListings: ProfileListing[]) => {
-    const [activeTab, setActiveTab] = useState<ListingTab>("all");
+const toListingTab = (tab?: string): ListingTab => {
+    if (tab === "properties" || tab === "vehicles") return tab;
+    return "all";
+};
+
+export const useMyListingsViewModel = (initialListings: ProfileListing[], initialTab?: string) => {
+    const [activeTab, setActiveTab] = useState<ListingTab>(() => toListingTab(initialTab));
 
     const getActiveIndex = () => {
         switch (activeTab) {

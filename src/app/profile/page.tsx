@@ -18,7 +18,12 @@ import RecentlyViewed from './_components/RecentlyViewed'
 import SponsoredAd from './_components/SponsoredAd'
 import MyListings from './_components/MyListings'
 
-export default async function ProfilePage() {
+export default async function ProfilePage({
+    searchParams,
+}: {
+    searchParams: Promise<{ tab?: string }>
+}) {
+    const { tab } = await searchParams
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
@@ -57,7 +62,9 @@ export default async function ProfilePage() {
                         <ProfileHeader profile={profile} stats={stats} />
                         <ProfileInformation profile={profile} />
                         <ReviewsAndRatings reviews={reviews} />
-                        <MyListings listings={listings} />
+                        <div id="my-listings" className="scroll-mt-24">
+                            <MyListings listings={listings} initialTab={tab} />
+                        </div>
                     </div>
 
                     {/* Right Column - Sidebar */}
