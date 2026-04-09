@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useHomePageContentViewModel } from "./useViewModel";
 import HeroSection from "../HeroSection";
 import ListingsArea from "../ListingsArea";
-import FeedComposer from "../FeedComposer";
 import FeedPost from "../FeedPost";
 import HomeLeftSidebar from "../HomeLeftSidebar";
 import HomeRightSidebar from "../HomeRightSidebar";
@@ -158,7 +157,6 @@ const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentP
 
                     {/* Center feed */}
                     <div className="flex-1 max-w-2xl min-w-0 flex flex-col gap-4">
-                        <FeedComposer onPost={addPost} />
                         {posts.length === 0 ? (
                             <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-gray-200 bg-white py-16 text-center">
                                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-green-50)]">
@@ -166,8 +164,8 @@ const HomePageContent = ({ initialListings, initialFeedPosts }: HomePageContentP
                                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                     </svg>
                                 </div>
-                                <p className="text-sm font-semibold text-gray-700">No posts yet</p>
-                                <p className="mt-1 text-xs text-gray-400">Be the first to share something with the community.</p>
+                                <p className="text-sm font-semibold text-gray-700">No listings yet</p>
+                                <p className="mt-1 text-xs text-gray-400">Listings from the community will appear here.</p>
                             </div>
                         ) : (
                             posts.map((post) => (
