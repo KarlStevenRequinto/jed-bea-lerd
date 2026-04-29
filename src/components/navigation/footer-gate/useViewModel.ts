@@ -10,7 +10,12 @@ export const useFooterGateViewModel = () => {
     }, []);
 
     // Hide footer on auth pages
-    const isAuthPage = pathname === "/login" || pathname === "/register" || pathname === "/forgot-password" || pathname === "/reset-password";
+    const isAuthPage =
+        pathname === "/login" ||
+        pathname === "/register" ||
+        pathname === "/forgot-password" ||
+        pathname === "/reset-password" ||
+        pathname === "/messages";
 
     return {
         mounted,

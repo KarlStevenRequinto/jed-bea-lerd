@@ -68,21 +68,25 @@ const HomeLeftSidebar = ({ onCreateListing }: HomeLeftSidebarProps) => {
         <div className="flex flex-col gap-4">
             {/* Profile card */}
             <div className="flex flex-col items-center rounded-xl border border-[var(--color-green-100)] bg-white p-5 text-center shadow-[0_18px_45px_rgba(39,102,58,0.08)]">
-                {user?.profilePhotoUrl ? (
-                    <Image
-                        src={user.profilePhotoUrl}
-                        alt="Profile"
-                        width={64}
-                        height={64}
-                        className="h-16 w-16 rounded-full object-cover ring-2 ring-[var(--color-brand)] ring-offset-2 ring-offset-[var(--color-green-50)]"
-                    />
-                ) : (
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-brand)] text-lg font-bold text-white ring-2 ring-[var(--color-brand)] ring-offset-2 ring-offset-[var(--color-green-50)]">
-                        {userInitials}
-                    </div>
-                )}
+                <Link href="/profile" className="cursor-pointer">
+                    {user?.profilePhotoUrl ? (
+                        <Image
+                            src={user.profilePhotoUrl}
+                            alt="Profile"
+                            width={64}
+                            height={64}
+                            className="h-16 w-16 rounded-full object-cover ring-2 ring-[var(--color-brand)] ring-offset-2 ring-offset-[var(--color-green-50)]"
+                        />
+                    ) : (
+                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-brand)] text-lg font-bold text-white ring-2 ring-[var(--color-brand)] ring-offset-2 ring-offset-[var(--color-green-50)]">
+                            {userInitials}
+                        </div>
+                    )}
+                </Link>
 
-                <p className="mt-3 text-sm font-bold text-gray-800">{fullName}</p>
+                <Link href="/profile" className="mt-3 cursor-pointer text-sm font-bold text-gray-800 hover:underline">
+                    {fullName}
+                </Link>
                 <p className="text-xs text-[var(--color-green-500)]">Verified Member</p>
 
                 {/* Stats */}
